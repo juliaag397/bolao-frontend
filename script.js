@@ -195,6 +195,12 @@ function abrirAposta(celula) {
     // Se já apostou, trava
     if (celula.dataset.apostado === "true") return;
 
+    // data
+    if (celula.dataset.encerrado === "true") {
+        alert("Apostas encerradas para este jogo!");
+        return;
+    }
+
     // Se já abriu input, não cria outro
     if (celula.querySelector("input")) return;
 
@@ -257,3 +263,29 @@ function abrirAposta(celula) {
     celula.appendChild(input2);
     celula.appendChild(botao);
 }
+
+    // BLOQUEAR OS JOGOS DO DIA
+function bloquearJogosPassados() {
+
+    const hoje = new Date();
+
+    const celulas = document.querySelectorAll("[data-data]");
+
+    celulas.forEach(celula => {
+
+        const dataJogo = new Date(celula.dataset.data);
+
+        if (hoje >= dataJogo) {
+
+            celula.style.backgroundColor = "#ccc";
+            celula.style.cursor = "not-allowed";
+            celula.innerHTML = "<span class='palpite'>Encerrado</span>";
+            celula.onclick = null;
+            celula.dataset.encerrado = "true";
+
+        }
+
+    });
+}
+
+bloquearJogosPassados();
