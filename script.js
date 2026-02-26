@@ -267,11 +267,14 @@ function abrirAposta(celula) {
 
 function carregarApostas() {
 
+    console.log("usuarioId", usuarioId);
+
     if (!usuarioId) return;
 
     fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`)
         .then(res => res.json())
         .then(apostas => {
+            console.log("Apostas recebidas:", apostas);
 
             apostas.forEach(aposta => {
 
