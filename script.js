@@ -194,7 +194,7 @@ function abrirAposta(celula) {
     }
 
     // Se já apostou, trava
-    if (celula.dataset.apostado === "true") return;
+    if (celula.dataset.apostado === "true" && celula.dataset.encerrado === "true") return;
 
     // data
     if (celula.dataset.encerrado === "true") {
