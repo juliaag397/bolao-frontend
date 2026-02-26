@@ -127,6 +127,25 @@ function fazerLogin() {
         usuarioLogado = true; // ✅ ATIVA LOGIN
         usuarioId = data.id;
 
+        fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`)
+            .then(res => res.json())
+            .then(apostas => {
+
+                apostas.forEach(aposta => {
+
+                    const celula = document.querySelector(
+                        `[data-jogo="${aposta.jogo}"]`
+                    );
+
+                    if (celula) {
+                        celula.innerHTML = aposta.gols_casa + " x " + aposta.gols_fora;
+                        celula.dataset.apostado = "true";
+                    }
+
+                });
+
+            });
+
         document.getElementById("login-form").style.display = "none";
         document.getElementById("area-logada").style.display = "block";
 
@@ -200,8 +219,33 @@ function abrirAposta(celula) {
             return;
         }
 
-        celula.innerHTML = input1.value + " x " + input2.value;
-        celula.dataset.apostado = "true";
+        fetch("https://bolao-backend-k56l.onrender.com/apostar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                usuario_id: usuarioId,
+                jogo: celula.dataset.jogo,
+                gols_casa: input1.value,
+                gols_fora: input2.value
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+
+            if (data.erro) {
+                alert("Erro ao salvar aposta");
+                return;
+            }
+
+            celula.innerHTML = input1.value + " x " + input2.value;
+            celula.dataset.apostado = "true";
+
+        })
+        .catch(() => {
+            alert("Erro ao conectar com servidor");
+        });
     };
 
     input1.addEventListener("click", e => e.stopPropagation());
