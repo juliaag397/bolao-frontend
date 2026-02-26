@@ -1,4 +1,5 @@
 let usuarioLogado = false;
+let usuarioId = null;
 
 // ===============================
 // TROCAR ENTRE LOGIN E CADASTRO
@@ -124,6 +125,7 @@ function fazerLogin() {
 
         // 🔥 LOGIN DEU CERTO
         usuarioLogado = true; // ✅ ATIVA LOGIN
+        usuarioId = data.id;
 
         document.getElementById("login-form").style.display = "none";
         document.getElementById("area-logada").style.display = "block";
