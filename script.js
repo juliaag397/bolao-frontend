@@ -265,11 +265,36 @@ function abrirAposta(celula) {
     celula.appendChild(botao);
 }
 
+function carregarApostas() {
+
+    if (!usuarioId) return;
+
+    fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`)
+        .then(res => res.json())
+        .then(apostas => {
+
+            apostas.forEach(aposta => {
+
+                const celula = document.querySelector(
+                    `[data-jogo="${aposta.jogo}"]`
+                );
+
+                if (celula) {
+                    celula.innerHTML =
+                        aposta.gols_casa + " x " + aposta.gols_fora;
+
+                    celula.dataset.apostado = "true";
+                }
+
+            });
+
+        });
+}
+
     // BLOQUEAR OS JOGOS DO DIA
 function bloquearJogosPassados() {
 
     const hoje = new Date();
-
     const celulas = document.querySelectorAll("[data-data]");
 
     celulas.forEach(celula => {
@@ -280,14 +305,19 @@ function bloquearJogosPassados() {
 
             celula.style.backgroundColor = "#ccc";
             celula.style.cursor = "not-allowed";
-            celula.innerHTML = "<span class='palpite'>Encerrado</span>";
             celula.dataset.encerrado = "true";
+
+            // 🔥 SÓ MOSTRA "Encerrado" SE NÃO TIVER APOSTA
+            if (celula.dataset.apostado !== "true") {
+                celula.innerHTML = "<span class='palpite'>Encerrado</span>";
+            }
 
         }
 
     });
 }
 
+carregarApostas();
 bloquearJogosPassados();
 
 document.querySelectorAll("[data-jogo]").forEach(celula => {
