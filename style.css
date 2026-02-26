@@ -1,0 +1,200 @@
+/* ===== TEMA COPA DO MUNDO - BRASIL 2026 ===== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #009C3B, #002776);
+    color: white;
+    min-height: 100vh;
+}
+
+/* ===== HEADER ===== */
+
+header {
+    background-color: #FFDF00;
+    color: #002776;
+    text-align: center;
+    padding: 25px 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+header h1 {
+    font-size: 32px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+header p {
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* ===== FORMULÁRIOS (LOGIN / CADASTRO) ===== */
+
+.demo-form {
+    background: white;
+    color: #002776;
+    width: 350px;
+    margin: 30px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+.demo-form h3 {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #009C3B;
+}
+
+.demo-form label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.demo-form input {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0 12px 0;
+    border-radius: 6px;
+    border: 2px solid #009C3B;
+    outline: none;
+}
+
+.demo-form input:focus {
+    border-color: #FFDF00;
+    box-shadow: 0 0 5px #FFDF00;
+}
+
+.form-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #009C3B;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.form-btn:hover {
+    background-color: #002776;
+    transform: scale(1.02);
+}
+
+.toggle-link {
+    display: block;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 13px;
+}
+
+.toggle-link span {
+    color: #009C3B;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.error-msg {
+    color: red;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.success-msg {
+    display: none;
+    color: green;
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+/* ===== SEÇÃO DOS GRUPOS ===== */
+
+main {
+    width: 90%;
+    margin: 40px auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+}
+
+section {
+    background: white;
+    color: #002776;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+    margin-bottom: 0;
+}
+
+/* ===== TÍTULOS ===== */
+
+h2 {
+    text-align: center;
+    background-color: #009C3B;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+}
+
+h3 {
+    margin: 15px 0 10px 0;
+    color: #002776;
+}
+
+/* ===== TABELAS ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+th {
+    background-color: #002776;
+    color: #FFDF00;
+    padding: 8px;
+    font-size: 13px;
+}
+
+td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: #e6f5ec;
+    transition: 0.3s;
+}
+
+/* Destaque placar */
+strong {
+    color: #009C3B;
+    font-size: 15px;
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr;
+    }
+    .demo-form {
+        width: 90%;
+    }
+
+    table {
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Bolao Copa</title>
+        <meta name="description" content="Um bolao da Copa do Mundo de 2026">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header>
+            <h1>Bolão da Copa do Mundo</h1>
+            <p>Tente adivinhar o resultado dos jogos!</p>
+        </header>
+
+
+
+        <!-- LOGIN -->
+    <div class="demo-form" id="login-form">
+      <h3>🔑 Fazer Login</h3>
+      <label for="li-email">E-mail</label>
+      <input type="email" id="li-email" placeholder="seu@email.com"/>
+      <label for="li-senha">Senha</label>
+      <input type="password" id="li-senha" placeholder="Mínimo 6 caracteres"/>
+      <div class="error-msg" id="li-error"></div>
+      <button type="button" class="form-btn" onclick="fazerLogin()">Entrar</button>
+      <div class="success-msg" id="li-success">✅ Login realizado com sucesso!</div>
+      <span class="toggle-link">Não tem conta? <span onclick="showDemo('cadastro')">Cadastre-se</span></span>
+    </div>
+
+    <!-- CADASTRO -->
+    <div class="demo-form" id="cadastro-form" style="display:none">
+      <h3>✨ Criar Conta</h3>
+      <label for="ca-nome">Nome</label>
+      <input type="text" id="ca-nome" placeholder="Seu nome"/>
+      <label for="ca-email">E-mail</label>
+      <input type="email" id="ca-email" placeholder="seu@email.com"/>
+      <label for="ca-senha">Senha</label>
+      <input type="password" id="ca-senha" placeholder="Mínimo 6 caracteres"/>
+      <label for="ca-confirma">Confirmar senha</label>
+      <input type="password" id="ca-confirma" placeholder="Repita a senha"/>
+      <div class="error-msg" id="ca-error"></div>
+      <button type="button" class="form-btn" onclick="fazerCadastro()">Criar conta</button>
+      <div class="success-msg" id="ca-success">🎉 Conta criada! Agora faça login.</div>
+      <span class="toggle-link">Já tem conta? <span onclick="showDemo('login')">Fazer login</span></span>
+    </div>
+
+    <!--AREA LOGADA-->
+    <div id="area-logada" style="display:none; text-align:center; margin-top:30px;">
+  
+  <h2 id="boas-vindas"></h2>
+
+  <div class="bolao-area">
+    
+  </div>
+
+  <br>
+  <button class="form-btn" onclick="logout()">Sair</button>
+
+</div>
+
+        <main>
+            <section>
+                <h2>Grupo A</h2>
+                <h3>Jogos</h3>
+
+                <table border="1">
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                    </tr>
+
+                    <tr>
+                        <td>11/06</td>
+                        <td>México</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>África do Sul</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>11/06</td>
+                        <td>Coréia do Sul</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>?</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>18/06</td>
+                        <td>?</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>África do Sul</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>18/06</td>
+                        <td>México</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>Coréia do Sul</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>24/06</td>
+                        <td>África do Sul</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>Coréia do Sul</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>24/06</td>
+                        <td>?</td>
+                        <td><strong class="placar-oficial">0 x 0</strong></td>
+                        <td>México</td>
+                        <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                    <tr>
+                        <th>Seleções</th>
+                        <th>JG</th>
+                        <th>V</th>
+                        <th>E</th>
+                        <th>D</th>
+                        <th>GP</th>
+                        <th>GC</th>
+                        <th>SG</th>
+                        <th>PT</th>
+                    </tr>
+
+                    <tr>
+                        <td>México</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+
+                    <tr>
+                        <td>África do Sul</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+
+                    <tr>
+                        <td>Coréia do Sul</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+
+                    <tr>
+                        <td>?</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                        <td>0</td><td>0</td><td>0</td><td>0</td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h2>Grupo B</h2>
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th><th>Seleção</th><th>Resultado</th><th>Seleção</th><th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td><td>Canada</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+
+                <tr>
+                <td>13/06</td><td>Catar</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Suíça</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+
+                <tr>
+                <td>18/06</td><td>Suíça</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+
+                <tr>
+                <td>18/06</td><td>Canada</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Catar</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+
+                <tr>
+                <td>24/06</td><td>?</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Catar</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+
+                <tr>
+                <td>24/06</td><td>Suíça</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Canada</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;"><span class="palpite">Apostar</span></td>
+                </tr>
+                </table>
+
+                <h3>Classificação</h3>
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Canadá</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Catar</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Suíça</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>?</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+                </table>
+            </section>
+            <section>
+
+                <h2>Grupo C</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Marrocos</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Haiti</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Escócia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Haiti</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Marrocos</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Escócia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Escócia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Marrocos</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Haiti</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Brasil</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Marrocos</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Haiti</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Escócia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo D</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>EUA</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Paraguai</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Austrália</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>EUA</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Austrália</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Paraguai</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>EUA</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Paraguai</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Austrália</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>EUA</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Paraguai</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Austrália</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>?</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo E</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Curaçao</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Costa do Marfim</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Equador</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Costa do Marfim</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Curaçao</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Equador</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Equador</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Curaçao</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Costa do Marfim</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Alemanha</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Curaçao</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Costa do Marfim</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Equador</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo F</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Holanda</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Japão</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Tunísia</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Holanda</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Tunísia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Japão</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Holanda</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>?</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Japão</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Tunísia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Holanda</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Japão</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Tunísia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>?</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo G</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Bélgica</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Egito</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Irã</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Nova Zelândia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Bélgica</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Irã</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Egito</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Nova Zelândia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Bélgica</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Nova Zelândia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Egito</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Irã</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Bélgica</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Egito</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Irã</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Nova Zelândia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo H</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Sérvia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Suíça</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Camarões</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Suíça</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Sérvia</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Camarões</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Brasil</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Camarões</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Suíça</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Sérvia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Brasil</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Suíça</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Camarões</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Sérvia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo I</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Estados Unidos</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>México</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Coreia do Sul</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Marrocos</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Estados Unidos</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Coreia do Sul</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>México</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Marrocos</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Estados Unidos</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Marrocos</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>México</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Coreia do Sul</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Estados Unidos</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>México</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Coreia do Sul</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Marrocos</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo J</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>França</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Chile</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Nigéria</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Canadá</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>França</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Nigéria</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Chile</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Canadá</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>França</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Canadá</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Chile</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Nigéria</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>França</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Chile</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Nigéria</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Canadá</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo K</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Colômbia</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Costa Rica</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Gana</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Costa Rica</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Colômbia</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Gana</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Alemanha</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Gana</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Colômbia</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Costa Rica</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Alemanha</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Colômbia</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Costa Rica</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Gana</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+            <section>
+
+                <h2>Grupo L</h2>
+
+                <h3>Jogos</h3>
+
+                <table border="1">
+                <tr>
+                <th>Data</th>
+                <th>Seleção</th>
+                <th>Resultado</th>
+                <th>Seleção</th>
+                <th>Seu Palpite</th>
+                </tr>
+
+                <tr>
+                <td>12/06</td>
+                <td>Portugal</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Uruguai</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>13/06</td>
+                <td>Arábia Saudita</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Austrália</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Portugal</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Arábia Saudita</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>18/06</td>
+                <td>Uruguai</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Austrália</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Portugal</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Austrália</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                <tr>
+                <td>24/06</td>
+                <td>Uruguai</td>
+                <td><strong class="placar-oficial">0 x 0</strong></td>
+                <td>Arábia Saudita</td>
+                <td onclick="abrirAposta(this)" style="cursor:pointer;">
+                <span class="palpite">Apostar</span>
+                </td>
+                </tr>
+
+                </table>
+
+                <h3>Classificação</h3>
+
+                <table border="1">
+                <tr>
+                <th>Pos</th>
+                <th>Seleção</th>
+                <th>P</th>
+                <th>J</th>
+                <th>V</th>
+                <th>E</th>
+                <th>D</th>
+                <th>GP</th>
+                <th>GC</th>
+                <th>SG</th>
+                </tr>
+
+                <tr>
+                <td>1</td>
+                <td>Portugal</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>2</td>
+                <td>Uruguai</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>3</td>
+                <td>Arábia Saudita</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                <tr>
+                <td>4</td>
+                <td>Austrália</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                <td>0</td>
+                </tr>
+
+                </table>
+
+            </section>
+        </main>
+        <script src="script.js"></script>
+    </body>
+
+</html>
