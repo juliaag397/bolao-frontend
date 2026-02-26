@@ -184,6 +184,35 @@ function logout() {
     if (erro) erro.textContent = "";
 }
 
+    //ARTILHEIRO
+function salvarArtilheiro(tipo) {
+
+    const selectId = tipo === "geral"
+        ? "artilheiro-geral"
+        : "artilheiro-parcial";
+
+    const jogador = document.getElementById(selectId).value;
+
+    fetch("https://seu-backend/artilheiro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            usuario_id: usuarioId,
+            tipo: tipo,
+            jogador: jogador
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.erro) {
+            alert(data.erro);
+        } else {
+            alert("Salvo com sucesso!");
+        }
+    });
+}
     // PARA APOSTAR
 function abrirAposta(celula) {
 
