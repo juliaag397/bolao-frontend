@@ -281,7 +281,6 @@ function bloquearJogosPassados() {
             celula.style.backgroundColor = "#ccc";
             celula.style.cursor = "not-allowed";
             celula.innerHTML = "<span class='palpite'>Encerrado</span>";
-            celula.onclick = null;
             celula.dataset.encerrado = "true";
 
         }
@@ -290,3 +289,9 @@ function bloquearJogosPassados() {
 }
 
 bloquearJogosPassados();
+
+document.querySelectorAll("[data-jogo]").forEach(celula => {
+    celula.addEventListener("click", function () {
+        abrirAposta(this);
+    });
+});
