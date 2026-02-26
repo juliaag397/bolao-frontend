@@ -170,6 +170,7 @@ function logout() {
     celulas.forEach(celula => {
         celula.innerHTML = '<span class="palpite">Apostar</span>';
         celula.dataset.apostado = "false";
+        celula.onclick = function() { abrirAposta(this); };
     });
 
     // 👀 Mostra login novamente
