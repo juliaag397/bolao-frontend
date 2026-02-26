@@ -165,7 +165,7 @@ function logout() {
     usuarioLogado = false;
 
     // 🧹 Limpa todos os palpites
-    const celulas = document.querySelectorAll("[data-apostado='true']");
+    const celulas = document.querySelectorAll(".celula-aposta");
 
     celulas.forEach(celula => {
         celula.innerHTML = '<span class="palpite">Apostar</span>';
