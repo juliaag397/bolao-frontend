@@ -511,3 +511,4 @@ document.querySelectorAll("[data-jogo]").forEach(celula => {
     celula.addEventListener("click", function () {
         abrirAposta(this);
     });
+});
