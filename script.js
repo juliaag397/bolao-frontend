@@ -365,6 +365,32 @@ function toggleMenu() {
 
 
 // ARTILHEIRO
+
+function verificarLogin() {
+
+    fetch("/verificar-login", {
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (!data.logado) {
+
+            document.querySelectorAll("#artilheiros select").forEach(select => {
+                select.disabled = true;
+            });
+
+            document.querySelectorAll("#artilheiros button").forEach(btn => {
+                btn.disabled = true;
+            });
+
+        }
+
+    });
+}
+
+
+
 function verificarPeriodoArtilheiros() {
 
     const hoje = new Date();
@@ -452,31 +478,9 @@ function salvarAposta(tipo) {
 
 }
 
-function verificarLogin() {
-
-    fetch("/verificar-login", {
-        credentials: "include"
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        if (!data.logado) {
-
-            document.querySelectorAll("#artilheiros select").forEach(select => {
-                select.disabled = true;
-            });
-
-            document.querySelectorAll("#artilheiros button").forEach(btn => {
-                btn.disabled = true;
-            });
-
-        }
-
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     verificarPeriodoArtilheiros();
+    verificarLogin();
 });
 
 carregarApostas();
