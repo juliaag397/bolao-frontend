@@ -90,7 +90,6 @@
     <!-- CONTEÚDO -->
     <div class="conteudo">
 
-        <div id="grupos" class="area ativa">
         <div id="regras" class="area ativa">
             <h2>Bem-vindo ao Bolão Copa 2026 🇧🇷</h2>
             <p>Regras:</p>
@@ -2036,7 +2035,41 @@
         </div>
 
         <div id="artilheiro" class="area">
-            Área do Artilheiro
+            <h2>Artilheiros</h2>
+
+            <!-- PRIMEIRO PALPITE -->
+            <div id="aposta1" class="card-artilheiro">
+                <h3>Palpite Inicial (antes da Copa)</h3>
+
+                <select id="jogador1">
+                    <option value="">Selecione o jogador</option>
+                    <option value="Vini Jr">Vini Jr</option>
+                    <option value="Mbappé">Mbappé</option>
+                    <option value="Haaland">Haaland</option>
+                    <option value="Kane">Harry Kane</option>
+                    <option value="Messi">Messi</option>
+                </select>
+
+                <button onclick="salvarAposta(1)">Salvar Palpite</button>
+                <button onclick="salvarAposta('inicial')">Salvar Palpite</button>
+            </div>
+
+            <!-- SEGUNDO PALPITE -->
+            <div id="aposta2" class="card-artilheiro">
+                <h3>Palpite Pós-Fase de Grupos</h3>
+
+                <select id="jogador2">
+                    <option value="">Selecione o jogador</option>
+                    <option value="Vini Jr">Vini Jr</option>
+                    <option value="Mbappé">Mbappé</option>
+                    <option value="Haaland">Haaland</option>
+                    <option value="Kane">Harry Kane</option>
+                    <option value="Messi">Messi</option>
+                </select>
+
+                <button onclick="salvarAposta(2)">Salvar Palpite</button>
+                <button onclick="salvarAposta('pos_grupos')">Salvar Palpite</button>
+            </div>
         </div>
 
         <div id="brasil" class="area">
