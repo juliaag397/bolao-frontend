@@ -378,13 +378,29 @@ function verificarLogin() {
     .then(res => res.json())
     .then(data => {
 
-        if (!data.logado) {
+        if (data.logado) {
+
+            // 🔥 ATIVA LOGIN
+            usuarioLogado = true;
+            usuarioId = data.id;
+
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("area-logada").style.display = "block";
+
+            document.getElementById("boas-vindas").textContent =
+                "👋 Bem-vinda, " + data.nome;
+
+            carregarApostas();
+
+        } else {
+
+            usuarioLogado = false;
 
             const area = document.getElementById("artilheiro");
-
             if (area) {
                 area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
             }
+
         }
 
     });
@@ -506,7 +522,6 @@ document.addEventListener("DOMContentLoaded", function () {
     verificarLogin();
 });
 
-carregarApostas();
 bloquearJogosPassados();
 
 document.querySelectorAll("[data-jogo]").forEach(celula => {
