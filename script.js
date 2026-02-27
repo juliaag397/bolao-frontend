@@ -376,7 +376,7 @@ function carregarArtilheiros() {
         apostas.forEach(aposta => {
 
             const select = document.getElementById(
-                aposta.tipo == 1 ? "jogador1" : "jogador2"
+                aposta.tipo == "inicial" ? "jogador1" : "jogador2"
             );
 
             if (select) {
@@ -498,7 +498,7 @@ function salvarAposta(tipo) {
         },
         credentials: "include",
         body: JSON.stringify({
-            tipo: tipo,
+            tipo: tipo === 1 ? "inicial" : "pos_grupos",
             jogador: document.getElementById(
                 tipo === 1 ? "jogador1" : "jogador2"
             ).value
