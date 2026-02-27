@@ -320,6 +320,24 @@ function bloquearJogosPassados() {
     });
 }
 
+    // MENU
+function mostrarArea(areaId, event) {
+
+    // Esconde todas as áreas
+    const areas = document.querySelectorAll(".area");
+    areas.forEach(area => area.style.display = "none");
+
+    // Remove classe ativa dos botões
+    const botoes = document.querySelectorAll(".menu-lateral button");
+    botoes.forEach(btn => btn.classList.remove("ativo"));
+
+    // Mostra área selecionada
+    document.getElementById(areaId).style.display = "block";
+
+    // Ativa botão clicado
+    event.target.classList.add("ativo");
+}
+
 carregarApostas();
 bloquearJogosPassados();
 
