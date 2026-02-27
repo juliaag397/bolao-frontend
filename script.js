@@ -164,27 +164,22 @@ function fazerLogin() {
     // PARA SAIR
 function logout() {
 
-    // 🔒 Desativa login
-    usuarioLogado = false;
+    fetch("https://bolao-backend-k56l.onrender.com/logout", {
+        method: "POST",
+        credentials: "include"
+    })
+    .then(() => {
 
-    // 🧹 Limpa todos os palpites
-    const celulas = document.querySelectorAll("[data-jogo]");
+        usuarioLogado = false;
+        usuarioId = null;
 
-    celulas.forEach(celula => {
-        celula.innerHTML = '<span class="palpite">Apostar</span>';
-        celula.dataset.apostado = "false";
-        celula.onclick = function() { abrirAposta(this); };
+        document.getElementById("login-form").style.display = "block";
+        document.getElementById("area-logada").style.display = "none";
+
+        location.reload(); // 🔥 força atualizar estado
+
     });
 
-    // 👀 Mostra login novamente
-    document.getElementById("login-form").style.display = "block";
-
-    // 🙈 Esconde área logada
-    document.getElementById("area-logada").style.display = "none";
-
-    // ❌ Limpa mensagens de erro
-    const erro = document.getElementById("li-error");
-    if (erro) erro.textContent = "";
 }
 
     // PARA APOSTAR
