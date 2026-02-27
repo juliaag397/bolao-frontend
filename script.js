@@ -185,12 +185,6 @@ function logout() {
     // PARA APOSTAR
 function abrirAposta(celula) {
 
-    // 🚨 BLOQUEIA SE NÃO ESTIVER LOGADO
-    if (!usuarioLogado) {
-        alert("Você precisa estar logado para apostar!");
-        return;
-    }
-
     // Se já apostou, trava
     if (celula.dataset.apostado === "true" && celula.dataset.encerrado === "true") return;
 
@@ -237,7 +231,13 @@ function abrirAposta(celula) {
                 gols_fora: input2.value
             })
         })
-        .then(res => res.json())
+        .then(res => {
+            if (res.status === 401) {
+                alert("Sessão expirada. Faça login novamente.");
+                return;
+            }
+            return res.json();
+        })
         .then(data => {
 
             if (data.erro) {
@@ -504,7 +504,13 @@ function salvarAposta(tipo) {
             ).value
         })
     })
-    .then(res => res.json())
+    .then(res => {
+        if (res.status === 401) {
+            alert("Sessão expirada. Faça login novamente.");
+            return;
+        }
+        return res.json();
+    })
     .then(data => {
 
         if (data.erro) {
