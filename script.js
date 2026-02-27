@@ -325,30 +325,28 @@ function bloquearJogosPassados() {
 // Mostrar área selecionada
 function mostrarArea(areaId, event) {
 
-    // Esconde todas as áreas
-    const areas = document.querySelectorAll(".area");
-    areas.forEach(area => {
-        area.style.display = "none";
+    // Remove classe ativa de todas as áreas
+    document.querySelectorAll(".area").forEach(area => {
+        area.classList.remove("ativa");
     });
 
-    // Remove classe ativa de todos os botões
-    const botoes = document.querySelectorAll(".menu-lateral button");
-    botoes.forEach(btn => {
+    // Remove classe ativa dos botões
+    document.querySelectorAll(".menu-lateral button").forEach(btn => {
         btn.classList.remove("ativo");
     });
 
-    // Mostra a área escolhida
+    // Ativa a área selecionada
     const areaSelecionada = document.getElementById(areaId);
     if (areaSelecionada) {
-        areaSelecionada.style.display = "block";
+        areaSelecionada.classList.add("ativa");
     }
 
-    // Marca botão como ativo (se houver evento)
+    // Marca botão como ativo
     if (event && event.target) {
         event.target.classList.add("ativo");
     }
 
-    // Fecha o menu após selecionar (efeito app moderno)
+    // Fecha o menu
     const menu = document.getElementById("menu");
     if (menu) {
         menu.classList.remove("ativo");
