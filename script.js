@@ -128,7 +128,9 @@ function fazerLogin() {
         usuarioLogado = true; // ✅ ATIVA LOGIN
         usuarioId = data.id;
 
-        fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`)
+        fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
+            credentials: "include"
+        })
             .then(res => res.json())
             .then(apostas => {
 
@@ -445,7 +447,7 @@ function verificarPeriodoArtilheiros() {
 function salvarAposta(tipo) {
 
     // 🔐 Primeiro verifica se está logado
-    fetch("/verificar-login", {
+    fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
         credentials: "include"
     })
     .then(res => res.json())
