@@ -199,43 +199,56 @@ strong {
     }
 }
 
-/* ===== LAYOUT COM MENU LATERAL ===== */
+/* ===== BOTÃO HAMBURGUER ===== */
 
-.container {
-    display: flex;
-    width: 95%;
-    margin: 30px auto;
-    gap: 25px;
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 35px;
+    cursor: pointer;
+    z-index: 1100;
 }
 
-/* ===== MENU LATERAL ===== */
+.menu-toggle div {
+    height: 4px;
+    background-color: #FFDF00;
+    margin: 6px 0;
+    border-radius: 3px;
+    transition: 0.3s ease;
+}
+
+
+/* ===== MENU LATERAL RETRÁTIL ===== */
 
 .menu-lateral {
-    width: 220px;
+    position: fixed;
+    top: 0;
+    left: -260px; /* escondido fora da tela */
+    width: 250px;
+    height: 100vh;
     background: linear-gradient(180deg, #002776, #009C3B);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    padding: 80px 20px 20px 20px;
+    box-shadow: 5px 0 20px rgba(0,0,0,0.4);
+    transition: left 0.4s ease;
     display: flex;
     flex-direction: column;
-    height: fit-content;
+    z-index: 1050;
 }
 
-.menu-lateral h3 {
-    color: #FFDF00;
-    text-align: center;
-    margin-bottom: 15px;
-    font-size: 16px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+/* Quando estiver ativo */
+.menu-lateral.ativo {
+    left: 0;
 }
+
+/* Botões do menu */
 
 .menu-lateral button {
     background-color: #FFDF00;
     color: #002776;
     border: none;
-    padding: 10px;
-    margin-bottom: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
@@ -252,17 +265,22 @@ strong {
     color: white;
 }
 
-/* ===== CONTEÚDO AO LADO DO MENU ===== */
+
+/* ===== CONTEÚDO PRINCIPAL ===== */
 
 .conteudo {
-    flex: 1;
+    width: 90%;
+    margin: 100px auto 40px auto; /* espaço para o botão */
 }
 
-/* Cada aba */
+
+/* ===== ÁREAS (ABAS) ===== */
+
 .area {
     display: none;
     animation: fadeIn 0.3s ease-in-out;
 }
+
 
 /* ===== ANIMAÇÃO SUAVE ===== */
 
@@ -277,23 +295,18 @@ strong {
     }
 }
 
-/* ===== RESPONSIVO PARA MENU ===== */
 
-@media (max-width: 900px) {
+/* ===== RESPONSIVO ===== */
 
-    .container {
-        flex-direction: column;
-    }
+@media (max-width: 768px) {
 
     .menu-lateral {
-        width: 100%;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
+        width: 220px;
+        left: -230px;
     }
 
-    .menu-lateral button {
-        margin: 5px;
-        flex: 1 1 45%;
+    .conteudo {
+        width: 95%;
+        margin-top: 90px;
     }
 }

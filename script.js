@@ -320,22 +320,48 @@ function bloquearJogosPassados() {
     });
 }
 
-    // MENU
+// ===== MENU RETRÁTIL =====
+
+// Mostrar área selecionada
 function mostrarArea(areaId, event) {
 
     // Esconde todas as áreas
     const areas = document.querySelectorAll(".area");
-    areas.forEach(area => area.style.display = "none");
+    areas.forEach(area => {
+        area.style.display = "none";
+    });
 
-    // Remove classe ativa dos botões
+    // Remove classe ativa de todos os botões
     const botoes = document.querySelectorAll(".menu-lateral button");
-    botoes.forEach(btn => btn.classList.remove("ativo"));
+    botoes.forEach(btn => {
+        btn.classList.remove("ativo");
+    });
 
-    // Mostra área selecionada
-    document.getElementById(areaId).style.display = "block";
+    // Mostra a área escolhida
+    const areaSelecionada = document.getElementById(areaId);
+    if (areaSelecionada) {
+        areaSelecionada.style.display = "block";
+    }
 
-    // Ativa botão clicado
-    event.target.classList.add("ativo");
+    // Marca botão como ativo (se houver evento)
+    if (event && event.target) {
+        event.target.classList.add("ativo");
+    }
+
+    // Fecha o menu após selecionar (efeito app moderno)
+    const menu = document.getElementById("menu");
+    if (menu) {
+        menu.classList.remove("ativo");
+    }
+}
+
+
+// Abrir / Fechar menu lateral
+function toggleMenu() {
+    const menu = document.getElementById("menu");
+    if (menu) {
+        menu.classList.toggle("ativo");
+    }
 }
 
 carregarApostas();

@@ -60,41 +60,56 @@
 
     <div class="container">
 
-        <!-- MENU LATERAL -->
-        <div class="menu-lateral">
-            <button onclick="mostrarArea('grupos', event)">Fase de Grupos</button>
-            <button onclick="mostrarArea('mata')">Mata-Mata</button>
-            <button onclick="mostrarArea('artilheiro')">Artilheiro</button>
-            <button onclick="mostrarArea('brasil')">Brasil</button>
-            <button onclick="mostrarArea('grupos-info')">Grupos</button>
-            <button onclick="mostrarArea('geral')">Geral</button>
+    <!-- BOTÃO HAMBURGUER -->
+    <div class="menu-toggle" onclick="toggleMenu()">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <!-- MENU LATERAL RETRÁTIL -->
+    <nav class="menu-lateral" id="menu">
+
+        <button onclick="mostrarArea('grupos', event)">Fase de Grupos</button>
+
+        <button onclick="mostrarArea('mata', event)">Mata-Mata</button>
+
+        <button onclick="mostrarArea('artilheiro', event)">Artilheiro</button>
+
+        <button onclick="mostrarArea('brasil', event)">Brasil</button>
+
+        <button onclick="mostrarArea('grupos-info', event)">Grupos</button>
+
+        <button onclick="mostrarArea('geral', event)">Geral</button>
+
+    </nav>
+
+
+    <!-- CONTEÚDO -->
+    <div class="conteudo">
+
+        <div id="grupos" class="area">
+            Conteúdo da Fase de Grupos
         </div>
 
-        <!-- CONTEÚDO -->
-        <div class="conteudo">
+        <div id="mata" class="area">
+            Conteúdo do Mata-Mata
+        </div>
 
-            <div id="grupos" class="area">Conteúdo da Fase de Grupos</div>
+        <div id="artilheiro" class="area">
+            Área do Artilheiro
+        </div>
 
-            <div id="mata" class="area" style="display:none;">
-                Conteúdo do Mata-Mata
-            </div>
+        <div id="brasil" class="area">
+            Jogos do Brasil
+        </div>
 
-            <div id="artilheiro" class="area" style="display:none;">
-                Área do Artilheiro
-            </div>
+        <div id="grupos-info" class="area">
+            Informações dos Grupos
+        </div>
 
-            <div id="brasil" class="area" style="display:none;">
-                Jogos do Brasil
-            </div>
-
-            <div id="grupos-info" class="area" style="display:none;">
-                Informações dos Grupos
-            </div>
-
-            <div id="geral" class="area" style="display:none;">
-                Classificação Geral
-            </div>
-
+        <div id="geral" class="area">
+            Classificação Geral
         </div>
 
     </div>
