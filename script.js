@@ -420,8 +420,10 @@ function verificarLogin() {
             }
 
             carregarApostas();
-            carregarArtilheiros();
 
+            setTimeout(() => {
+                carregarArtilheiros();
+            }, 200);
         } else {
 
             usuarioLogado = false;
