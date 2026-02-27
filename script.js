@@ -369,7 +369,6 @@ function verificarPeriodoArtilheiros() {
 
     const hoje = new Date();
 
-    // 🔥 DEFINA AS DATAS OFICIAIS AQUI
     const inicioCopa = new Date("2026-06-11");
     const fimFaseGrupos = new Date("2026-06-25");
     const inicioMataMata = new Date("2026-06-28");
@@ -377,18 +376,42 @@ function verificarPeriodoArtilheiros() {
     const aposta1 = document.getElementById("aposta1");
     const aposta2 = document.getElementById("aposta2");
 
-    // 🥇 APOSTA 1 - só antes da copa
+    if (!aposta1 || !aposta2) return;
+
+    // 🥇 APOSTA 1
     if (hoje >= inicioCopa) {
-        aposta1.innerHTML += "<p style='color:red;'>Apostas encerradas</p>";
-        aposta1.querySelector("select").disabled = true;
-        aposta1.querySelector("button").disabled = true;
+
+        const select1 = aposta1.querySelector("select");
+        const botao1 = aposta1.querySelector("button");
+
+        if (select1) select1.disabled = true;
+        if (botao1) botao1.disabled = true;
+
+        if (!aposta1.querySelector(".mensagem-bloqueio")) {
+            const msg = document.createElement("p");
+            msg.className = "mensagem-bloqueio";
+            msg.style.color = "red";
+            msg.textContent = "Apostas encerradas.";
+            aposta1.appendChild(msg);
+        }
     }
 
-    // 🥈 APOSTA 2 - só depois da fase de grupos
+    // 🥈 APOSTA 2
     if (hoje < fimFaseGrupos || hoje >= inicioMataMata) {
-        aposta2.innerHTML += "<p style='color:red;'>Apostas indisponíveis neste período</p>";
-        aposta2.querySelector("select").disabled = true;
-        aposta2.querySelector("button").disabled = true;
+
+        const select2 = aposta2.querySelector("select");
+        const botao2 = aposta2.querySelector("button");
+
+        if (select2) select2.disabled = true;
+        if (botao2) botao2.disabled = true;
+
+        if (!aposta2.querySelector(".mensagem-bloqueio")) {
+            const msg = document.createElement("p");
+            msg.className = "mensagem-bloqueio";
+            msg.style.color = "red";
+            msg.textContent = "Apostas indisponíveis neste período.";
+            aposta2.appendChild(msg);
+        }
     }
 
 }
@@ -409,9 +432,8 @@ function salvarAposta(tipo) {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            usuarioId: 1, // você pega da sessão depois
-            tipoAposta: tipo,
-            jogador: jogador
+            tipo: tipo,          // agora chama "tipo"
+            jogador: jogador     // permanece igual
         })
     })
     .then(res => res.json())
@@ -421,6 +443,10 @@ function salvarAposta(tipo) {
         } else {
             alert("Aposta salva com sucesso!");
         }
+    })
+    .catch(err => {
+        console.error(err);
+        alert("Erro ao salvar aposta.");
     });
 
 }
