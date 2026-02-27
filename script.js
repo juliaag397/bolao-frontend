@@ -109,6 +109,7 @@ function fazerLogin() {
         headers: {
             "Content-Type": "application/json"
         },
+        credentials: "include", // 🔥 OBRIGATÓRIO
         body: JSON.stringify({
             email: email,
             senha: senha
@@ -231,8 +232,8 @@ function abrirAposta(celula) {
             headers: {
                 "Content-Type": "application/json"
             },
+            credentials: "include",
             body: JSON.stringify({
-                usuario_id: usuarioId,
                 jogo: celula.dataset.jogo,
                 gols_casa: input1.value,
                 gols_fora: input2.value
@@ -368,7 +369,7 @@ function toggleMenu() {
 
 function verificarLogin() {
 
-    fetch("/verificar-login", {
+    fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
         credentials: "include"
     })
     .then(res => res.json())
@@ -463,7 +464,7 @@ function salvarAposta(tipo) {
             return;
         }
 
-        return fetch("/salvar-artilheiro", {
+        return fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
