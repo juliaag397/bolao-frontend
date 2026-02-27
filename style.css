@@ -325,3 +325,28 @@ strong {
         margin-top: 90px;
     }
 }
+
+
+/* =============ARTILHEIRO -----------*/
+.card-artilheiro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.card-artilheiro select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+.card-artilheiro button {
+    background-color: #009C3B;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}

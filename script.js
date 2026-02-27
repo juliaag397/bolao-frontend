@@ -363,6 +363,68 @@ function toggleMenu() {
     toggle.classList.toggle("ativo");
 }
 
+
+// ARTILHEIRO
+function verificarPeriodoArtilheiros() {
+
+    const hoje = new Date();
+
+    // 🔥 DEFINA AS DATAS OFICIAIS AQUI
+    const inicioCopa = new Date("2026-06-11");
+    const fimFaseGrupos = new Date("2026-06-25");
+    const inicioMataMata = new Date("2026-06-28");
+
+    const aposta1 = document.getElementById("aposta1");
+    const aposta2 = document.getElementById("aposta2");
+
+    // 🥇 APOSTA 1 - só antes da copa
+    if (hoje >= inicioCopa) {
+        aposta1.innerHTML += "<p style='color:red;'>Apostas encerradas</p>";
+        aposta1.querySelector("select").disabled = true;
+        aposta1.querySelector("button").disabled = true;
+    }
+
+    // 🥈 APOSTA 2 - só depois da fase de grupos
+    if (hoje < fimFaseGrupos || hoje >= inicioMataMata) {
+        aposta2.innerHTML += "<p style='color:red;'>Apostas indisponíveis neste período</p>";
+        aposta2.querySelector("select").disabled = true;
+        aposta2.querySelector("button").disabled = true;
+    }
+
+}
+
+// SALVAR ARTILHEIRO
+function salvarAposta(tipo) {
+
+    const jogador = document.getElementById("jogador" + tipo).value;
+
+    if (!jogador) {
+        alert("Selecione um jogador!");
+        return;
+    }
+
+    fetch("/salvar-artilheiro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            usuarioId: 1, // você pega da sessão depois
+            tipoAposta: tipo,
+            jogador: jogador
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.erro) {
+            alert(data.erro);
+        } else {
+            alert("Aposta salva com sucesso!");
+        }
+    });
+
+}
+
 carregarApostas();
 bloquearJogosPassados();
 
