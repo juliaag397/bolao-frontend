@@ -325,27 +325,38 @@ function bloquearJogosPassados() {
 // Mostrar área selecionada
 function mostrarArea(areaId, event) {
 
+    // Esconde todas as áreas
+    const areas = document.querySelectorAll(".area");
+    areas.forEach(area => {
+        area.style.display = "none";
     // Remove classe ativa de todas as áreas
     document.querySelectorAll(".area").forEach(area => {
         area.classList.remove("ativa");
     });
 
+    // Remove classe ativa de todos os botões
+    const botoes = document.querySelectorAll(".menu-lateral button");
+    botoes.forEach(btn => {
     // Remove classe ativa dos botões
     document.querySelectorAll(".menu-lateral button").forEach(btn => {
         btn.classList.remove("ativo");
     });
 
+    // Mostra a área escolhida
     // Ativa a área selecionada
     const areaSelecionada = document.getElementById(areaId);
     if (areaSelecionada) {
+        areaSelecionada.style.display = "block";
         areaSelecionada.classList.add("ativa");
     }
 
+    // Marca botão como ativo (se houver evento)
     // Marca botão como ativo
     if (event && event.target) {
         event.target.classList.add("ativo");
     }
 
+    // Fecha o menu após selecionar (efeito app moderno)
     // Fecha o menu
     const menu = document.getElementById("menu");
     if (menu) {
@@ -361,68 +372,6 @@ function toggleMenu() {
 
     menu.classList.toggle("ativo");
     toggle.classList.toggle("ativo");
-}
-
-
-// ARTILHEIRO
-function verificarPeriodoArtilheiros() {
-
-    const hoje = new Date();
-
-    // 🔥 DEFINA AS DATAS OFICIAIS AQUI
-    const inicioCopa = new Date("2026-06-11");
-    const fimFaseGrupos = new Date("2026-06-25");
-    const inicioMataMata = new Date("2026-06-28");
-
-    const aposta1 = document.getElementById("aposta1");
-    const aposta2 = document.getElementById("aposta2");
-
-    // 🥇 APOSTA 1 - só antes da copa
-    if (hoje >= inicioCopa) {
-        aposta1.innerHTML += "<p style='color:red;'>Apostas encerradas</p>";
-        aposta1.querySelector("select").disabled = true;
-        aposta1.querySelector("button").disabled = true;
-    }
-
-    // 🥈 APOSTA 2 - só depois da fase de grupos
-    if (hoje < fimFaseGrupos || hoje >= inicioMataMata) {
-        aposta2.innerHTML += "<p style='color:red;'>Apostas indisponíveis neste período</p>";
-        aposta2.querySelector("select").disabled = true;
-        aposta2.querySelector("button").disabled = true;
-    }
-
-}
-
-// SALVAR ARTILHEIRO
-function salvarAposta(tipo) {
-
-    const jogador = document.getElementById("jogador" + tipo).value;
-
-    if (!jogador) {
-        alert("Selecione um jogador!");
-        return;
-    }
-
-    fetch("/salvar-artilheiro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            usuarioId: 1, // você pega da sessão depois
-            tipoAposta: tipo,
-            jogador: jogador
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        if (data.erro) {
-            alert(data.erro);
-        } else {
-            alert("Aposta salva com sucesso!");
-        }
-    });
-
 }
 
 carregarApostas();
