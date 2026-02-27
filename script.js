@@ -426,9 +426,9 @@ function verificarLogin() {
 
             usuarioLogado = false;
 
-            if (area) {
-                area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
-            }
+            document.getElementById("area-logada").style.display = "none";
+            document.getElementById("login-form").style.display = "block";
+
         }
 
     });
