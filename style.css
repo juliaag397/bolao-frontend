@@ -117,11 +117,6 @@ header p {
 /* ===== SEÇÃO DOS GRUPOS ===== */
 /* ===== GRID SOMENTE NA FASE DE GRUPOS ===== */
 
-#grupos {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
-}
 
 section {
     background: white;
