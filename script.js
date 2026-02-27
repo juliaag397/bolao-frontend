@@ -124,6 +124,10 @@ function fazerLogin() {
             return;
         }
 
+        if (data.sucesso) {
+        verificarLogin();
+        }
+
         // 🔥 LOGIN DEU CERTO
         usuarioLogado = true; // ✅ ATIVA LOGIN
         usuarioId = data.id;
