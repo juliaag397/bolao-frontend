@@ -376,7 +376,7 @@ function verificarLogin() {
 
         if (!data.logado) {
 
-            const area = document.getElementById("artilheiros");
+            const area = document.getElementById("artilheiro");
 
             if (area) {
                 area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
@@ -454,7 +454,9 @@ function salvarAposta(tipo) {
             return;
         }
 
-        const jogador = document.getElementById("jogador" + tipo).value;
+        const jogador = document.getElementById(
+            tipo === "inicial" ? "jogador1" : "jogador2"
+        ).value;
 
         if (!jogador) {
             alert("Selecione um jogador!");
