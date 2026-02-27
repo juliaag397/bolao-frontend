@@ -1,4 +1,4 @@
-let usuarioLogado = false;
+
 let usuarioId = null;
 
 // ===============================
