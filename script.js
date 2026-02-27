@@ -397,9 +397,10 @@ function verificarLogin() {
     .then(res => res.json())
     .then(data => {
 
+        const area = document.getElementById("artilheiro");
+
         if (data.logado) {
 
-            // 🔥 ATIVA LOGIN
             usuarioLogado = true;
             usuarioId = data.id;
 
@@ -409,6 +410,15 @@ function verificarLogin() {
             document.getElementById("boas-vindas").textContent =
                 "👋 Bem-vinda, " + data.nome;
 
+            // 🔥 REMOVE MENSAGEM VERMELHA
+            if (area) {
+                area.querySelectorAll("p").forEach(p => {
+                    if (p.style.color === "red") {
+                        p.remove();
+                    }
+                });
+            }
+
             carregarApostas();
             carregarArtilheiros();
 
@@ -416,16 +426,13 @@ function verificarLogin() {
 
             usuarioLogado = false;
 
-            const area = document.getElementById("artilheiro");
             if (area) {
                 area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
             }
-
         }
 
     });
 }
-
 
 
 function verificarPeriodoArtilheiros() {
