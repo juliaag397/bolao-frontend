@@ -359,9 +359,10 @@ function mostrarArea(areaId, event) {
 // Abrir / Fechar menu lateral
 function toggleMenu() {
     const menu = document.getElementById("menu");
-    if (menu) {
-        menu.classList.toggle("ativo");
-    }
+    const toggle = document.querySelector(".menu-toggle");
+
+    menu.classList.toggle("ativo");
+    toggle.classList.toggle("ativo");
 }
 
 carregarApostas();
