@@ -367,6 +367,8 @@ function toggleMenu() {
 
 function carregarArtilheiros() {
 
+    console.log("CARREGAR ARTILHEIROS FOI CHAMADO");
+
     fetch("https://bolao-backend-k56l.onrender.com/artilheiros", {
         credentials: "include"
     })
