@@ -109,7 +109,6 @@ function fazerLogin() {
         headers: {
             "Content-Type": "application/json"
         },
-        credentials: "include", // 🔥 OBRIGATÓRIO
         body: JSON.stringify({
             email: email,
             senha: senha
@@ -232,8 +231,8 @@ function abrirAposta(celula) {
             headers: {
                 "Content-Type": "application/json"
             },
-            credentials: "include",
             body: JSON.stringify({
+                usuario_id: usuarioId,
                 jogo: celula.dataset.jogo,
                 gols_casa: input1.value,
                 gols_fora: input2.value
@@ -366,33 +365,11 @@ function toggleMenu() {
 
 
 // ARTILHEIRO
-
-function verificarLogin() {
-
-    fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
-        credentials: "include"
-    })
-    .then(res => res.json())
-    .then(data => {
-
-        if (!data.logado) {
-
-            const area = document.getElementById("artilheiro");
-
-            if (area) {
-                area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
-            }
-        }
-
-    });
-}
-
-
-
 function verificarPeriodoArtilheiros() {
 
     const hoje = new Date();
 
+    // 🔥 DEFINA AS DATAS OFICIAIS AQUI
     const inicioCopa = new Date("2026-06-11");
     const fimFaseGrupos = new Date("2026-06-25");
     const inicioMataMata = new Date("2026-06-28");
@@ -400,42 +377,18 @@ function verificarPeriodoArtilheiros() {
     const aposta1 = document.getElementById("aposta1");
     const aposta2 = document.getElementById("aposta2");
 
-    if (!aposta1 || !aposta2) return;
-
-    // 🥇 APOSTA 1
+    // 🥇 APOSTA 1 - só antes da copa
     if (hoje >= inicioCopa) {
-
-        const select1 = aposta1.querySelector("select");
-        const botao1 = aposta1.querySelector("button");
-
-        if (select1) select1.disabled = true;
-        if (botao1) botao1.disabled = true;
-
-        if (!aposta1.querySelector(".mensagem-bloqueio")) {
-            const msg = document.createElement("p");
-            msg.className = "mensagem-bloqueio";
-            msg.style.color = "red";
-            msg.textContent = "Apostas encerradas.";
-            aposta1.appendChild(msg);
-        }
+        aposta1.innerHTML += "<p style='color:red;'>Apostas encerradas</p>";
+        aposta1.querySelector("select").disabled = true;
+        aposta1.querySelector("button").disabled = true;
     }
 
-    // 🥈 APOSTA 2
+    // 🥈 APOSTA 2 - só depois da fase de grupos
     if (hoje < fimFaseGrupos || hoje >= inicioMataMata) {
-
-        const select2 = aposta2.querySelector("select");
-        const botao2 = aposta2.querySelector("button");
-
-        if (select2) select2.disabled = true;
-        if (botao2) botao2.disabled = true;
-
-        if (!aposta2.querySelector(".mensagem-bloqueio")) {
-            const msg = document.createElement("p");
-            msg.className = "mensagem-bloqueio";
-            msg.style.color = "red";
-            msg.textContent = "Apostas indisponíveis neste período.";
-            aposta2.appendChild(msg);
-        }
+        aposta2.innerHTML += "<p style='color:red;'>Apostas indisponíveis neste período</p>";
+        aposta2.querySelector("select").disabled = true;
+        aposta2.querySelector("button").disabled = true;
     }
 
 }
@@ -443,65 +396,34 @@ function verificarPeriodoArtilheiros() {
 // SALVAR ARTILHEIRO
 function salvarAposta(tipo) {
 
-    // 🔐 Primeiro verifica se está logado
-    fetch("/verificar-login", {
-        credentials: "include"
+    const jogador = document.getElementById("jogador" + tipo).value;
+
+    if (!jogador) {
+        alert("Selecione um jogador!");
+        return;
+    }
+
+    fetch("/salvar-artilheiro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            usuarioId: 1, // você pega da sessão depois
+            tipoAposta: tipo,
+            jogador: jogador
+        })
     })
     .then(res => res.json())
-    .then(login => {
-
-        if (!login.logado) {
-            alert("Você precisa estar logada para apostar.");
-            return;
-        }
-
-        const jogador = document.getElementById(
-            tipo === "inicial" ? "jogador1" : "jogador2"
-        ).value;
-
-        if (!jogador) {
-            alert("Selecione um jogador!");
-            return;
-        }
-
-        return fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                tipo: tipo,
-                jogador: jogador
-            })
-        });
-
-    })
-    .then(res => {
-        if (!res) return;
-        return res.json();
-    })
     .then(data => {
-
-        if (!data) return;
-
         if (data.erro) {
             alert(data.erro);
         } else {
             alert("Aposta salva com sucesso!");
         }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Erro ao salvar aposta.");
     });
 
 }
-
-document.addEventListener("DOMContentLoaded", function () {
-    verificarPeriodoArtilheiros();
-    verificarLogin();
-});
 
 carregarApostas();
 bloquearJogosPassados();
@@ -510,4 +432,3 @@ document.querySelectorAll("[data-jogo]").forEach(celula => {
     celula.addEventListener("click", function () {
         abrirAposta(this);
     });
-});
