@@ -431,6 +431,7 @@ function salvarAposta(tipo) {
         headers: {
             "Content-Type": "application/json"
         },
+        credentials: "include",
         body: JSON.stringify({
             tipo: tipo,          // agora chama "tipo"
             jogador: jogador     // permanece igual
@@ -450,6 +451,33 @@ function salvarAposta(tipo) {
     });
 
 }
+
+function verificarLogin() {
+
+    fetch("/verificar-login", {
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        if (!data.logado) {
+
+            document.querySelectorAll("#artilheiros select").forEach(select => {
+                select.disabled = true;
+            });
+
+            document.querySelectorAll("#artilheiros button").forEach(btn => {
+                btn.disabled = true;
+            });
+
+        }
+
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    verificarPeriodoArtilheiros();
+});
 
 carregarApostas();
 bloquearJogosPassados();
