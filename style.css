@@ -115,11 +115,9 @@ header p {
 }
 
 /* ===== SEÇÃO DOS GRUPOS ===== */
+/* ===== GRID SOMENTE NA FASE DE GRUPOS ===== */
 
-main {
-    width: 90%;
-    margin: 40px auto;
-
+#grupos {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 25px;
@@ -185,11 +183,12 @@ strong {
 }
 
 /* ===== RESPONSIVO ===== */
-
 @media (max-width: 768px) {
-    main {
+
+    #grupos {
         grid-template-columns: 1fr;
     }
+
     .demo-form {
         width: 90%;
     }
@@ -197,7 +196,9 @@ strong {
     table {
         font-size: 12px;
     }
+
 }
+
 
 /* ===== BOTÃO HAMBURGUER ===== */
 
