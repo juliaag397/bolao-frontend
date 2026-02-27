@@ -365,6 +365,30 @@ function toggleMenu() {
 
 // ARTILHEIRO
 
+function carregarArtilheiros() {
+
+    fetch("https://bolao-backend-k56l.onrender.com/artilheiros", {
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(apostas => {
+
+        apostas.forEach(aposta => {
+
+            const select = document.getElementById(
+                aposta.tipo == 1 ? "jogador1" : "jogador2"
+            );
+
+            if (select) {
+                select.value = aposta.jogador;
+            }
+
+        });
+
+    });
+
+}
+
 function verificarLogin() {
 
     fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
@@ -386,6 +410,7 @@ function verificarLogin() {
                 "👋 Bem-vinda, " + data.nome;
 
             carregarApostas();
+            carregarArtilheiros();
 
         } else {
 
@@ -454,60 +479,37 @@ function verificarPeriodoArtilheiros() {
 
 }
 
+
+
 // SALVAR ARTILHEIRO
 function salvarAposta(tipo) {
 
-    // 🔐 Primeiro verifica se está logado
-    fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
-        credentials: "include"
+    fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+            tipo: tipo,
+            jogador: document.getElementById(
+                tipo === 1 ? "jogador1" : "jogador2"
+            ).value
+        })
     })
     .then(res => res.json())
-    .then(login => {
-
-        if (!login.logado) {
-            alert("Você precisa estar logada para apostar.");
-            return;
-        }
-
-        const jogador = document.getElementById(
-            tipo === 1 ? "jogador1" : "jogador2"
-        ).value;
-
-        if (!jogador) {
-            alert("Selecione um jogador!");
-            return;
-        }
-
-        return fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                tipo: tipo,
-                jogador: jogador
-            })
-        });
-
-    })
-    .then(res => {
-        if (!res) return;
-        return res.json();
-    })
     .then(data => {
 
-        if (!data) return;
-
         if (data.erro) {
-            alert(data.erro);
-        } else {
-            alert("Aposta salva com sucesso!");
+            alert("Erro ao salvar aposta");
+            return;
         }
+
+        alert("Aposta salva com sucesso!");
+
     })
-    .catch(err => {
-        console.error(err);
-        alert("Erro ao salvar aposta.");
+    .catch(() => {
+        alert("Erro ao conectar com servidor");
     });
 
 }
