@@ -370,7 +370,6 @@ function toggleMenu() {
 
 function verificarLogin() {
 
-    fetch("/verificar-login", {
     fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
         credentials: "include"
     })
@@ -458,7 +457,7 @@ function salvarAposta(tipo) {
         }
 
         const jogador = document.getElementById(
-            tipo === "inicial" ? "jogador1" : "jogador2"
+            tipo === 1 ? "jogador1" : "jogador2"
         ).value;
 
         if (!jogador) {
@@ -466,7 +465,6 @@ function salvarAposta(tipo) {
             return;
         }
 
-        return fetch("/salvar-artilheiro", {
         return fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
             method: "POST",
             headers: {
