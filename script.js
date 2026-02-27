@@ -376,14 +376,11 @@ function verificarLogin() {
 
         if (!data.logado) {
 
-            document.querySelectorAll("#artilheiros select").forEach(select => {
-                select.disabled = true;
-            });
+            const area = document.getElementById("artilheiros");
 
-            document.querySelectorAll("#artilheiros button").forEach(btn => {
-                btn.disabled = true;
-            });
-
+            if (area) {
+                area.innerHTML = "<p style='color:red;'>Faça login para apostar.</p>";
+            }
         }
 
     });
@@ -445,26 +442,46 @@ function verificarPeriodoArtilheiros() {
 // SALVAR ARTILHEIRO
 function salvarAposta(tipo) {
 
-    const jogador = document.getElementById("jogador" + tipo).value;
-
-    if (!jogador) {
-        alert("Selecione um jogador!");
-        return;
-    }
-
-    fetch("/salvar-artilheiro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        credentials: "include",
-        body: JSON.stringify({
-            tipo: tipo,          // agora chama "tipo"
-            jogador: jogador     // permanece igual
-        })
+    // 🔐 Primeiro verifica se está logado
+    fetch("/verificar-login", {
+        credentials: "include"
     })
     .then(res => res.json())
+    .then(login => {
+
+        if (!login.logado) {
+            alert("Você precisa estar logada para apostar.");
+            return;
+        }
+
+        const jogador = document.getElementById("jogador" + tipo).value;
+
+        if (!jogador) {
+            alert("Selecione um jogador!");
+            return;
+        }
+
+        return fetch("/salvar-artilheiro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+            body: JSON.stringify({
+                tipo: tipo,
+                jogador: jogador
+            })
+        });
+
+    })
+    .then(res => {
+        if (!res) return;
+        return res.json();
+    })
     .then(data => {
+
+        if (!data) return;
+
         if (data.erro) {
             alert(data.erro);
         } else {
