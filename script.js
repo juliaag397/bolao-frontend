@@ -550,7 +550,7 @@ async function calcularPontuacao() {
         return;
     }
 
-    await fetch(`/calcular-pontos/${usuarioId}`, {
+    await fetch(`https://bolao-backend-k56l.onrender.com/calcular-pontos/${usuarioId}`, {
         method: "POST",
         credentials: "include"
     });
@@ -563,7 +563,7 @@ async function carregarPontosPorJogo() {
 
     if (!usuarioId) return;
 
-    const resposta = await fetch(`/apostas/${usuarioId}`, {
+    const resposta = await fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
         credentials: "include"
     });
 
