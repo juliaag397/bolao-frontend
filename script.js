@@ -396,51 +396,46 @@ function carregarArtilheiros() {
 
 }
 
-function verificarLogin() {
+async function verificarLogin() {
 
-    fetch("https://bolao-backend-k56l.onrender.com/verificar-login", {
-        credentials: "include"
-    })
-    .then(res => res.json())
-    .then(data => {
+    const res = await fetch(
+        "https://bolao-backend-k56l.onrender.com/verificar-login",
+        { credentials: "include" }
+    );
 
-        const area = document.getElementById("artilheiro");
+    const data = await res.json();
 
-        if (data.logado) {
+    const area = document.getElementById("artilheiro");
 
-            usuarioLogado = true;
-            usuarioId = data.id;
+    if (data.logado) {
 
-            document.getElementById("login-form").style.display = "none";
-            document.getElementById("area-logada").style.display = "block";
+        usuarioLogado = true;
+        usuarioId = data.id;
 
-            document.getElementById("boas-vindas").textContent =
-                "👋 Bem-vinda, " + data.nome;
+        document.getElementById("login-form").style.display = "none";
+        document.getElementById("area-logada").style.display = "block";
 
-            // 🔥 REMOVE MENSAGEM VERMELHA
-            if (area) {
-                area.querySelectorAll("p").forEach(p => {
-                    if (p.style.color === "red") {
-                        p.remove();
-                    }
-                });
-            }
+        document.getElementById("boas-vindas").textContent =
+            "👋 Bem-vinda, " + data.nome;
 
-            carregarApostas();
-
-            setTimeout(() => {
-                carregarArtilheiros();
-            }, 200);
-        } else {
-
-            usuarioLogado = false;
-
-            document.getElementById("area-logada").style.display = "none";
-            document.getElementById("login-form").style.display = "block";
-
+        if (area) {
+            area.querySelectorAll("p").forEach(p => {
+                if (p.style.color === "red") {
+                    p.remove();
+                }
+            });
         }
 
-    });
+        await carregarApostas();
+        await carregarArtilheiros();
+
+    } else {
+
+        usuarioLogado = false;
+
+        document.getElementById("area-logada").style.display = "none";
+        document.getElementById("login-form").style.display = "block";
+    }
 }
 
 
@@ -587,10 +582,10 @@ async function carregarPontosPorJogo() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
-    verificarLogin();
-    calcularPontuacao();
+    await verificarLogin();
+    await calcularPontuacao();
 });
 
 bloquearJogosPassados();
