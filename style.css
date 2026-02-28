@@ -210,17 +210,17 @@ strong {
 
 .menu-toggle div {
     height: 4px;
-    background-color: #009C3B; /* VERDE por padrão */
+    background-color: #ffffff; /* BRANCO sempre */
     margin: 6px 0;
     border-radius: 3px;
     transition: 0.3s ease;
 }
 
-/* Quando menu estiver aberto, linhas ficam amarelas */
+/* Mantém branco mesmo quando estiver ativo ou menu aberto */
 
 .menu-lateral.ativo ~ .menu-toggle div,
 .menu-toggle.ativo div {
-    background-color: #FFDF00;
+    background-color: #ffffff; /* continua branco */
 }
 
 
