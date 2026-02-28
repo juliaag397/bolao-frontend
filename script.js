@@ -568,7 +568,7 @@ async function carregarPontosPorJogo() {
 
     if (!usuarioId) return;
 
-    const resposta = await fetch(`/minhas-apostas/${usuarioId}`, {
+    const resposta = await fetch(`/apostas/${usuarioId}`, {
         credentials: "include"
     });
 
