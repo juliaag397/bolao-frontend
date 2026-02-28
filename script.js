@@ -283,7 +283,7 @@ function carregarApostas() {
             apostas.forEach(aposta => {
 
                 const celula = document.querySelector(
-                    `[data-jogo="${aposta.jogo}"]`
+                    `.celula-aposta[data-jogo="${aposta.jogo}"]`
                 );
 
                 if (celula) {
@@ -572,7 +572,7 @@ async function carregarPontosPorJogo() {
     apostas.forEach(aposta => {
 
         const celula = document.querySelector(
-            `.pontos-jogo[data-jogo="${aposta.jogo}"]`
+            `.pontos-jogo[data-pontos="${aposta.jogo}"]`
         );
 
         if (celula) {
@@ -590,7 +590,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 bloquearJogosPassados();
 
-document.querySelectorAll("[data-jogo]").forEach(celula => {
+document.querySelectorAll(".celula-aposta").forEach(celula => {
     celula.addEventListener("click", function () {
         abrirAposta(this);
     });
