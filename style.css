@@ -376,3 +376,104 @@ strong {
     font-weight: bold;
     color: #333;
 }
+
+/* ===== ABA REGRAS - TEMA COPA 2026 ===== */
+
+.regras-bolao {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Título principal da aba */
+.regras-bolao h2 {
+    background-color: #009C3B;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+/* Subtítulos */
+.regras-bolao h3 {
+    margin-top: 25px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #FFDF00;
+    color: #002776;
+}
+
+/* Subcategoria (ex: 1º palpite artilheiro) */
+.regras-bolao h4 {
+    margin-top: 15px;
+    color: #009C3B;
+}
+
+/* Lista */
+.regras-bolao ul {
+    margin: 10px 0 15px 20px;
+}
+
+.regras-bolao li {
+    margin-bottom: 6px;
+}
+
+/* ===== TABELA DE PONTUAÇÃO ===== */
+
+.tabela-regras {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 25px 0;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabela-regras th {
+    background-color: #002776;
+    color: #FFDF00;
+    padding: 10px;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tabela-regras td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #002776;
+}
+
+.tabela-regras tr:hover {
+    background-color: #e6f5ec;
+    transition: 0.3s;
+}
+
+/* Destaque exemplos */
+.regras-bolao em {
+    color: #009C3B;
+    font-style: normal;
+    font-weight: bold;
+}
+
+/* Caixa de destaque (multiplicador ou bônus) */
+.regras-destaque {
+    background: linear-gradient(135deg, #009C3B, #002776);
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+
+    .tabela-regras th,
+    .tabela-regras td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    .regras-bolao h2 {
+        font-size: 18px;
+    }
+}
