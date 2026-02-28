@@ -1,5 +1,6 @@
 
 let usuarioId = null;
+let usuarioLogado = false;
 
 // ===============================
 // TROCAR ENTRE LOGIN E CADASTRO
@@ -544,6 +545,25 @@ function atualizarResultadoFinal(nome, gols) {
 
     // Atualiza total de gols
     document.getElementById("golsOficial").innerText = gols + " gols";
+}
+
+    // CALCULAR PONTOS
+async function calcularPontuacao() {
+
+    if (!usuarioId) {
+        alert("Usuário não logado");
+        return;
+    }
+
+    const resposta = await fetch(`/calcular-pontos/${usuarioId}`, {
+        method: "POST",
+        credentials: "include"
+    });
+
+    const dados = await resposta.json();
+
+    console.log("Pontuação atual:", dados.totalPontos);
+
 }
 
 document.addEventListener("DOMContentLoaded", function () {
