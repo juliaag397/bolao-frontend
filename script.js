@@ -555,20 +555,42 @@ async function calcularPontuacao() {
         return;
     }
 
-    const resposta = await fetch(`/calcular-pontos/${usuarioId}`, {
+    await fetch(`/calcular-pontos/${usuarioId}`, {
         method: "POST",
         credentials: "include"
     });
 
-    const dados = await resposta.json();
+    // 🔥 Depois de calcular, carrega os pontos
+    await carregarPontosPorJogo();
+}
 
-    console.log("Pontuação atual:", dados.totalPontos);
+async function carregarPontosPorJogo() {
 
+    if (!usuarioId) return;
+
+    const resposta = await fetch(`/minhas-apostas/${usuarioId}`, {
+        credentials: "include"
+    });
+
+    const apostas = await resposta.json();
+
+    apostas.forEach(aposta => {
+
+        const celula = document.querySelector(
+            `.pontos-jogo[data-jogo="${aposta.jogo}"]`
+        );
+
+        if (celula) {
+            celula.textContent = aposta.pontos ?? 0;
+        }
+
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
     verificarPeriodoArtilheiros();
     verificarLogin();
+    calcularPontuacao();
 });
 
 bloquearJogosPassados();
