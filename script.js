@@ -428,6 +428,7 @@ async function verificarLogin() {
 
         await carregarApostas();
         await carregarArtilheiros();
+        await calcularPontuacao();
 
     } else {
 
@@ -585,7 +586,6 @@ async function carregarPontosPorJogo() {
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await verificarLogin();
-    await calcularPontuacao();
 });
 
 bloquearJogosPassados();
