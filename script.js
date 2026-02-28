@@ -535,6 +535,17 @@ function salvarAposta(tipo) {
 
 }
 
+// ===== ATUALIZAR RESULTADO FINAL ARTILHEIRO=====
+
+function atualizarResultadoFinal(nome, gols) {
+
+    // Atualiza nome do artilheiro
+    document.getElementById("artilheiroOficial").innerText = nome;
+
+    // Atualiza total de gols
+    document.getElementById("golsOficial").innerText = gols + " gols";
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     verificarPeriodoArtilheiros();
     verificarLogin();
