@@ -269,33 +269,50 @@ function abrirAposta(celula) {
     celula.appendChild(botao);
 }
 
-function carregarApostas() {
+async function carregarApostas() {
 
     console.log("usuarioId", usuarioId);
 
     if (!usuarioId) return;
 
-    fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`)
-        .then(res => res.json())
-        .then(apostas => {
-            console.log("Apostas recebidas:", apostas);
+    try {
 
-            apostas.forEach(aposta => {
+        const resposta = await fetch(
+            `https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`,
+            {
+                credentials: "include" // 🔥 ESSENCIAL para sessão funcionar
+            }
+        );
 
-                const celula = document.querySelector(
-                    `.celula-aposta[data-jogo="${aposta.jogo}"]`
-                );
+        if (!resposta.ok) {
+            console.log("Erro ao buscar apostas:", resposta.status);
+            return;
+        }
 
-                if (celula) {
-                    celula.innerHTML =
-                        aposta.gols_casa + " x " + aposta.gols_fora;
+        const apostas = await resposta.json();
 
-                    celula.dataset.apostado = "true";
-                }
+        console.log("Apostas recebidas:", apostas);
 
-            });
+        if (!Array.isArray(apostas)) return;
+
+        apostas.forEach(aposta => {
+
+            const celula = document.querySelector(
+                `.celula-aposta[data-jogo="${aposta.jogo}"]`
+            );
+
+            if (celula) {
+                celula.innerHTML =
+                    `${aposta.gols_casa} x ${aposta.gols_fora}`;
+
+                celula.dataset.apostado = "true";
+            }
 
         });
+
+    } catch (erro) {
+        console.log("Erro ao carregar apostas:", erro);
+    }
 }
 
     // BLOQUEAR OS JOGOS DO DIA
