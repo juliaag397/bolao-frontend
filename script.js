@@ -612,12 +612,14 @@ async function carregarJogos() {
     jogos.forEach(jogo => {
 
         const celula = document.querySelector(
-            `.resultado-oficial[data-jogo="${jogo.jogo}"]`
+            `.placar-oficial[data-placar="${jogo.jogo}"]`
         );
 
         if (celula) {
             celula.textContent =
                 jogo.gols_casa + " x " + jogo.gols_fora;
+        } else {
+            console.log("Não encontrou:", jogo.jogo);
         }
     });
 }
