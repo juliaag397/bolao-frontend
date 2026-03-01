@@ -430,12 +430,16 @@ async function verificarLogin() {
         await carregarArtilheiros();
         await calcularPontuacao();
 
+        bloquearJogosPassados();
+
     } else {
 
         usuarioLogado = false;
 
         document.getElementById("area-logada").style.display = "none";
         document.getElementById("login-form").style.display = "block";
+
+        bloquearJogosPassados();
     }
 }
 
@@ -587,8 +591,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await verificarLogin();
 });
-
-bloquearJogosPassados();
 
 document.querySelectorAll(".celula-aposta").forEach(celula => {
     celula.addEventListener("click", function () {
