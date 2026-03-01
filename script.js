@@ -603,8 +603,28 @@ async function carregarPontosPorJogo() {
     });
 }
 
+    // JOGOS OFICIAIS
+async function carregarJogos() {
+
+    const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
+    const jogos = await res.json();
+
+    jogos.forEach(jogo => {
+
+        const celula = document.querySelector(
+            `.resultado-oficial[data-jogo="${jogo.jogo}"]`
+        );
+
+        if (celula) {
+            celula.textContent =
+                jogo.gols_casa + " x " + jogo.gols_fora;
+        }
+    });
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
+    await carregarJogos();
     await verificarLogin();
 });
 
