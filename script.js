@@ -445,8 +445,6 @@ async function verificarLogin() {
 
         await carregarApostas();
         await carregarArtilheiros();
-        await calcularPontuacao();
-
         bloquearJogosPassados();
 
     } else {
