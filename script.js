@@ -413,6 +413,31 @@ function carregarArtilheiros() {
 
 }
 
+    // PONTUACAO TOTAL
+async function carregarPontuacao() {
+
+    try {
+        const resposta = await fetch(
+            "https://bolao-backend-k56l.onrender.com/minha-pontuacao",
+            { credentials: "include" }
+        );
+
+        if (!resposta.ok) return;
+
+        const data = await resposta.json();
+
+        if (data.pontos !== undefined) {
+            const span = document.getElementById("pontuacao-total");
+            if (span) {
+                span.textContent = data.pontos + " pts";
+            }
+        }
+
+    } catch (erro) {
+        console.log("Erro ao carregar pontuação:", erro);
+    }
+}
+
 async function verificarLogin() {
 
     const res = await fetch(
@@ -443,6 +468,7 @@ async function verificarLogin() {
             });
         }
 
+        await carregarPontuacao();
         await carregarApostas();
         await carregarPontosPorJogo();
         await carregarArtilheiros();

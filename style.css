@@ -114,6 +114,36 @@ header p {
     margin-top: 5px;
 }
 
+    /*------linha do usuario-------------*/
+.topo-usuario {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0a7c3a;
+    padding: 15px 30px;
+    border-radius: 8px;
+    color: white;
+}
+
+.info-usuario {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+#pontuacao-total {
+    font-weight: bold;
+    font-size: 18px;
+    background: gold;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
+
+.sair-btn {
+    padding: 8px 15px;
+}
+
 /* ===== SEÇÃO DOS GRUPOS ===== */
 /* ===== GRID SOMENTE NA FASE DE GRUPOS ===== */
 
