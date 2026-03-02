@@ -472,6 +472,7 @@ async function verificarLogin() {
         await carregarApostas();
         await carregarPontosPorJogo();
         await carregarArtilheiros();
+        await carregarRanking();
         bloquearJogosPassados();
 
     } else {
@@ -648,6 +649,45 @@ async function carregarJogos() {
             console.log("Não encontrou:", jogo.jogo);
         }
     });
+}
+
+    //RANKING
+async function carregarRanking() {
+
+    try {
+        const resposta = await fetch(
+            "https://bolao-backend-k56l.onrender.com/ranking",
+            { credentials: "include" }
+        );
+
+        const ranking = await resposta.json();
+
+        const tbody = document.getElementById("ranking-body");
+        tbody.innerHTML = "";
+
+        ranking.forEach((usuario, index) => {
+
+            let medalha;
+
+            if (index === 0) medalha = "🥇";
+            else if (index === 1) medalha = "🥈";
+            else if (index === 2) medalha = "🥉";
+            else medalha = index + 1;
+
+            const linha = document.createElement("tr");
+
+            linha.innerHTML = `
+                <td>${medalha}</td>
+                <td>${usuario.nome}</td>
+                <td>${usuario.pontos}</td>
+            `;
+
+            tbody.appendChild(linha);
+        });
+
+    } catch (erro) {
+        console.log("Erro ao carregar ranking:", erro);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
