@@ -507,3 +507,67 @@ strong {
         font-size: 18px;
     }
 }
+
+    /*---------ranking-----------*/
+/* ===== RANKING GERAL ===== */
+
+#ranking {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+#ranking table {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Cabeçalho */
+#ranking th {
+    background: linear-gradient(90deg, #002776, #009C3B);
+    color: #FFDF00;
+    padding: 12px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Linhas */
+#ranking td {
+    padding: 12px;
+    font-weight: bold;
+    color: #002776;
+}
+
+/* Hover suave */
+#ranking tr:hover {
+    background-color: #e6f5ec;
+    transform: scale(1.01);
+    transition: 0.2s ease;
+}
+
+/* 🥇 Primeiro lugar */
+#ranking tr:nth-child(1) {
+    background: linear-gradient(90deg, #FFD700, #FFF4B0);
+    font-size: 16px;
+}
+
+/* 🥈 Segundo lugar */
+#ranking tr:nth-child(2) {
+    background: linear-gradient(90deg, #C0C0C0, #E8E8E8);
+}
+
+/* 🥉 Terceiro lugar */
+#ranking tr:nth-child(3) {
+    background: linear-gradient(90deg, #CD7F32, #F5D6B4);
+}
+
+/* Destacar usuário logado */
+.ranking-logado {
+    border-left: 6px solid #009C3B;
+    background-color: #d9f7e4 !important;
+}
+
+/* Número/medalha maior */
+#ranking td:first-child {
+    font-size: 18px;
+}
