@@ -445,7 +445,12 @@
 
                 <table border="1">
                     <tr>
-                        <th>Data</th><th>Seleção</th><th>Resultado</th><th>Seleção</th><th>Seu Palpite</th>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
                     </tr>
 
                     <tr>
@@ -704,6 +709,7 @@
                         <th>Resultado</th>
                         <th>Seleção</th>
                         <th>Seu Palpite</th>
+                        <th>Pontos</th>
                     </tr>
 
                     <tr>
@@ -764,57 +770,121 @@
                         </td>
                     </tr>
 
-                <tr>
-                <td>19/06</td>
-                <td>Escócia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Marrocos</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Escócia x Marrocos - 19/06"
-                    data-data="2026-06-19"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>19/06</td>
+                        <td>Escócia</td>
 
-                <tr>
-                <td>19/06</td>
-                <td>Brasil</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Haiti</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Brasil x Haiti - 19/06"
-                    data-data="2026-06-19"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Escócia x Marrocos - 19/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>24/06</td>
-                <td>Escócia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Brasil</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Escócia x Brasil - 24/06"
-                    data-data="2026-06-24"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Marrocos</td>
 
-                <tr>
-                <td>24/06</td>
-                <td>Marrocos</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Haiti</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Marrocos x Haiti - 24/06"
-                    data-data="2026-06-24"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Escócia x Marrocos - 19/06"
+                            data-data="2026-06-19"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Escócia x Marrocos - 19/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>19/06</td>
+                        <td>Brasil</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Brasil x Haiti - 19/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Haiti</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Brasil x Haiti - 19/06"
+                            data-data="2026-06-19"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Brasil x Haiti - 19/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>24/06</td>
+                        <td>Escócia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Escócia x Brasil - 24/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Brasil</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Escócia x Brasil - 24/06"
+                            data-data="2026-06-24"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Escócia x Brasil - 24/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>24/06</td>
+                        <td>Marrocos</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Marrocos x Haiti - 24/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Haiti</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Marrocos x Haiti - 24/06"
+                            data-data="2026-06-24"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Marrocos x Haiti - 24/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -896,91 +966,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>12/06</td>
-                <td>EUA</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Paraguai</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="EUA x Paraguai - 12/06"
-                    data-data="2026-06-12"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>12/06</td>
+                        <td>EUA</td>
 
-                <tr>
-                <td>14/06</td>
-                <td>Austrália</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>?</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Austrália x ? - 14/06"
-                    data-data="2026-06-14"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="EUA x Paraguai - 12/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>19/06</td>
-                <td>EUA</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Austrália</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="EUA x Austrália - 19/06"
-                    data-data="2026-06-19"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Paraguai</td>
 
-                <tr>
-                <td>20/06</td>
-                <td>P?</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Paraguai</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="? x Paraguai - 20/06"
-                    data-data="2026-06-20"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="EUA x Paraguai - 12/06"
+                            data-data="2026-06-12"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>25/06</td>
-                <td>?</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>EUA</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="? x EUA - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="EUA x Paraguai - 12/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>25/06</td>
-                <td>Paraguai</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Austrália</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Paraguai x Austrália - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>14/06</td>
+                        <td>Austrália</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Austrália x ? - 14/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>?</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Austrália x ? - 14/06"
+                            data-data="2026-06-14"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Austrália x ? - 14/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>19/06</td>
+                        <td>EUA</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="EUA x Austrália - 19/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Austrália</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="EUA x Austrália - 19/06"
+                            data-data="2026-06-19"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="EUA x Austrália - 19/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>20/06</td>
+                        <td>?</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="? x Paraguai - 20/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Paraguai</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="? x Paraguai - 20/06"
+                            data-data="2026-06-20"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="? x Paraguai - 20/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>?</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="? x EUA - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>EUA</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="? x EUA - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="? x EUA - 25/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>Paraguai</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Paraguai x Austrália - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Austrália</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Paraguai x Austrália - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Paraguai x Austrália - 25/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1062,91 +1229,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>14/06</td>
-                <td>Alemanha</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Curaçao</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Alemanha x Curaçao - 14/06"
-                    data-data="2026-06-14"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>14/06</td>
+                        <td>Alemanha</td>
 
-                <tr>
-                <td>14/06</td>
-                <td>Costa do Marfim</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Equador</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Costa do Marfim x Equador - 14/06"
-                    data-data="2026-06-14"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Alemanha x Curaçao - 14/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>20/06</td>
-                <td>Alemanha</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Costa do Marfim</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Alemanha x Costa do Marfim - 20/06"
-                    data-data="2026-06-20"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Curaçao</td>
 
-                <tr>
-                <td>20/06</td>
-                <td>Equador</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Curaçao</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Equador x Curaçao - 20/06"
-                    data-data="2026-06-20"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Alemanha x Curaçao - 14/06"
+                            data-data="2026-06-14"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>25/06</td>
-                <td>Equador</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Alemanha</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Equador x Alemanha - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Alemanha x Curaçao - 14/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>25/06</td>
-                <td>Curaçao</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Costa do Marfim</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Curaçao x Costa do Marfim - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>14/06</td>
+                        <td>Costa do Marfim</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Costa do Marfim x Equador - 14/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Equador</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Costa do Marfim x Equador - 14/06"
+                            data-data="2026-06-14"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Costa do Marfim x Equador - 14/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>20/06</td>
+                        <td>Alemanha</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Alemanha x Costa do Marfim - 20/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Costa do Marfim</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Alemanha x Costa do Marfim - 20/06"
+                            data-data="2026-06-20"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Alemanha x Costa do Marfim - 20/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>20/06</td>
+                        <td>Equador</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Equador x Curaçao - 20/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Curaçao</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Equador x Curaçao - 20/06"
+                            data-data="2026-06-20"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Equador x Curaçao - 20/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>Equador</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Equador x Alemanha - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Alemanha</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Equador x Alemanha - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Equador x Alemanha - 25/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>Curaçao</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Curaçao x Costa do Marfim - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Costa do Marfim</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Curaçao x Costa do Marfim - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Curaçao x Costa do Marfim - 25/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1228,91 +1492,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>14/06</td>
-                <td>Holanda</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Japão</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Holanda x Japão - 14/06"
-                    data-data="2026-06-14"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>14/06</td>
+                        <td>Holanda</td>
 
-                <tr>
-                <td>15/06</td>
-                <td>?</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Tunísia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="? x Tunísia - 15/06"
-                    data-data="2026-06-15"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Holanda x Japão - 14/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>20/06</td>
-                <td>Holanda</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>?</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Holanda x ? - 20/06"
-                    data-data="2026-06-20"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Japão</td>
 
-                <tr>
-                <td>20/06</td>
-                <td>Tunísia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Japão</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Tunísia x Japão - 20/06"
-                    data-data="2026-06-20"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Holanda x Japão - 14/06"
+                            data-data="2026-06-14"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>25/06</td>
-                <td>Tunísia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Holanda</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Tunísia x Holanda - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Holanda x Japão - 14/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>25/06</td>
-                <td>Japão</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>?</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Japão x ? - 25/06"
-                    data-data="2026-06-25"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>15/06</td>
+                        <td>?</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="? x Tunísia - 15/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Tunísia</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="? x Tunísia - 15/06"
+                            data-data="2026-06-15"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="? x Tunísia - 15/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>20/06</td>
+                        <td>Holanda</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Holanda x ? - 20/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>?</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Holanda x ? - 20/06"
+                            data-data="2026-06-20"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Holanda x ? - 20/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>20/06</td>
+                        <td>Tunísia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Tunísia x Japão - 20/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Japão</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Tunísia x Japão - 20/06"
+                            data-data="2026-06-20"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Tunísia x Japão - 20/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>Tunísia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Tunísia x Holanda - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Holanda</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Tunísia x Holanda - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Tunísia x Holanda - 25/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>25/06</td>
+                        <td>Japão</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Japão x ? - 25/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>?</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Japão x ? - 25/06"
+                            data-data="2026-06-25"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Japão x ? - 25/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1394,91 +1755,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>15/06</td>
-                <td>Bélgica</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Egito</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Bélgica x Egito - 15/06"
-                    data-data="2026-06-15"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>15/06</td>
+                        <td>Bélgica</td>
 
-                <tr>
-                <td>16/06</td>
-                <td>Irã</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Nova Zelândia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Irã x Nova Zelândia - 16/06"
-                    data-data="2026-06-16"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Bélgica x Egito - 15/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>21/06</td>
-                <td>Bélgica</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Irã</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Bélgica x Irã - 21/06"
-                    data-data="2026-06-21"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Egito</td>
 
-                <tr>
-                <td>21/06</td>
-                <td>Egito</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Nova Zelândia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Egito x Nova Zelândia - 21/06"
-                    data-data="2026-06-21"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Bélgica x Egito - 15/06"
+                            data-data="2026-06-15"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>26/06</td>
-                <td>Egito</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Irã</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Egito x Irã - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Bélgica x Egito - 15/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>26/06</td>
-                <td>Nova Zelândia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Bélgica</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Nova ZelÂndia x Bélgica - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>16/06</td>
+                        <td>Irã</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Irã x Nova Zelândia - 16/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Nova Zelândia</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Irã x Nova Zelândia - 16/06"
+                            data-data="2026-06-16"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Irã x Nova Zelândia - 16/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>21/06</td>
+                        <td>Bélgica</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Bélgica x Irã - 21/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Irã</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Bélgica x Irã - 21/06"
+                            data-data="2026-06-21"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Bélgica x Irã - 21/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>21/06</td>
+                        <td>Egito</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Egito x Nova Zelândia - 21/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Nova Zelândia</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Egito x Nova Zelândia - 21/06"
+                            data-data="2026-06-21"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Egito x Nova Zelândia - 21/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Egito</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Egito x Irã - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Irã</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Egito x Irã - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Egito x Irã - 26/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Nova ZelÂndia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Nova Zelândia x Bélgica - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Bélgica</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Nova Zelândia x Bélgica - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Nova Zelândia x Bélgica - 26/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1560,91 +2018,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>15/06</td>
-                <td>Espanha</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Cabo Verde</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Espanha x Cabo Verde - 15/06"
-                    data-data="2026-06-15"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>15/06</td>
+                        <td>Espanha</td>
 
-                <tr>
-                <td>15/06</td>
-                <td>Arábia Saudita</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Uruguai</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Arábia Saudita x Uruguai - 15/06"
-                    data-data="2026-06-15"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Espanha x Cabo Verde - 15/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>21/06</td>
-                <td>Espanha</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Arábia Saudita</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Espanha x Arábia Saudita - 21/06"
-                    data-data="2026-06-21"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Cabo Verde</td>
 
-                <tr>
-                <td>21/06</td>
-                <td>Uruguai</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Cabo Verde</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Uruguai x Cabo Verde - 21/06"
-                    data-data="2026-06-21"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Espanha x Cabo Verde - 15/06"
+                            data-data="2026-06-15"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>26/06</td>
-                <td>Uruguai</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Espanha</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Uruguai x Espanha - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Espanha x Cabo Verde - 15/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>26/06</td>
-                <td>Cabo Verde</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Arábia Saudita</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Cabo Verde x Arábia Saudita - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>15/06</td>
+                        <td>Arábia Saudita</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Arábia Saudita x Uruguai - 15/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Uruguai</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Arábia Saudita x Uruguai - 15/06"
+                            data-data="2026-06-15"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Arábia Saudita x Uruguai - 15/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>21/06</td>
+                        <td>Espanha</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Espanha x Arábia Saudita - 21/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Arábia Saudita</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Espanha x Arábia Saudita - 21/06"
+                            data-data="2026-06-21"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Espanha x Arábia Saudita - 21/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>21/06</td>
+                        <td>Uruguai</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Uruguai x Cabo Verde - 21/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Cabo Verde</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Uruguai x Cabo Verde - 21/06"
+                            data-data="2026-06-21"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Uruguai x Cabo Verde - 21/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Uruguai</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Uruguai x Espanha - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Espanha</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Uruguai x Espanha - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Uruguai x Espanha - 26/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Cabo Verde</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Cabo Verde x Arábia Saudita - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Arábia Saudita</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Cabo Verde x Arábia Saudita - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Cabo Verde x Arábia Saudita - 26/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1726,91 +2281,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>16/06</td>
-                <td>França</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Senegal</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="França x Senegal - 16/06"
-                    data-data="2026-06-16"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>16/06</td>
+                        <td>França</td>
 
-                <tr>
-                <td>16/06</td>
-                <td>?</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Noruega</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="? x Noruega - 16/06"
-                    data-data="2026-06-16"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="França x Senegal - 16/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>22/06</td>
-                <td>França</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>?</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="França x ? - 22/06"
-                    data-data="2026-06-22"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Senegal</td>
 
-                <tr>
-                <td>22/06</td>
-                <td>Noruega</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Senegal</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Noruega x Senegal - 22/06"
-                    data-data="2026-06-22"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="França x Senegal - 16/06"
+                            data-data="2026-06-16"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>26/06</td>
-                <td>Noruega</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>França</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Noruega x França - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="França x Senegal - 16/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>26/06</td>
-                <td>Senegal</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>?</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Senegal x ? - 26/06"
-                    data-data="2026-06-26"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>16/06</td>
+                        <td>?</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="? x Noruega - 16/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Noruega</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="? x Noruega - 16/06"
+                            data-data="2026-06-16"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="? x Noruega - 16/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>22/06</td>
+                        <td>França</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="França x ? - 22/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>?</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="França x ? - 22/06"
+                            data-data="2026-06-22"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="França x ? - 22/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>22/06</td>
+                        <td>Noruega</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Noruega x Senegal - 22/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Senegal</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Noruega x Senegal - 22/06"
+                            data-data="2026-06-22"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Noruega x Senegal - 22/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Noruega</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Noruega x França - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>França</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Noruega x França - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Noruega x França - 26/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>26/06</td>
+                        <td>Senegal</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Senegal x ? - 26/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>?</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Senegal x ? - 26/06"
+                            data-data="2026-06-26"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Senegal x ? - 26/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -1892,91 +2544,188 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
-                <tr>
-                <td>16/06</td>
-                <td>Áustria</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Jordânia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Áustria x Jordânia - 16/06"
-                    data-data="2026-06-16"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>16/06</td>
+                        <td>Áustria</td>
 
-                <tr>
-                <td>16/06</td>
-                <td>Argentina</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Argélia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Argentina x Argélia - 16/06"
-                    data-data="2026-06-16"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Áustria x Jordânia - 16/06">
+                                0 x 0
+                            </strong>
+                        </td>
 
-                <tr>
-                <td>22/06</td>
-                <td>Argentina</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Áustria</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Argentina x Áustria - 22/06"
-                    data-data="2026-06-22"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td>Jordânia</td>
 
-                <tr>
-                <td>23/06</td>
-                <td>Jordânia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Argélia</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Jordânia x Argélia - 23/06"
-                    data-data="2026-06-23"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Áustria x Jordânia - 16/06"
+                            data-data="2026-06-16"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
 
-                <tr>
-                <td>27/06</td>
-                <td>Argélia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Áustria</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Argélia x Áustria - 27/06"
-                    data-data="2026-06-27"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Áustria x Jordânia - 16/06">
+                            -
+                        </td>
+                    </tr>
 
-                <tr>
-                <td>27/06</td>
-                <td>Jordânia</td>
-                <td><strong class="placar-oficial">0 x 0</strong></td>
-                <td>Argentina</td>
-                <td onclick="abrirAposta(this)"
-                    data-jogo="Jordânia x Argentina - 27/06"
-                    data-data="2026-06-27"
-                    style="cursor:pointer;">
-                <span class="palpite">Apostar</span>
-                </td>
-                </tr>
+                    <tr>
+                        <td>16/06</td>
+                        <td>Argentina</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Argentina x Argélia - 16/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Argélia</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Argentina x Argélia - 16/06"
+                            data-data="2026-06-16"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Argentina x Argélia - 16/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>22/06</td>
+                        <td>Argentina</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Argentina x Áustria - 22/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Áustria</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Argentina x Áustria - 22/06"
+                            data-data="2026-06-22"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Argentina x Áustria - 22/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>23/06</td>
+                        <td>Jordânia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Jordânia x Argélia - 23/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Argélia</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Jordânia x Argélia - 23/06"
+                            data-data="2026-06-23"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Jordânia x Argélia - 23/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>27/06</td>
+                        <td>Argélia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Argélia x Áustria - 27/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Áustria</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Argélia x Áustria - 27/06"
+                            data-data="2026-06-27"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Argélia x Áustria - 27/06">
+                            -
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>27/06</td>
+                        <td>Jordânia</td>
+
+                        <td>
+                            <strong 
+                                class="placar-oficial"
+                                data-placar="Jordânia x Argentina - 27/06">
+                                0 x 0
+                            </strong>
+                        </td>
+
+                        <td>Argentina</td>
+
+                        <td
+                            class="celula-aposta"
+                            data-jogo="Jordânia x Argentina - 27/06"
+                            data-data="2026-06-27"
+                            style="cursor:pointer;">
+                            <span class="palpite">Apostar</span>
+                        </td>
+
+                        <td 
+                            class="pontos-jogo"
+                            data-pontos="Jordânia x Argentina - 27/06">
+                            -
+                        </td>
+                    </tr>
 
                 </table>
 
@@ -2058,13 +2807,14 @@
                 <h3>Jogos</h3>
 
                 <table border="1">
-                <tr>
-                <th>Data</th>
-                <th>Seleção</th>
-                <th>Resultado</th>
-                <th>Seleção</th>
-                <th>Seu Palpite</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>Seleção</th>
+                        <th>Resultado</th>
+                        <th>Seleção</th>
+                        <th>Seu Palpite</th>
+                        <th>Pontos</th>
+                    </tr>
 
                 <tr>
                 <td>17/06</td>
