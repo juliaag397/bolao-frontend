@@ -3397,15 +3397,35 @@
         </div>
 
         <div id="grupos-info" class="area">
+
+            <!-- Submenu interno -->
             <div class="subtabs">
                 <button onclick="showTab('create')">Criar Grupo</button>
                 <button onclick="showTab('join')">Entrar em Grupo</button>
                 <button onclick="showTab('myGroups')">Meus Grupos</button>
             </div>
 
-            <div id="create" class="tab-content"></div>
-            <div id="join" class="tab-content"></div>
-            <div id="myGroups" class="tab-content"></div>
+            <!-- Aba Criar -->
+            <div id="create" class="tab-content" style="display: none;">
+                <h3>Criar Grupo</h3>
+                <input type="text" id="groupName" placeholder="Nome do grupo">
+                <textarea id="groupRules" placeholder="Regras do grupo"></textarea>
+                <button onclick="createGroup()">Criar</button>
+            </div>
+
+            <!-- Aba Entrar -->
+            <div id="join" class="tab-content" style="display: none;">
+                <h3>Entrar em Grupo</h3>
+                <input type="text" id="groupCode" placeholder="Código do grupo">
+                <button onclick="joinGroup()">Entrar</button>
+            </div>
+
+            <!-- Aba Meus Grupos -->
+            <div id="myGroups" class="tab-content" style="display: none;">
+                <h3>Meus Grupos</h3>
+                <div id="myGroupsList"></div>
+            </div>
+
         </div>
 
         <div id="geral" class="area">

@@ -693,113 +693,77 @@ async function carregarRanking() {
 
     //GRUPOS
 function showTab(tabId) {
-    const tabs = document.querySelectorAll('.tab-content');
-
-    if (!tabs.length) return; // se não existir nenhuma aba, não faz nada
-
-    tabs.forEach(tab => {
-        tab.style.display = 'none';
-    });
+    document.querySelectorAll('#grupos-info .tab-content')
+        .forEach(tab => tab.style.display = 'none');
 
     const selectedTab = document.getElementById(tabId);
-
     if (selectedTab) {
         selectedTab.style.display = 'block';
     }
 }
 
 async function createGroup() {
-    const name = document.getElementById("groupName").value;
-    const rules = document.getElementById("groupRules").value;
+    try {
+        const name = document.getElementById("groupName").value;
+        const rules = document.getElementById("groupRules").value;
 
-    const { data: { user } } = await supabase.auth.getUser();
+        const response = await fetch("/api/create-group", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, rules })
+        });
 
-    if (!user) {
-        alert("Você precisa estar logado.");
-        return;
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.error || "Erro ao criar grupo");
+            return;
+        }
+
+        alert("Grupo criado! Código: " + data.code);
+        await loadUserGroups();
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro de conexão com o servidor.");
     }
-
-    const { data, error } = await supabase
-        .from('groups')
-        .insert([
-            { 
-                name: name,
-                rules: rules,
-                created_by: user.id
-            }
-        ])
-        .select()
-        .single();
-
-    if (error) {
-        console.error(error);
-        alert("Erro ao criar grupo");
-        return;
-    }
-
-    // adiciona criador como membro
-    const { error: memberError } = await supabase
-        .from('group_members')
-        .insert([
-            {
-                group_id: data.id,
-                user_id: user.id
-            }
-        ]);
-
-    if (memberError) {
-        console.error(memberError);
-        alert("Grupo criado, mas houve erro ao adicionar você como membro.");
-        return;
-    }
-
-    alert("Grupo criado! Código: " + data.code);
-
-    // 🔥 Atualiza lista de grupos automaticamente
-    await loadUserGroups();
 }
 
 async function joinGroup() {
-    const code = document.getElementById("groupCode").value.trim().toUpperCase();
+    const code = document.getElementById("groupCode").value
+        .trim()
+        .toUpperCase();
 
-    const { data: group, error } = await supabase
-        .from('groups')
-        .select('id')
-        .eq('code', code)
-        .single();
-
-    if (error || !group) {
-        alert("Grupo não encontrado");
+    if (!code) {
+        alert("Digite um código.");
         return;
     }
 
-    const { data: { user } } = await supabase.auth.getUser();
+    try {
+        const response = await fetch("/api/join-group", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ code })
+        });
 
-    if (!user) {
-        alert("Você precisa estar logado.");
-        return;
-    }
+        const data = await response.json();
 
-    const { error: insertError } = await supabase
-        .from('group_members')
-        .insert([
-            {
-                group_id: group.id,
-                user_id: user.id
-            }
-        ]);
-
-    if (insertError) {
-        if (insertError.code === "23505") {
-            alert("Você já está nesse grupo.");
-        } else {
-            alert("Erro ao entrar no grupo.");
+        if (!response.ok) {
+            alert(data.error || "Erro ao entrar no grupo.");
+            return;
         }
-        return;
-    }
 
-    alert("Você entrou no grupo!");
-    await loadUserGroups();
+        alert("Você entrou no grupo!");
+        await loadUserGroups();
+
+    } catch (err) {
+        console.error(err);
+        alert("Erro de conexão com o servidor.");
+    }
 }
 
 async function loadRanking(groupId) {
@@ -847,50 +811,41 @@ async function loadRanking(groupId) {
 }
 
 async function loadUserGroups() {
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    try {
+        const response = await fetch("/api/my-groups");
 
-    if (userError || !user) {
-        console.warn("Usuário não autenticado.");
-        return;
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.warn(data.error || "Erro ao buscar grupos.");
+            return;
+        }
+
+        const container = document.getElementById("myGroupsList");
+        if (!container) return;
+
+        container.innerHTML = "";
+
+        if (!data || data.length === 0) {
+            container.innerHTML = "<p>Você ainda não participa de nenhum grupo.</p>";
+            return;
+        }
+
+        let html = "";
+
+        data.forEach(group => {
+            html += `
+                <button onclick="openGroup('${group.id}')">
+                    ${group.name}
+                </button>
+            `;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+        console.error("Erro de conexão:", err);
     }
-
-    const { data, error } = await supabase
-        .from('group_members')
-        .select(`
-            group_id,
-            groups:group_id ( name )
-        `)
-        .eq('user_id', user.id);
-
-    if (error) {
-        console.error("Erro ao buscar grupos:", error);
-        return;
-    }
-
-    const container = document.getElementById("myGroups");
-
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    if (!data || data.length === 0) {
-        container.innerHTML = "<p>Você ainda não participa de nenhum grupo.</p>";
-        return;
-    }
-
-    let html = "";
-
-    data.forEach(item => {
-        if (!item.groups) return;
-
-        html += `
-            <button onclick="openGroup('${item.group_id}')">
-                ${item.groups.name}
-            </button>
-        `;
-    });
-
-    container.innerHTML = html;
 }
 
 document.addEventListener("DOMContentLoaded", async function () {

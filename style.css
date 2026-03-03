@@ -571,3 +571,28 @@ strong {
 #ranking td:first-child {
     font-size: 18px;
 }
+
+.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #0b3d91;
+    padding: 10px;
+    border-radius: 8px;
+    flex-direction: column;
+}
+
+.submenu button {
+    display: block;
+    margin: 5px 0;
+    width: 160px;
+}
+
+.has-submenu:hover .submenu {
+    display: flex;
+}
