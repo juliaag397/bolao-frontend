@@ -572,27 +572,95 @@ strong {
     font-size: 18px;
 }
 
-.has-submenu {
-    position: relative;
-}
+/* ===== SUBTABS - GRUPOS ===== */
 
-.submenu {
-    display: none;
-    position: absolute;
-    left: 100%;
-    top: 0;
-    background-color: #0b3d91;
-    padding: 10px;
-    border-radius: 8px;
-    flex-direction: column;
-}
-
-.submenu button {
-    display: block;
-    margin: 5px 0;
-    width: 160px;
-}
-
-.has-submenu:hover .submenu {
+.subtabs {
     display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+}
+
+.subtabs button {
+    background: linear-gradient(90deg, #009C3B, #002776);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.subtabs button:hover {
+    background: #FFDF00;
+    color: #002776;
+    transform: scale(1.05);
+}
+
+/* ===== CARD GRUPOS ===== */
+
+#grupos-info .tab-content {
+    background: white;
+    color: #002776;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Inputs */
+#grupos-info input,
+#grupos-info textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0 15px 0;
+    border-radius: 8px;
+    border: 2px solid #009C3B;
+    outline: none;
+}
+
+#grupos-info input:focus,
+#grupos-info textarea:focus {
+    border-color: #FFDF00;
+    box-shadow: 0 0 6px #FFDF00;
+}
+
+/* Botões internos */
+#grupos-info .tab-content button {
+    background-color: #009C3B;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#grupos-info .tab-content button:hover {
+    background-color: #002776;
+    transform: scale(1.03);
+}
+
+/* ===== LISTA MEUS GRUPOS ===== */
+
+#myGroupsList button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-weight: bold;
+    background: linear-gradient(90deg, #002776, #009C3B);
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+#myGroupsList button:hover {
+    background: #FFDF00;
+    color: #002776;
+    transform: translateX(5px);
 }
