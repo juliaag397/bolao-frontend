@@ -706,48 +706,38 @@ async function createGroup() {
     const name = document.getElementById("groupName").value.trim();
     const rules = document.getElementById("groupRules").value.trim();
 
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-        alert("Você precisa estar logado.");
-        return;
-    }
-
-    // gera código aleatório
-    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
-
-    // cria grupo
-    const { data: group, error } = await supabase
-        .from("groups")
-        .insert([
+    try {
+        const response = await fetch(
+            "https://bolao-backend-k56l.onrender.com/api/create-group",
             {
-                name,
-                rules,
-                code,
-                created_by: user.id
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({ name, rules })
             }
-        ])
-        .select()
-        .single();
+        );
 
-    if (error) {
-        console.error(error);
-        alert("Erro ao criar grupo");
-        return;
-    }
-
-    // adiciona criador como membro
-    await supabase.from("group_members").insert([
-        {
-            group_id: group.id,
-            user_id: user.id,
-            score: 0
+        if (!response.ok) {
+            throw new Error("Erro no servidor");
         }
-    ]);
 
-    alert("Grupo criado! Código: " + code);
+        const data = await response.json();
 
-    await loadUserGroups();
+        if (data.error) {
+            alert("Erro ao criar grupo");
+            return;
+        }
+
+        alert("Grupo criado! Código: " + data.code);
+
+        await loadUserGroups();
+
+    } catch (error) {
+        console.error("Erro:", error);
+        alert("Erro de conexão com o servidor.");
+    }
 }
 
 async function joinGroup() {
@@ -761,13 +751,17 @@ async function joinGroup() {
     }
 
     try {
-        const response = await fetch("/api/join-group", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ code })
-        });
+        const response = await fetch(
+            "https://bolao-backend-k56l.onrender.com/api/join-group",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include", // 👈 AQUI
+                body: JSON.stringify({ code })
+            }
+        );
 
         const data = await response.json();
 
@@ -788,50 +782,59 @@ async function joinGroup() {
 async function loadRanking(groupId) {
     if (!groupId) return;
 
-    const { data, error } = await supabase
-        .from('group_members')
-        .select(`
-            score,
-            user_id,
-            users:user_id ( email )
-        `)
-        .eq('group_id', groupId)
-        .order('score', { ascending: false });
+    try {
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/api/ranking/${groupId}`,
+            {
+                credentials: "include"
+            }
+        );
 
-    if (error) {
+        if (!response.ok) {
+            throw new Error("Erro ao buscar ranking");
+        }
+
+        const data = await response.json();
+
+        const rankingDiv = document.getElementById("ranking");
+        if (!rankingDiv) return;
+
+        rankingDiv.innerHTML = "";
+
+        if (!data || data.length === 0) {
+            rankingDiv.innerHTML = "<p>Nenhum participante ainda.</p>";
+            return;
+        }
+
+        let html = "";
+
+        data.forEach((member, index) => {
+            const email = member.users?.email || "Usuário";
+            const score = member.score ?? 0;
+
+            html += `
+                <div>
+                    ${index + 1}º - ${email} - ${score} pontos
+                </div>
+            `;
+        });
+
+        rankingDiv.innerHTML = html;
+
+    } catch (error) {
         console.error("Erro ao carregar ranking:", error);
-        return;
     }
-
-    const rankingDiv = document.getElementById("ranking");
-    if (!rankingDiv) return;
-
-    rankingDiv.innerHTML = "";
-
-    if (!data || data.length === 0) {
-        rankingDiv.innerHTML = "<p>Nenhum participante ainda.</p>";
-        return;
-    }
-
-    let html = "";
-
-    data.forEach((member, index) => {
-        const email = member.users?.email || "Usuário";
-        const score = member.score ?? 0;
-
-        html += `
-            <div>
-                ${index + 1}º - ${email} - ${score} pontos
-            </div>
-        `;
-    });
-
-    rankingDiv.innerHTML = html;
 }
 
 async function loadUserGroups() {
     try {
-        const response = await fetch("/api/my-groups");
+        const response = await fetch(
+            "https://bolao-backend-k56l.onrender.com/api/my-groups",
+            {
+                method: "GET",
+                credentials: "include" // 👈 AQUI
+            }
+        );
 
         const data = await response.json();
 
@@ -839,6 +842,12 @@ async function loadUserGroups() {
             console.warn(data.error || "Erro ao buscar grupos.");
             return;
         }
+
+        // resto do código...
+
+    } catch (error) {
+        console.error("Erro:", error);
+    }
 
         const container = document.getElementById("myGroupsList");
         if (!container) return;
