@@ -3397,7 +3397,15 @@
         </div>
 
         <div id="grupos-info" class="area">
-            Informações dos Grupos
+            <div class="subtabs">
+                <button onclick="showTab('create')">Criar Grupo</button>
+                <button onclick="showTab('join')">Entrar em Grupo</button>
+                <button onclick="showTab('myGroups')">Meus Grupos</button>
+            </div>
+
+            <div id="create" class="tab-content"></div>
+            <div id="join" class="tab-content"></div>
+            <div id="myGroups" class="tab-content"></div>
         </div>
 
         <div id="geral" class="area">

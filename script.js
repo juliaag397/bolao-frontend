@@ -473,6 +473,7 @@ async function verificarLogin() {
         await carregarPontosPorJogo();
         await carregarArtilheiros();
         await carregarRanking();
+        await loadUserGroups();
         bloquearJogosPassados();
 
     } else {
@@ -688,6 +689,208 @@ async function carregarRanking() {
     } catch (erro) {
         console.log("Erro ao carregar ranking:", erro);
     }
+}
+
+    //GRUPOS
+function showTab(tabId) {
+    const tabs = document.querySelectorAll('.tab-content');
+
+    if (!tabs.length) return; // se não existir nenhuma aba, não faz nada
+
+    tabs.forEach(tab => {
+        tab.style.display = 'none';
+    });
+
+    const selectedTab = document.getElementById(tabId);
+
+    if (selectedTab) {
+        selectedTab.style.display = 'block';
+    }
+}
+
+async function createGroup() {
+    const name = document.getElementById("groupName").value;
+    const rules = document.getElementById("groupRules").value;
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        alert("Você precisa estar logado.");
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from('groups')
+        .insert([
+            { 
+                name: name,
+                rules: rules,
+                created_by: user.id
+            }
+        ])
+        .select()
+        .single();
+
+    if (error) {
+        console.error(error);
+        alert("Erro ao criar grupo");
+        return;
+    }
+
+    // adiciona criador como membro
+    const { error: memberError } = await supabase
+        .from('group_members')
+        .insert([
+            {
+                group_id: data.id,
+                user_id: user.id
+            }
+        ]);
+
+    if (memberError) {
+        console.error(memberError);
+        alert("Grupo criado, mas houve erro ao adicionar você como membro.");
+        return;
+    }
+
+    alert("Grupo criado! Código: " + data.code);
+
+    // 🔥 Atualiza lista de grupos automaticamente
+    await loadUserGroups();
+}
+
+async function joinGroup() {
+    const code = document.getElementById("groupCode").value.trim().toUpperCase();
+
+    const { data: group, error } = await supabase
+        .from('groups')
+        .select('id')
+        .eq('code', code)
+        .single();
+
+    if (error || !group) {
+        alert("Grupo não encontrado");
+        return;
+    }
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+        alert("Você precisa estar logado.");
+        return;
+    }
+
+    const { error: insertError } = await supabase
+        .from('group_members')
+        .insert([
+            {
+                group_id: group.id,
+                user_id: user.id
+            }
+        ]);
+
+    if (insertError) {
+        if (insertError.code === "23505") {
+            alert("Você já está nesse grupo.");
+        } else {
+            alert("Erro ao entrar no grupo.");
+        }
+        return;
+    }
+
+    alert("Você entrou no grupo!");
+    await loadUserGroups();
+}
+
+async function loadRanking(groupId) {
+    if (!groupId) return;
+
+    const { data, error } = await supabase
+        .from('group_members')
+        .select(`
+            score,
+            user_id,
+            users:user_id ( email )
+        `)
+        .eq('group_id', groupId)
+        .order('score', { ascending: false });
+
+    if (error) {
+        console.error("Erro ao carregar ranking:", error);
+        return;
+    }
+
+    const rankingDiv = document.getElementById("ranking");
+    if (!rankingDiv) return;
+
+    rankingDiv.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        rankingDiv.innerHTML = "<p>Nenhum participante ainda.</p>";
+        return;
+    }
+
+    let html = "";
+
+    data.forEach((member, index) => {
+        const email = member.users?.email || "Usuário";
+        const score = member.score ?? 0;
+
+        html += `
+            <div>
+                ${index + 1}º - ${email} - ${score} pontos
+            </div>
+        `;
+    });
+
+    rankingDiv.innerHTML = html;
+}
+
+async function loadUserGroups() {
+    const { data: { user }, error: userError } = await supabase.auth.getUser();
+
+    if (userError || !user) {
+        console.warn("Usuário não autenticado.");
+        return;
+    }
+
+    const { data, error } = await supabase
+        .from('group_members')
+        .select(`
+            group_id,
+            groups:group_id ( name )
+        `)
+        .eq('user_id', user.id);
+
+    if (error) {
+        console.error("Erro ao buscar grupos:", error);
+        return;
+    }
+
+    const container = document.getElementById("myGroups");
+
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    if (!data || data.length === 0) {
+        container.innerHTML = "<p>Você ainda não participa de nenhum grupo.</p>";
+        return;
+    }
+
+    let html = "";
+
+    data.forEach(item => {
+        if (!item.groups) return;
+
+        html += `
+            <button onclick="openGroup('${item.group_id}')">
+                ${item.groups.name}
+            </button>
+        `;
+    });
+
+    container.innerHTML = html;
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
