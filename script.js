@@ -832,7 +832,7 @@ async function loadUserGroups() {
             "https://bolao-backend-k56l.onrender.com/api/my-groups",
             {
                 method: "GET",
-                credentials: "include" // 👈 AQUI
+                credentials: "include"
             }
         );
 
@@ -842,12 +842,6 @@ async function loadUserGroups() {
             console.warn(data.error || "Erro ao buscar grupos.");
             return;
         }
-
-        // resto do código...
-
-    } catch (error) {
-        console.error("Erro:", error);
-    }
 
         const container = document.getElementById("myGroupsList");
         if (!container) return;
