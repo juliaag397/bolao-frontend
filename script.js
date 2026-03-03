@@ -703,32 +703,51 @@ function showTab(tabId) {
 }
 
 async function createGroup() {
-    try {
-        const name = document.getElementById("groupName").value;
-        const rules = document.getElementById("groupRules").value;
+    const name = document.getElementById("groupName").value.trim();
+    const rules = document.getElementById("groupRules").value.trim();
 
-        const response = await fetch("/api/create-group", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, rules })
-        });
+    const { data: { user } } = await supabase.auth.getUser();
 
-        const data = await response.json();
-
-        if (!response.ok) {
-            alert(data.error || "Erro ao criar grupo");
-            return;
-        }
-
-        alert("Grupo criado! Código: " + data.code);
-        await loadUserGroups();
-
-    } catch (err) {
-        console.error(err);
-        alert("Erro de conexão com o servidor.");
+    if (!user) {
+        alert("Você precisa estar logado.");
+        return;
     }
+
+    // gera código aleatório
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    // cria grupo
+    const { data: group, error } = await supabase
+        .from("groups")
+        .insert([
+            {
+                name,
+                rules,
+                code,
+                created_by: user.id
+            }
+        ])
+        .select()
+        .single();
+
+    if (error) {
+        console.error(error);
+        alert("Erro ao criar grupo");
+        return;
+    }
+
+    // adiciona criador como membro
+    await supabase.from("group_members").insert([
+        {
+            group_id: group.id,
+            user_id: user.id,
+            score: 0
+        }
+    ]);
+
+    alert("Grupo criado! Código: " + code);
+
+    await loadUserGroups();
 }
 
 async function joinGroup() {
