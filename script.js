@@ -708,7 +708,7 @@ async function createGroup() {
 
     try {
         const response = await fetch(
-            "https://bolao-backend-k56l.onrender.com/api/create-group",
+            "https://bolao-backend-k56l.onrender.com/create-group",
             {
                 method: "POST",
                 headers: {
@@ -752,7 +752,7 @@ async function joinGroup() {
 
     try {
         const response = await fetch(
-            "https://bolao-backend-k56l.onrender.com/api/join-group",
+            "https://bolao-backend-k56l.onrender.com/join-group",
             {
                 method: "POST",
                 headers: {
@@ -784,7 +784,7 @@ async function loadRanking(groupId) {
 
     try {
         const response = await fetch(
-            `https://bolao-backend-k56l.onrender.com/api/ranking/${groupId}`,
+            `https://bolao-backend-k56l.onrender.com/ranking-grupo/${groupId}`,
             {
                 credentials: "include"
             }
@@ -829,7 +829,7 @@ async function loadRanking(groupId) {
 async function loadUserGroups() {
     try {
         const response = await fetch(
-            "https://bolao-backend-k56l.onrender.com/api/my-groups",
+            "https://bolao-backend-k56l.onrender.com/my-groups",
             {
                 method: "GET",
                 credentials: "include"

@@ -3400,30 +3400,40 @@
 
             <!-- Submenu interno -->
             <div class="subtabs">
-                <button onclick="showTab('create')">Criar Grupo</button>
-                <button onclick="showTab('join')">Entrar em Grupo</button>
-                <button onclick="showTab('myGroups')">Meus Grupos</button>
+                <button type="button" onclick="showTab('create')">Criar Grupo</button>
+                <button type="button" onclick="showTab('join')">Entrar em Grupo</button>
+                <button type="button" onclick="showTab('myGroups')">Meus Grupos</button>
             </div>
 
-            <!-- Aba Criar -->
-            <div id="create" class="tab-content" style="display: none;">
+            <!-- ================= CRIAR ================= -->
+            <div id="create" class="tab-content">
                 <h3>Criar Grupo</h3>
+
                 <input type="text" id="groupName" placeholder="Nome do grupo">
                 <textarea id="groupRules" placeholder="Regras do grupo"></textarea>
-                <button onclick="createGroup()">Criar</button>
+
+                <button type="button" onclick="createGroup()">Criar</button>
             </div>
 
-            <!-- Aba Entrar -->
+            <!-- ================= ENTRAR ================= -->
             <div id="join" class="tab-content" style="display: none;">
                 <h3>Entrar em Grupo</h3>
+
                 <input type="text" id="groupCode" placeholder="Código do grupo">
-                <button onclick="joinGroup()">Entrar</button>
+                <button type="button" onclick="joinGroup()">Entrar</button>
             </div>
 
-            <!-- Aba Meus Grupos -->
+            <!-- ================= MEUS GRUPOS ================= -->
             <div id="myGroups" class="tab-content" style="display: none;">
                 <h3>Meus Grupos</h3>
+
                 <div id="myGroupsList"></div>
+
+                <!-- Área do ranking do grupo -->
+                <div id="groupRankingArea" style="margin-top:20px; display:none;">
+                    <h4>Ranking do Grupo</h4>
+                    <div id="ranking"></div>
+                </div>
             </div>
 
         </div>
