@@ -190,11 +190,11 @@ function logout() {
     // PARA APOSTAR
 function abrirAposta(celula) {
 
-    // Se já apostou, trava
-    if (celula.dataset.apostado === "true" && celula.dataset.encerrado === "true") return;
+    const agora = new Date();
+    const dataJogo = new Date(celula.dataset.data);
 
-    // data
-    if (celula.dataset.encerrado === "true") {
+    // 🔒 BLOQUEIO REAL BASEADO NA DATA
+    if (agora >= dataJogo) {
         alert("Apostas encerradas para este jogo!");
         return;
     }
@@ -225,28 +225,31 @@ function abrirAposta(celula) {
 
         fetch("https://bolao-backend-k56l.onrender.com/apostar", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                usuario_id: usuarioId,
                 jogo: celula.dataset.jogo,
                 gols_casa: input1.value,
                 gols_fora: input2.value
             })
         })
-        .then(res => {
+        .then(async res => {
+
+            if (res.status === 403) {
+                alert("Este jogo já começou.");
+                bloquearJogosPassados(); // 🔥 atualiza visual
+                return;
+            }
+
             if (res.status === 401) {
                 alert("Sessão expirada. Faça login novamente.");
                 return;
             }
-            return res.json();
-        })
-        .then(data => {
+
+            const data = await res.json();
 
             if (data.erro) {
-                alert("Erro ao salvar aposta");
+                alert(data.erro);
                 return;
             }
 
@@ -470,11 +473,11 @@ async function verificarLogin() {
 
         await carregarPontuacao();
         await carregarApostas();
+        bloquearJogosPassados();
         await carregarPontosPorJogo();
         await carregarArtilheiros();
         await carregarRanking();
         await loadUserGroups();
-        bloquearJogosPassados();
 
     } else {
 
