@@ -871,18 +871,18 @@ async function loadUserGroups() {
 }
 
 function esconderTudo() {
-  document.getElementById("areaCriar").style.display = "none";
-  document.getElementById("areaEntrar").style.display = "none";
+  document.getElementById("create").style.display = "none";
+  document.getElementById("join").style.display = "none";
 }
 
 function mostrarCriar() {
   esconderTudo();
-  document.getElementById("areaCriar").style.display = "block";
+  document.getElementById("create").style.display = "block";
 }
 
 function mostrarEntrar() {
   esconderTudo();
-  document.getElementById("areaEntrar").style.display = "block";
+  document.getElementById("join").style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
