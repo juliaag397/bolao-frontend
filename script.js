@@ -1109,7 +1109,6 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const jogoDiv = botao.closest(".jogo");
 
-    // 🔒 Se já existir container, não cria outro
     if (jogoDiv.querySelector(".containerJogadores")) {
         return;
     }
@@ -1125,6 +1124,35 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     jogoDiv.appendChild(btnSalvar);
 
     criarSelectJogadores(golsBrasil, container);
+
+    // 🔥 CARREGA JOGADORES SALVOS
+    carregarJogadores(aposta_id, container);
+}
+
+async function carregarJogadores(aposta_id, container) {
+
+    try {
+
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`,
+            { credentials: "include" }
+        );
+
+        const jogadores = await response.json();
+
+        if (jogadores.length === 0) return;
+
+        const selects = container.querySelectorAll(".select-jogador");
+
+        jogadores.forEach((j, i) => {
+            if (selects[i]) {
+                selects[i].value = j.jogador;
+            }
+        });
+
+    } catch (err) {
+        console.error("Erro ao carregar jogadores", err);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
