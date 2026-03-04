@@ -959,6 +959,40 @@ async function toggleGroup(groupId) {
 }
 
     // ABA BRASIL
+async function carregarJogosBrasil() {
+
+    const usuario = localStorage.getItem("usuario");
+    const lista = document.getElementById("listaJogosBrasil");
+    lista.innerHTML = "";
+
+    try {
+
+        const response = await fetch(`https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuario}`);
+        const jogos = await response.json();
+
+        jogos.forEach(aposta => {
+
+            const div = document.createElement("div");
+            div.classList.add("jogo");
+
+            div.innerHTML = `
+                <strong>${aposta.jogo}</strong><br>
+                Seu palpite: ${aposta.gols_casa} x ${aposta.gols_fora}<br><br>
+                <button onclick="abrirJogadores(${aposta.id}, ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora})">
+                    Escolher jogadores
+                </button>
+                <hr>
+            `;
+
+            lista.appendChild(div);
+        });
+
+    } catch (error) {
+        alert("Erro ao carregar jogos.");
+        console.error(error);
+    }
+}
+
 function criarSelectJogadores(golsBrasil) {
 
     const container = document.getElementById("containerJogadores");
@@ -1060,6 +1094,20 @@ document.addEventListener("change", function(e) {
     }
 
 });
+
+function abrirJogadores(aposta_id, golsBrasil, botao) {
+
+    const jogoDiv = botao.closest(".jogo");
+
+    jogoDiv.innerHTML += `
+        <div id="containerJogadores"></div>
+        <button onclick="salvarJogadores(${aposta_id})">
+            Salvar jogadores
+        </button>
+    `;
+
+    criarSelectJogadores(golsBrasil);
+}
 
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
