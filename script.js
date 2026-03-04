@@ -961,13 +961,13 @@ async function toggleGroup(groupId) {
     // ABA BRASIL
 async function carregarJogosBrasil() {
 
-    const usuario = localStorage.getItem("usuario");
+    const usuario = localStorage.getItem("usuario_id");
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
 
     try {
 
-        const response = await fetch(`https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuario}`);
+        const response = await fetch(`https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuario_id}`);
         const jogos = await response.json();
 
         jogos.forEach(aposta => {
