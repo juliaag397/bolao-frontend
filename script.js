@@ -1054,11 +1054,13 @@ function criarSelectJogadores(golsBrasil, container) {
     }
 }
 
-async function salvarJogadores(aposta_id) {
+async function salvarJogadores(aposta_id, botao) {
 
     try {
 
-        const selects = document.querySelectorAll(".select-jogador");
+        const jogoDiv = botao.closest(".jogo");
+        const selects = jogoDiv.querySelectorAll(".select-jogador");
+
         const jogadoresEscolhidos = [];
 
         selects.forEach(select => {
@@ -1090,7 +1092,7 @@ async function salvarJogadores(aposta_id) {
         } else {
             alert(data.erro);
         }
-    
+
     } catch (error) {
         alert("Erro ao conectar com o servidor.");
         console.error(error);
@@ -1133,7 +1135,7 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const btnSalvar = document.createElement("button");
     btnSalvar.textContent = "Salvar jogadores";
-    btnSalvar.onclick = () => salvarJogadores(aposta_id);
+    btnSalvar.onclick = (e) => salvarJogadores(aposta_id, e.target);
 
     jogoDiv.appendChild(container);
     jogoDiv.appendChild(btnSalvar);
