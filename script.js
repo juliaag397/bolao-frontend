@@ -732,6 +732,9 @@ async function createGroup() {
 
         alert("Grupo criado! Código: " + data.code);
 
+        document.getElementById("groupName").value = "";
+        document.getElementById("groupRules").value = "";
+
         await loadUserGroups();
 
     } catch (error) {
@@ -771,6 +774,7 @@ async function joinGroup() {
         }
 
         alert("Você entrou no grupo!");
+        document.getElementById("groupCode").value = "";
         await loadUserGroups();
 
     } catch (err) {
@@ -868,21 +872,6 @@ async function loadUserGroups() {
     } catch (err) {
         console.error("Erro de conexão:", err);
     }
-}
-
-function esconderTudo() {
-  document.getElementById("create").style.display = "none";
-  document.getElementById("join").style.display = "none";
-}
-
-function mostrarCriar() {
-  esconderTudo();
-  document.getElementById("create").style.display = "block";
-}
-
-function mostrarEntrar() {
-  esconderTudo();
-  document.getElementById("join").style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
