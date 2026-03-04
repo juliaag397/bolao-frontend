@@ -1024,12 +1024,18 @@ function criarSelectJogadores(golsBrasil, container) {
 
     const jogadores = [
         "Vinicius Jr",
-        "Rodrygo",
+        "João Pedro",
         "Raphinha",
-        "Richarlison",
+        "Estevão",
         "Paquetá",
         "Endrick",
-        "Igor Jesus"
+        "Gabriel Magalhães",
+        "Marquinhos",
+        "Casemiro",
+        "Bruno Guimarães",
+        "Luis Henrique",
+        "Martinelli",
+        "Neymar"
     ];
 
     for (let i = 0; i < golsBrasil; i++) {
