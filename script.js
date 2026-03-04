@@ -459,6 +459,8 @@ async function verificarLogin() {
         usuarioLogado = true;
         usuarioId = data.id;
 
+        localStorage.setItem("usuario_id", data.id);
+
         document.getElementById("login-form").style.display = "none";
         document.getElementById("area-logada").style.display = "block";
 
@@ -480,6 +482,7 @@ async function verificarLogin() {
         await carregarArtilheiros();
         await carregarRanking();
         await loadUserGroups();
+        await carregarJogosBrasil();
 
     } else {
 
@@ -963,7 +966,7 @@ async function toggleGroup(groupId) {
     // ABA BRASIL
 async function carregarJogosBrasil() {
 
-    const usuario_id = localStorage.getItem("usuario_id");
+    const usuario_id = usuarioId;
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
 
@@ -1115,7 +1118,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();
     await verificarLogin();
-    carregarJogosBrasil();
 });
 
 document.querySelectorAll(".celula-aposta").forEach(celula => {
