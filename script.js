@@ -897,22 +897,26 @@ async function loadUserGroups() {
 }
 
 async function toggleGroup(groupId) {
-    const detailsDiv = document.getElementById(`group-details-${groupId}`);
 
+    const detailsDiv = document.getElementById(`group-details-${groupId}`);
     if (!detailsDiv) return;
 
-    const isOpen = detailsDiv.style.display === "block";
+    const isOpen = detailsDiv.classList.contains("ativo");
 
-    // Fecha se já estiver aberto
+    // 🔒 Fecha todos os outros grupos
+    document.querySelectorAll(".grupo-detalhes").forEach(div => {
+        div.classList.remove("ativo");
+    });
+
+    // Se já estava aberto, só fecha
     if (isOpen) {
-        detailsDiv.style.display = "none";
         return;
     }
 
-    // Abre
-    detailsDiv.style.display = "block";
+    // Abre o grupo clicado
+    detailsDiv.classList.add("ativo");
 
-    // Carrega ranking dentro da aba
+    // Carrega ranking apenas quando abrir
     await loadRankingInsideGroup(groupId);
 }
 
