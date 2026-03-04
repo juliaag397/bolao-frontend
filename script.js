@@ -998,34 +998,68 @@ function criarSelectJogadores(golsBrasil) {
 
 async function salvarJogadores(aposta_id) {
 
+    try {
+
+        const selects = document.querySelectorAll(".select-jogador");
+        const jogadoresEscolhidos = [];
+
+        selects.forEach(select => {
+            if (select.value !== "") {
+                jogadoresEscolhidos.push(select.value);
+            }
+        });
+
+        if (jogadoresEscolhidos.length !== selects.length) {
+            alert("Selecione todos os jogadores antes de salvar!");
+            return;
+        }
+
+        const response = await fetch("https://bolao-backend-k56l.onrender.com/salvar-jogadores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                aposta_id: aposta_id,
+                jogadores: jogadoresEscolhidos
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.sucesso) {
+            alert("Jogadores salvos com sucesso!");
+        } else {
+            alert(data.erro);
+        }
+    
+    } catch (error) {
+        alert("Erro ao conectar com o servidor.");
+        console.error(error);
+    }
+}
+
+document.addEventListener("change", function(e) {
+
+    if (!e.target.classList.contains("select-jogador")) return;
+
     const selects = document.querySelectorAll(".select-jogador");
-    const jogadoresEscolhidos = [];
+    const valores = [];
 
     selects.forEach(select => {
         if (select.value !== "") {
-            jogadoresEscolhidos.push(select.value);
+            valores.push(select.value);
         }
     });
 
-    const response = await fetch("https://bolao-backend-k56l.onrender.com/salvar-jogadores", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            aposta_id: aposta_id,
-            jogadores: jogadoresEscolhidos
-        })
-    });
+    const repetidos = valores.filter((item, index) => valores.indexOf(item) !== index);
 
-    const data = await response.json();
-
-    if (data.sucesso) {
-        alert("Jogadores salvos com sucesso!");
-    } else {
-        alert(data.erro);
+    if (repetidos.length > 0) {
+        alert("Você não pode escolher o mesmo jogador duas vezes!");
+        e.target.value = "";
     }
-}
+
+});
 
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
