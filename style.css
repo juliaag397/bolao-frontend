@@ -700,3 +700,113 @@ strong {
     padding: 20px;
     opacity: 1;
 }
+
+/* ===== ABA JOGOS DO BRASIL ===== */
+
+.jogos-brasil {
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+/* Título */
+.jogos-brasil h2 {
+    background: linear-gradient(90deg, #009C3B, #002776);
+    color: white;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+}
+
+/* Card de cada jogo */
+.jogo {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-left: 6px solid #009C3B;
+    transition: 0.3s ease;
+}
+
+.jogo:hover {
+    transform: translateY(-3px);
+}
+
+/* Nome do jogo */
+.jogo strong {
+    font-size: 18px;
+    color: #002776;
+}
+
+/* Palpite */
+.jogo p {
+    margin: 8px 0;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Botões */
+.jogo button {
+    background: linear-gradient(90deg, #009C3B, #002776);
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 8px;
+}
+
+.jogo button:hover {
+    background: #FFDF00;
+    color: #002776;
+    transform: scale(1.05);
+}
+
+/* Container dos selects */
+.containerJogadores {
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    border: 2px solid #009C3B;
+}
+
+/* Select estilizado */
+.select-jogador {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 2px solid #009C3B;
+    outline: none;
+    font-weight: bold;
+    color: #002776;
+    transition: 0.2s ease;
+}
+
+.select-jogador:focus {
+    border-color: #FFDF00;
+    box-shadow: 0 0 6px #FFDF00;
+}
+
+/* Linha divisória */
+.jogo hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, #009C3B, #FFDF00, #002776);
+    margin-top: 20px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .jogo {
+        padding: 15px;
+    }
+
+    .jogo strong {
+        font-size: 16px;
+    }
+}

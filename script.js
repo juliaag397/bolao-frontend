@@ -981,11 +981,22 @@ async function carregarJogosBrasil() {
             div.classList.add("jogo");
 
             div.innerHTML = `
-                <strong>${aposta.jogo}</strong><br>
-                Seu palpite: ${aposta.gols_casa} x ${aposta.gols_fora}<br><br>
-                <button onclick="abrirJogadores(${aposta.id}, ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora}, this)">
+                <strong>⚽ ${aposta.jogo}</strong>
+
+                <p class="palpite">
+                    Seu palpite: 
+                    <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
+                </p>
+
+                <button class="btn-jogadores"
+                    onclick="abrirJogadores(
+                        ${aposta.id}, 
+                        ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora}, 
+                        this
+                    )">
                     Escolher jogadores
                 </button>
+
                 <hr>
             `;
 
