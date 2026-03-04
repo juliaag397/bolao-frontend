@@ -144,7 +144,7 @@ function fazerLogin() {
                 apostas.forEach(aposta => {
 
                     const celula = document.querySelector(
-                        `[data-jogo="${aposta.jogo}"]`
+                        `.celula-aposta[data-jogo-id="${aposta.jogo_id}"]`
                     );
 
                     if (celula) {
@@ -230,7 +230,7 @@ function abrirAposta(celula) {
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                jogo: celula.dataset.jogo,
+                jogo_id: celula.dataset.jogoId,
                 gols_casa: input1.value,
                 gols_fora: input2.value
             })
@@ -303,7 +303,7 @@ async function carregarApostas() {
         apostas.forEach(aposta => {
 
             const celula = document.querySelector(
-                `.celula-aposta[data-jogo="${aposta.jogo}"]`
+                `.celula-aposta[data-jogo-id="${aposta.jogo_id}"]`
             );
 
             if (celula) {
@@ -629,7 +629,7 @@ async function carregarPontosPorJogo() {
     apostas.forEach(aposta => {
 
         const celula = document.querySelector(
-            `.pontos-jogo[data-pontos="${aposta.jogo}"]`
+            `.pontos-jogo[data-jogo-id="${aposta.jogo_id}"]`
         );
 
         if (celula) {
@@ -648,7 +648,7 @@ async function carregarJogos() {
     jogos.forEach(jogo => {
 
         const celula = document.querySelector(
-            `.placar-oficial[data-placar="${jogo.jogo}"]`
+            `.placar-oficial[data-jogo-id="${jogo.id}"]`
         );
 
         if (celula) {
@@ -966,13 +966,22 @@ async function toggleGroup(groupId) {
     // ABA BRASIL
 async function carregarJogosBrasil() {
 
-    const usuario_id = usuarioId;
+    if (!usuarioId) return;
+
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
 
     try {
 
-        const response = await fetch(`https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuario_id}`);
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuarioId}`,
+            { credentials: "include" }
+        );
+
+        if (!response.ok) {
+            throw new Error("Erro ao buscar jogos");
+        }
+
         const jogos = await response.json();
 
         jogos.forEach(aposta => {
@@ -984,14 +993,14 @@ async function carregarJogosBrasil() {
                 <strong>⚽ ${aposta.jogo}</strong>
 
                 <p class="palpite">
-                    Seu palpite: 
+                    Seu palpite:
                     <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
                 </p>
 
                 <button class="btn-jogadores"
                     onclick="abrirJogadores(
-                        ${aposta.id}, 
-                        ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora}, 
+                        ${aposta.id},
+                        ${aposta.gols_brasil},
                         this
                     )">
                     Escolher jogadores
