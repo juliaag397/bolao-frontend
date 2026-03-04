@@ -1126,7 +1126,10 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     criarSelectJogadores(golsBrasil, container);
 
     // 🔥 CARREGA JOGADORES SALVOS
-    carregarJogadores(aposta_id, container);
+    if (aposta_id) {
+        carregarJogadores(aposta_id, container);
+    }
+
 }
 
 async function carregarJogadores(aposta_id, container) {
@@ -1138,9 +1141,10 @@ async function carregarJogadores(aposta_id, container) {
             { credentials: "include" }
         );
 
-        const jogadores = await response.json();
+        const data = await response.json();
+        const jogadores = data.jogadores; // 👈 pegar o array correto
 
-        if (jogadores.length === 0) return;
+        if (!Array.isArray(jogadores) || jogadores.length === 0) return;
 
         const selects = container.querySelectorAll(".select-jogador");
 
