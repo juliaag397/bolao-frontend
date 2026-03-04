@@ -870,6 +870,21 @@ async function loadUserGroups() {
     }
 }
 
+function esconderTudo() {
+  document.getElementById("areaCriar").style.display = "none";
+  document.getElementById("areaEntrar").style.display = "none";
+}
+
+function mostrarCriar() {
+  esconderTudo();
+  document.getElementById("areaCriar").style.display = "block";
+}
+
+function mostrarEntrar() {
+  esconderTudo();
+  document.getElementById("areaEntrar").style.display = "block";
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();
