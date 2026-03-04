@@ -869,10 +869,7 @@ async function loadUserGroups() {
                         <p><strong>Código:</strong> ${group.code || "----"}</p>
 
                         <p><strong>Regras:</strong></p>
-                        <p>
-                            - 3 pontos por placar exato<br>
-                            - 1 ponto por acertar vencedor<br>
-                        </p>
+                        <p>${group.rules ? group.rules : "Nenhuma regra definida."}</p>
 
                         <h4>Ranking</h4>
                         <div id="ranking-${group.id}">
