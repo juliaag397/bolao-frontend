@@ -1099,28 +1099,6 @@ async function salvarJogadores(aposta_id, botao) {
     }
 }
 
-document.addEventListener("change", function(e) {
-
-    if (!e.target.classList.contains("select-jogador")) return;
-
-    const selects = document.querySelectorAll(".select-jogador");
-    const valores = [];
-
-    selects.forEach(select => {
-        if (select.value !== "") {
-            valores.push(select.value);
-        }
-    });
-
-    const repetidos = valores.filter((item, index) => valores.indexOf(item) !== index);
-
-    if (repetidos.length > 0) {
-        alert("Você não pode escolher o mesmo jogador duas vezes!");
-        e.target.value = "";
-    }
-
-});
-
 function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const jogoDiv = botao.closest(".jogo");
