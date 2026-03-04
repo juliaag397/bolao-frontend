@@ -980,7 +980,7 @@ async function carregarJogosBrasil() {
             div.innerHTML = `
                 <strong>${aposta.jogo}</strong><br>
                 Seu palpite: ${aposta.gols_casa} x ${aposta.gols_fora}<br><br>
-                <button onclick="abrirJogadores(${aposta.id}, ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora})">
+                <button onclick="abrirJogadores(${aposta.id}, ${aposta.jogo.startsWith("Brasil") ? aposta.gols_casa : aposta.gols_fora}, this)">
                     Escolher jogadores
                 </button>
                 <hr>
@@ -995,9 +995,8 @@ async function carregarJogosBrasil() {
     }
 }
 
-function criarSelectJogadores(golsBrasil) {
+function criarSelectJogadores(golsBrasil, container) {
 
-    const container = document.getElementById("containerJogadores");
     container.innerHTML = "";
 
     const jogadores = [
@@ -1102,13 +1101,14 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     const jogoDiv = botao.closest(".jogo");
 
     jogoDiv.innerHTML += `
-        <div id="containerJogadores"></div>
+        <div class="containerJogadores"></div>
         <button onclick="salvarJogadores(${aposta_id})">
             Salvar jogadores
         </button>
     `;
 
-    criarSelectJogadores(golsBrasil);
+    const container = jogoDiv.querySelector(".containerJogadores");
+    criarSelectJogadores(golsBrasil, container);
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
