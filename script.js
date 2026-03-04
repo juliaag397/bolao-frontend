@@ -783,15 +783,11 @@ async function joinGroup() {
     }
 }
 
-async function loadRanking(groupId) {
-    if (!groupId) return;
-
+async function loadRankingInsideGroup(groupId) {
     try {
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/ranking-grupo/${groupId}`,
-            {
-                credentials: "include"
-            }
+            { credentials: "include" }
         );
 
         if (!response.ok) {
@@ -800,7 +796,7 @@ async function loadRanking(groupId) {
 
         const data = await response.json();
 
-        const rankingDiv = document.getElementById("ranking");
+        const rankingDiv = document.getElementById(`ranking-${groupId}`);
         if (!rankingDiv) return;
 
         rankingDiv.innerHTML = "";
@@ -861,9 +857,30 @@ async function loadUserGroups() {
 
         data.forEach(group => {
             html += `
-                <button onclick="openGroup('${group.id}')">
-                    ${group.name}
-                </button>
+                <div class="group-item">
+                    <button onclick="toggleGroup('${group.id}')">
+                        ${group.name}
+                    </button>
+
+                    <div id="group-details-${group.id}" 
+                        class="group-details" 
+                        style="display: none; margin-top:10px;">
+
+                        <p><strong>Código:</strong> ${group.code || "----"}</p>
+
+                        <p><strong>Regras:</strong></p>
+                        <p>
+                            - 3 pontos por placar exato<br>
+                            - 1 ponto por acertar vencedor<br>
+                        </p>
+
+                        <h4>Ranking</h4>
+                        <div id="ranking-${group.id}">
+                            Carregando...
+                        </div>
+
+                    </div>
+                </div>
             `;
         });
 
@@ -872,6 +889,26 @@ async function loadUserGroups() {
     } catch (err) {
         console.error("Erro de conexão:", err);
     }
+}
+
+async function toggleGroup(groupId) {
+    const detailsDiv = document.getElementById(`group-details-${groupId}`);
+
+    if (!detailsDiv) return;
+
+    const isOpen = detailsDiv.style.display === "block";
+
+    // Fecha se já estiver aberto
+    if (isOpen) {
+        detailsDiv.style.display = "none";
+        return;
+    }
+
+    // Abre
+    detailsDiv.style.display = "block";
+
+    // Carrega ranking dentro da aba
+    await loadRankingInsideGroup(groupId);
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
