@@ -865,26 +865,31 @@ async function loadUserGroups() {
 
         data.forEach(group => {
             html += `
-                <div class="group-item">
-                    <button onclick="toggleGroup('${group.id}')">
+                <div class="grupo-card">
+
+                    <button class="grupo-titulo" onclick="toggleGroup('${group.id}')">
                         ${group.name}
                     </button>
 
                     <div id="group-details-${group.id}" 
-                        class="group-details" 
-                        style="display: none; margin-top:10px;">
+                        class="grupo-detalhes">
 
-                        <p><strong>Código:</strong> ${group.code || "----"}</p>
+                        <div class="grupo-info">
+                            <p><span>Código:</span> ${group.code || "----"}</p>
 
-                        <p><strong>Regras:</strong></p>
-                        <p>${group.rules ? group.rules : "Nenhuma regra definida."}</p>
+                            <p><span>Regras:</span></p>
+                            <div class="grupo-regras">
+                                ${group.rules ? group.rules : "Nenhuma regra definida."}
+                            </div>
+                        </div>
 
-                        <h4>Ranking</h4>
-                        <div id="ranking-${group.id}">
-                            Carregando...
+                        <div class="grupo-ranking">
+                            <h4>🏆 Ranking</h4>
+                            <div id="ranking-${group.id}"></div>
                         </div>
 
                     </div>
+
                 </div>
             `;
         });
