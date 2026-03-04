@@ -958,6 +958,75 @@ async function toggleGroup(groupId) {
     await loadRankingInsideGroup(groupId);
 }
 
+    // ABA BRASIL
+function criarSelectJogadores(golsBrasil) {
+
+    const container = document.getElementById("containerJogadores");
+    container.innerHTML = "";
+
+    const jogadores = [
+        "Vinicius Jr",
+        "Rodrygo",
+        "Raphinha",
+        "Richarlison",
+        "Paquetá",
+        "Endrick",
+        "Igor Jesus"
+    ];
+
+    for (let i = 0; i < golsBrasil; i++) {
+
+        const select = document.createElement("select");
+        select.classList.add("select-jogador");
+
+        const optionPadrao = document.createElement("option");
+        optionPadrao.value = "";
+        optionPadrao.textContent = "Selecione o jogador";
+        select.appendChild(optionPadrao);
+
+        jogadores.forEach(jogador => {
+            const option = document.createElement("option");
+            option.value = jogador;
+            option.textContent = jogador;
+            select.appendChild(option);
+        });
+
+        container.appendChild(select);
+        container.appendChild(document.createElement("br"));
+    }
+}
+
+async function salvarJogadores(aposta_id) {
+
+    const selects = document.querySelectorAll(".select-jogador");
+    const jogadoresEscolhidos = [];
+
+    selects.forEach(select => {
+        if (select.value !== "") {
+            jogadoresEscolhidos.push(select.value);
+        }
+    });
+
+    const response = await fetch("https://SEU-BACKEND.onrender.com/salvar-jogadores", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            aposta_id: aposta_id,
+            jogadores: jogadoresEscolhidos
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.sucesso) {
+        alert("Jogadores salvos com sucesso!");
+    } else {
+        alert(data.erro);
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();
