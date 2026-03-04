@@ -1150,7 +1150,7 @@ async function carregarJogadores(aposta_id, container) {
 
         jogadores.forEach((j, i) => {
             if (selects[i]) {
-                selects[i].value = j.jogador;
+                selects[i].value = j.jogador_nome;
             }
         });
 
