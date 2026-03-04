@@ -809,12 +809,20 @@ async function loadRankingInsideGroup(groupId) {
         let html = "";
 
         data.forEach((member, index) => {
-            const email = member.users?.email || "Usuário";
+
+            const nome = member.nome || "Usuário";
             const score = member.score ?? 0;
+
+            let medalha;
+
+            if (index === 0) medalha = "🥇";
+            else if (index === 1) medalha = "🥈";
+            else if (index === 2) medalha = "🥉";
+            else medalha = index + 1;
 
             html += `
                 <div>
-                    ${index + 1}º - ${email} - ${score} pontos
+                    ${medalha} - ${nome} - ${score} pontos
                 </div>
             `;
         });
