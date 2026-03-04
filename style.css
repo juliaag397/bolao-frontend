@@ -664,3 +664,91 @@ strong {
     color: #002776;
     transform: translateX(5px);
 }
+
+/* ===== CARD DETALHES DO GRUPO ===== */
+
+.grupo-card {
+    margin-bottom: 15px;
+}
+
+/* Área interna retrátil */
+.grupo-detalhes {
+    background: white;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-left: 6px solid #009C3B;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Informações do grupo */
+.grupo-info p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #002776;
+}
+
+.grupo-info span {
+    font-weight: bold;
+    color: #009C3B;
+}
+
+/* Caixa das regras */
+.grupo-regras {
+    background: #f4f9f6;
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #FFDF00;
+    margin-bottom: 15px;
+    color: #002776;
+}
+
+/* Ranking interno */
+.grupo-ranking h4 {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #FFDF00;
+    color: #002776;
+}
+
+/* Tabela ranking dentro do grupo */
+.grupo-ranking table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.grupo-ranking th {
+    background: linear-gradient(90deg, #002776, #009C3B);
+    color: #FFDF00;
+    padding: 10px;
+    font-size: 13px;
+}
+
+.grupo-ranking td {
+    padding: 10px;
+    font-weight: bold;
+    color: #002776;
+}
+
+.grupo-ranking tr:hover {
+    background-color: #e6f5ec;
+    transition: 0.2s;
+}
+
+/* Destaque top 3 */
+.grupo-ranking tr:nth-child(1) {
+    background: linear-gradient(90deg, #FFD700, #FFF4B0);
+}
+
+.grupo-ranking tr:nth-child(2) {
+    background: linear-gradient(90deg, #C0C0C0, #E8E8E8);
+}
+
+.grupo-ranking tr:nth-child(3) {
+    background: linear-gradient(90deg, #CD7F32, #F5D6B4);
+}
