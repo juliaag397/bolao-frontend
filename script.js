@@ -1113,6 +1113,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();
     await verificarLogin();
+    carregarJogosBrasil();
 });
 
 document.querySelectorAll(".celula-aposta").forEach(celula => {
