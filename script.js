@@ -1123,14 +1123,21 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const jogoDiv = botao.closest(".jogo");
 
-    jogoDiv.innerHTML += `
-        <div class="containerJogadores"></div>
-        <button onclick="salvarJogadores(${aposta_id})">
-            Salvar jogadores
-        </button>
-    `;
+    // 🔒 Se já existir container, não cria outro
+    if (jogoDiv.querySelector(".containerJogadores")) {
+        return;
+    }
 
-    const container = jogoDiv.querySelector(".containerJogadores");
+    const container = document.createElement("div");
+    container.classList.add("containerJogadores");
+
+    const btnSalvar = document.createElement("button");
+    btnSalvar.textContent = "Salvar jogadores";
+    btnSalvar.onclick = () => salvarJogadores(aposta_id);
+
+    jogoDiv.appendChild(container);
+    jogoDiv.appendChild(btnSalvar);
+
     criarSelectJogadores(golsBrasil, container);
 }
 
