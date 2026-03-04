@@ -703,8 +703,30 @@ function showTab(tabId) {
 }
 
 async function createGroup() {
-    const name = document.getElementById("groupName").value.trim();
-    const rules = document.getElementById("groupRules").value.trim();
+    const nameInput = document.getElementById("groupName");
+    const rulesInput = document.getElementById("groupRules");
+
+    const name = nameInput.value.trim();
+    const rules = rulesInput.value.trim();
+
+    // 🚨 VALIDAÇÃO FRONTEND
+    if (!name) {
+        alert("O nome do grupo é obrigatório.");
+        nameInput.focus();
+        return;
+    }
+
+    if (!rules) {
+        alert("As regras do grupo são obrigatórias.");
+        rulesInput.focus();
+        return;
+    }
+
+    if (name.length < 3) {
+        alert("O nome do grupo deve ter pelo menos 3 caracteres.");
+        nameInput.focus();
+        return;
+    }
 
     try {
         const response = await fetch(
@@ -719,21 +741,17 @@ async function createGroup() {
             }
         );
 
-        if (!response.ok) {
-            throw new Error("Erro no servidor");
-        }
-
         const data = await response.json();
 
-        if (data.error) {
-            alert("Erro ao criar grupo");
+        if (!response.ok) {
+            alert(data.error || "Erro no servidor.");
             return;
         }
 
         alert("Grupo criado! Código: " + data.code);
 
-        document.getElementById("groupName").value = "";
-        document.getElementById("groupRules").value = "";
+        nameInput.value = "";
+        rulesInput.value = "";
 
         await loadUserGroups();
 
