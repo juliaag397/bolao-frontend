@@ -126,12 +126,14 @@ function fazerLogin() {
         }
 
         if (data.sucesso) {
-        verificarLogin();
-        }
+            verificarLogin();
 
-        // 🔥 LOGIN DEU CERTO
-        usuarioLogado = true; // ✅ ATIVA LOGIN
-        usuarioId = data.id;
+            usuarioLogado = true;
+            usuarioId = data.id;
+
+            // 🔥 ADICIONA ISSO AQUI
+            localStorage.setItem("usuario_id", data.id);
+        }
 
         fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
             credentials: "include"
@@ -961,7 +963,7 @@ async function toggleGroup(groupId) {
     // ABA BRASIL
 async function carregarJogosBrasil() {
 
-    const usuario = localStorage.getItem("usuario_id");
+    const usuario_id = localStorage.getItem("usuario_id");
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
 
