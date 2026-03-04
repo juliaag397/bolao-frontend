@@ -509,13 +509,15 @@ strong {
 }
 
     /*---------ranking-----------*/
-/* ===== RANKING GERAL ===== */
+/* ===== RANKING PADRÃO (GERAL + GRUPOS) ===== */
 
 #ranking {
     animation: fadeIn 0.4s ease-in-out;
 }
 
-#ranking table {
+.ranking-tabela {
+    width: 100%;
+    border-collapse: collapse;
     background: white;
     border-radius: 12px;
     overflow: hidden;
@@ -523,7 +525,7 @@ strong {
 }
 
 /* Cabeçalho */
-#ranking th {
+.ranking-tabela th {
     background: linear-gradient(90deg, #002776, #009C3B);
     color: #FFDF00;
     padding: 12px;
@@ -532,32 +534,33 @@ strong {
 }
 
 /* Linhas */
-#ranking td {
+.ranking-tabela td {
     padding: 12px;
     font-weight: bold;
     color: #002776;
+    text-align: center;
 }
 
 /* Hover suave */
-#ranking tr:hover {
+.ranking-tabela tbody tr:hover {
     background-color: #e6f5ec;
     transform: scale(1.01);
     transition: 0.2s ease;
 }
 
 /* 🥇 Primeiro lugar */
-#ranking tr:nth-child(1) {
+.ranking-tabela tbody tr:nth-child(1) {
     background: linear-gradient(90deg, #FFD700, #FFF4B0);
     font-size: 16px;
 }
 
 /* 🥈 Segundo lugar */
-#ranking tr:nth-child(2) {
+.ranking-tabela tbody tr:nth-child(2) {
     background: linear-gradient(90deg, #C0C0C0, #E8E8E8);
 }
 
 /* 🥉 Terceiro lugar */
-#ranking tr:nth-child(3) {
+.ranking-tabela tbody tr:nth-child(3) {
     background: linear-gradient(90deg, #CD7F32, #F5D6B4);
 }
 
@@ -568,7 +571,7 @@ strong {
 }
 
 /* Número/medalha maior */
-#ranking td:first-child {
+.ranking-tabela td:first-child {
     font-size: 18px;
 }
 

@@ -799,19 +799,24 @@ async function loadRankingInsideGroup(groupId) {
         const rankingDiv = document.getElementById(`ranking-${groupId}`);
         if (!rankingDiv) return;
 
-        rankingDiv.innerHTML = "";
-
         if (!data || data.length === 0) {
             rankingDiv.innerHTML = "<p>Nenhum participante ainda.</p>";
             return;
         }
 
-        let html = "";
+        let html = `
+            <table class="ranking-tabela">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
 
         data.forEach((member, index) => {
-
-            const nome = member.nome || "Usuário";
-            const score = member.score ?? 0;
 
             let medalha;
 
@@ -821,11 +826,18 @@ async function loadRankingInsideGroup(groupId) {
             else medalha = index + 1;
 
             html += `
-                <div>
-                    ${medalha} - ${nome} - ${score} pontos
-                </div>
+                <tr>
+                    <td>${medalha}</td>
+                    <td>${member.nome}</td>
+                    <td>${member.score ?? 0}</td>
+                </tr>
             `;
         });
+
+        html += `
+                </tbody>
+            </table>
+        `;
 
         rankingDiv.innerHTML = html;
 
