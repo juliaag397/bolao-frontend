@@ -1141,8 +1141,7 @@ async function carregarJogadores(aposta_id, container) {
             { credentials: "include" }
         );
 
-        const data = await response.json();
-        const jogadores = data.jogadores; // 👈 pegar o array correto
+        const jogadores = await response.json(); // 👈 direto
 
         if (!Array.isArray(jogadores) || jogadores.length === 0) return;
 
