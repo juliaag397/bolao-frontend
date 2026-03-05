@@ -1027,7 +1027,7 @@ async function carregarJogosBrasil() {
 
                 <div class="pontuacao-aposta">
                     <strong>🏆 Pontos nessa aposta:</strong>
-                    <span class="pontos">0</span>
+                    <span class="pontos">${aposta.pontos_jogadores || 0}</span>
                 </div>
 
                 <hr>
@@ -1072,6 +1072,8 @@ async function carregarGolsBrasil(jogo_id, jogoDiv) {
 function criarSelectJogadores(golsBrasil, container) {
 
     container.innerHTML = "";
+
+    golsBrasil = Math.min(golsBrasil, 4);
 
     const jogadores = [
         "Vinicius Jr",
