@@ -1,6 +1,7 @@
 
 let usuarioId = null;
 let usuarioLogado = false;
+let loginCarregando = false
 
 // ===============================
 // TROCAR ENTRE LOGIN E CADASTRO
@@ -91,6 +92,10 @@ function fazerCadastro() {
 // ===============================
 
 function fazerLogin() {
+
+    if (loginCarregando) return;
+    loginCarregando = true;
+
     const email = document.getElementById("li-email").value;
     const senha = document.getElementById("li-senha").value;
 
@@ -102,6 +107,7 @@ function fazerLogin() {
 
     if (!email || !senha) {
         erro.textContent = "Preencha todos os campos!";
+        loginCarregando = false;
         return;
     }
 
@@ -110,7 +116,7 @@ function fazerLogin() {
         headers: {
             "Content-Type": "application/json"
         },
-        credentials: "include", // 🔥 OBRIGATÓRIO
+        credentials: "include",
         body: JSON.stringify({
             email: email,
             senha: senha
@@ -118,26 +124,31 @@ function fazerLogin() {
     })
     .then(res => res.json())
     .then(data => {
+
         console.log(data);
 
         if (data.erro) {
             erro.textContent = data.erro;
+            loginCarregando = false;
             return;
         }
 
         if (data.sucesso) {
-            verificarLogin();
 
             usuarioLogado = true;
             usuarioId = data.id;
 
-            // 🔥 ADICIONA ISSO AQUI
             localStorage.setItem("usuario_id", data.id);
-        }
 
-        fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
-            credentials: "include"
-        })
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("area-logada").style.display = "block";
+
+            document.getElementById("boas-vindas").textContent =
+                "👋 Bem-vinda, " + data.nome;
+
+            fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
+                credentials: "include"
+            })
             .then(res => res.json())
             .then(apostas => {
 
@@ -148,7 +159,8 @@ function fazerLogin() {
                     );
 
                     if (celula) {
-                        celula.innerHTML = aposta.gols_casa + " x " + aposta.gols_fora;
+                        celula.innerHTML =
+                            aposta.gols_casa + " x " + aposta.gols_fora;
                         celula.dataset.apostado = "true";
                     }
 
@@ -156,15 +168,15 @@ function fazerLogin() {
 
             });
 
-        document.getElementById("login-form").style.display = "none";
-        document.getElementById("area-logada").style.display = "block";
+        }
 
-        document.getElementById("boas-vindas").textContent =
-            "👋 Bem-vinda, " + data.nome;
+        loginCarregando = false;
+
     })
     .catch(err => {
         console.error(err);
         erro.textContent = "Erro ao conectar com servidor.";
+        loginCarregando = false;
     });
 }
 
