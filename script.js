@@ -1036,6 +1036,7 @@ async function carregarJogosBrasil() {
             lista.appendChild(div);
 
             carregarGolsBrasil(aposta.jogo_id, div);
+            carregarPontosJogadores(aposta.id, div);
         });
 
     } catch (error) {
@@ -1209,6 +1210,30 @@ async function carregarJogadores(aposta_id, container) {
     } catch (err) {
         console.error("Erro ao carregar jogadores", err);
     }
+}
+
+async function carregarPontosJogadores(aposta_id, div) {
+
+  try {
+
+    const response = await fetch(
+      `https://bolao-backend-k56l.onrender.com/pontos-jogadores/${aposta_id}`
+    );
+
+    const data = await response.json();
+
+    const span = div.querySelector(".pontos");
+
+    if (span) {
+      span.textContent = data.pontos || 0;
+    }
+
+  } catch (erro) {
+
+    console.error("Erro ao carregar pontos", erro);
+
+  }
+
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
