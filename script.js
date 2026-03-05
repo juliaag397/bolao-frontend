@@ -1220,6 +1220,8 @@ async function carregarPontosJogadores(aposta_id, div) {
       `https://bolao-backend-k56l.onrender.com/pontos-jogadores/${aposta_id}`
     );
 
+    if (!response.ok) return;
+
     const data = await response.json();
 
     const span = div.querySelector(".pontos");
