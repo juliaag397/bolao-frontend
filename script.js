@@ -168,6 +168,8 @@ function fazerLogin() {
 
             });
 
+            verificarLogin();
+
         }
 
         loginCarregando = false;
