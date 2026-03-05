@@ -1020,15 +1020,52 @@ async function carregarJogosBrasil() {
                     Escolher jogadores
                 </button>
 
+                <div class="resultado-gols">
+                    <strong>⚽ Quem fez os gols:</strong>
+                    <span class="gols-reais">-</span>
+                </div>
+
+                <div class="pontuacao-aposta">
+                    <strong>🏆 Pontos nessa aposta:</strong>
+                    <span class="pontos">0</span>
+                </div>
+
                 <hr>
             `;
 
             lista.appendChild(div);
+
+            carregarGolsBrasil(aposta.jogo_id, div);
         });
 
     } catch (error) {
         alert("Erro ao carregar jogos.");
         console.error(error);
+    }
+}
+
+async function carregarGolsBrasil(jogo_id, jogoDiv) {
+
+    try {
+
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/gols-brasil/${jogo_id}`
+        );
+
+        const gols = await response.json();
+
+        if (!gols.length) return;
+
+        const nomes = gols.map(g => g.jogador_nome);
+
+        const span = jogoDiv.querySelector(".gols-reais");
+
+        if (span) {
+            span.textContent = nomes.join(", ");
+        }
+
+    } catch (err) {
+        console.error("Erro ao carregar gols", err);
     }
 }
 
