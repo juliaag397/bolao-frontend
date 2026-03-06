@@ -1169,35 +1169,31 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const container = document.createElement("div");
     container.classList.add("containerJogadores");
-
     jogoDiv.appendChild(container);
+
+    const data = jogoDiv.dataset.data;
+    const agora = new Date();
+    const dataJogo = new Date(data);
+
+    // 🔒 SE O JOGO JÁ COMEÇOU
+    if (agora >= dataJogo) {
+
+        // apenas mostra jogadores apostados
+        if (aposta_id) {
+            carregarJogadores(aposta_id, container);
+        }
+
+        return;
+    }
+
+    // ✅ SE O JOGO NÃO COMEÇOU
 
     criarSelectJogadores(golsBrasil, container);
 
-    // 🔥 carregar jogadores já apostados
     if (aposta_id) {
         carregarJogadores(aposta_id, container);
     }
 
-    // 🔒 verificar se jogo já começou
-    const data = jogoDiv.dataset.data;
-
-    if (!data) return;
-
-    const agora = new Date();
-    const dataJogo = new Date(data);
-
-    if (agora >= dataJogo) {
-
-        // ❌ não deixa editar
-        const selects = container.querySelectorAll("select");
-        selects.forEach(s => s.disabled = true);
-
-        // ❌ não mostra botão salvar
-        return;
-    }
-
-    // ✅ se jogo não começou → pode salvar
     const btnSalvar = document.createElement("button");
     btnSalvar.textContent = "Salvar jogadores";
     btnSalvar.onclick = (e) => salvarJogadores(aposta_id, e.target);
