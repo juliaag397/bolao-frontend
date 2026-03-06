@@ -1002,6 +1002,7 @@ async function carregarJogosBrasil() {
 
             const div = document.createElement("div");
             div.classList.add("jogo");
+            div.dataset.data = aposta.data_jogo;
 
             div.innerHTML = `
                 <strong>⚽ ${aposta.jogo}</strong>
@@ -1011,12 +1012,7 @@ async function carregarJogosBrasil() {
                     <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
                 </p>
 
-                <button class="btn-jogadores"
-                    onclick="abrirJogadores(
-                        ${aposta.id},
-                        ${aposta.gols_brasil},
-                        this
-                    )">
+                <button class="btn-jogadores">
                     Escolher jogadores
                 </button>
 
@@ -1034,6 +1030,21 @@ async function carregarJogosBrasil() {
             `;
 
             lista.appendChild(div);
+
+            const btn = div.querySelector(".btn-jogadores");
+
+            const agora = new Date();
+            const dataJogo = new Date(aposta.data_jogo);
+
+            btn.onclick = function () {
+
+                if (agora >= dataJogo) {
+                    alert("Este jogo já começou. Não é possível alterar jogadores.");
+                    return;
+                }
+
+                abrirJogadores(aposta.id, aposta.gols_brasil, btn);
+            };
 
             carregarGolsBrasil(aposta.jogo_id, div);
             carregarPontosJogadores(aposta.id, div);
