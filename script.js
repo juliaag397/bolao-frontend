@@ -497,6 +497,7 @@ async function verificarLogin() {
         await carregarRanking();
         await loadUserGroups();
         await carregarJogosBrasil();
+        await carregarArtilheiroOficial();
 
     } else {
 
@@ -611,6 +612,30 @@ function atualizarResultadoFinal(nome, gols) {
 
     // Atualiza total de gols
     document.getElementById("golsOficial").innerText = gols + " gols";
+}
+
+async function carregarArtilheiroOficial() {
+
+    try {
+
+        const res = await fetch(
+            "https://bolao-backend-k56l.onrender.com/artilheiro-oficial"
+        );
+
+        const data = await res.json();
+
+        if (data.artilheiro_oficial) {
+
+            document.getElementById("artilheiroOficial").innerText =
+                data.artilheiro_oficial;
+
+        }
+
+    } catch (erro) {
+
+        console.log("Erro ao carregar artilheiro:", erro);
+
+    }
 }
 
     // CALCULAR PONTOS
