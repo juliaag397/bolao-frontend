@@ -432,6 +432,29 @@ function carregarArtilheiros() {
 
 }
 
+async function carregarResultadoArtilheiro() {
+
+    try {
+
+        const res = await fetch(
+            "https://bolao-backend-k56l.onrender.com/resultado-artilheiro"
+        );
+
+        const data = await res.json();
+
+        document.getElementById("artilheiroOficial").textContent =
+            data.artilheiro_oficial || "A definir";
+
+        document.getElementById("golsOficial").textContent =
+            (data.gols_artilheiro || "-") + " gols";
+
+    } catch (erro) {
+
+        console.log("Erro ao carregar artilheiro:", erro);
+
+    }
+}
+
     // PONTUACAO TOTAL
 async function carregarPontuacao() {
 
@@ -499,6 +522,7 @@ async function verificarLogin() {
         await loadUserGroups();
         await carregarJogosBrasil();
         await carregarArtilheiroOficial();
+        await carregarResultadoArtilheiro();
 
     } else {
 
