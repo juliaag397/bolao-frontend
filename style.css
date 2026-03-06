@@ -1,465 +1,673 @@
-/* ===== TEMA COPA DO MUNDO - BRASIL 2026 ===== */
+/* ===== TEMA COPA DO MUNDO 2026 ===== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root{
+
+--fifa-red:#e10600;
+--fifa-purple:#6a00ff;
+--fifa-blue:#3557ff;
+--fifa-green:#00c853;
+--fifa-orange:#ff4d00;
+
+--fifa-dark:#111;
+--fifa-white:#ffffff;
+--fifa-light:#f3f3f3;
+
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #009C3B, #002776);
-    color: white;
-    min-height: 100vh;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, Helvetica, sans-serif;
+
+    background:linear-gradient(
+        135deg,
+        var(--fifa-purple),
+        var(--fifa-blue),
+        var(--fifa-green)
+    );
+
+    color:var(--fifa-white);
+    min-height:100vh;
 }
 
 /* ===== HEADER ===== */
 
-header {
-    background-color: #FFDF00;
-    color: #002776;
-    text-align: center;
-    padding: 25px 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+header{
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-red),
+        var(--fifa-orange)
+    );
+
+    color:white;
+    text-align:center;
+
+    padding:25px 10px;
+
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);
 }
 
-header h1 {
-    font-size: 32px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+header h1{
+    font-size:32px;
+    text-transform:uppercase;
+    letter-spacing:2px;
 }
 
-header p {
-    font-weight: bold;
-    margin-top: 5px;
+header p{
+    font-weight:bold;
+    margin-top:5px;
 }
 
 /* ===== FORMULÁRIOS (LOGIN / CADASTRO) ===== */
 
-.demo-form {
-    background: white;
-    color: #002776;
-    width: 350px;
-    margin: 30px auto;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+.demo-form{
+
+    background:var(--fifa-white);
+    color:#333;
+
+    width:350px;
+    margin:30px auto;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
 }
 
-.demo-form h3 {
-    text-align: center;
-    margin-bottom: 15px;
-    color: #009C3B;
+.demo-form h3{
+
+    text-align:center;
+    margin-bottom:15px;
+
+    color:var(--fifa-purple);
 }
 
-.demo-form label {
-    font-weight: bold;
-    font-size: 14px;
+.demo-form label{
+    font-weight:bold;
+    font-size:14px;
 }
 
-.demo-form input {
-    width: 100%;
-    padding: 8px;
-    margin: 6px 0 12px 0;
-    border-radius: 6px;
-    border: 2px solid #009C3B;
-    outline: none;
+.demo-form input{
+
+    width:100%;
+    padding:8px;
+
+    margin:6px 0 12px 0;
+
+    border-radius:6px;
+
+    border:2px solid var(--fifa-blue);
+
+    outline:none;
 }
 
-.demo-form input:focus {
-    border-color: #FFDF00;
-    box-shadow: 0 0 5px #FFDF00;
+.demo-form input:focus{
+
+    border-color:var(--fifa-purple);
+
+    box-shadow:0 0 6px var(--fifa-purple);
 }
 
-.form-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #009C3B;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: 0.3s;
+.form-btn{
+
+    width:100%;
+    padding:10px;
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-red),
+        var(--fifa-orange)
+    );
+
+    color:white;
+
+    font-weight:bold;
+
+    border:none;
+
+    border-radius:6px;
+
+    cursor:pointer;
+
+    transition:0.3s;
 }
 
-.form-btn:hover {
-    background-color: #002776;
-    transform: scale(1.02);
+.form-btn:hover{
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-purple),
+        var(--fifa-blue)
+    );
+
+    transform:scale(1.05);
 }
 
-.toggle-link {
-    display: block;
-    margin-top: 10px;
-    text-align: center;
-    font-size: 13px;
+.toggle-link{
+
+    display:block;
+
+    margin-top:10px;
+
+    text-align:center;
+
+    font-size:13px;
 }
 
-.toggle-link span {
-    color: #009C3B;
-    font-weight: bold;
-    cursor: pointer;
+.toggle-link span{
+
+    color:var(--fifa-purple);
+
+    font-weight:bold;
+
+    cursor:pointer;
 }
 
-.error-msg {
-    color: red;
-    font-size: 13px;
-    margin-bottom: 10px;
+.error-msg{
+
+    color:#ff4d4d;
+
+    font-size:13px;
+
+    margin-bottom:10px;
 }
 
-.success-msg {
-    display: none;
-    color: green;
-    font-size: 13px;
-    margin-top: 5px;
+.success-msg{
+
+    display:none;
+
+    color:#00c853;
+
+    font-size:13px;
+
+    margin-top:5px;
 }
 
-    /*------linha do usuario-------------*/
-.topo-usuario {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: #0a7c3a;
-    padding: 15px 30px;
-    border-radius: 8px;
-    color: white;
+/* ===== LINHA DO USUÁRIO ===== */
+
+.topo-usuario{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-purple),
+        var(--fifa-blue)
+    );
+
+    padding:15px 30px;
+
+    border-radius:8px;
+
+    color:white;
 }
 
-.info-usuario {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.info-usuario{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
 }
 
-#pontuacao-total {
-    font-weight: bold;
-    font-size: 18px;
-    background: gold;
-    color: black;
-    padding: 8px 15px;
-    border-radius: 20px;
+#pontuacao-total{
+
+    font-weight:bold;
+
+    font-size:18px;
+
+    background:gold;
+
+    color:black;
+
+    padding:8px 15px;
+
+    border-radius:20px;
 }
 
-.sair-btn {
-    padding: 8px 15px;
+.sair-btn{
+    padding:8px 15px;
 }
 
-/* ===== SEÇÃO DOS GRUPOS ===== */
-/* ===== GRID SOMENTE NA FASE DE GRUPOS ===== */
+/* ===== SEÇÕES ===== */
 
+section{
 
-section {
-    background: white;
-    color: #002776;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    background:var(--fifa-white);
 
-    margin-bottom: 0;
+    color:#333;
+
+    padding:25px;
+
+    border-radius:12px;
+
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+
+    margin-bottom:0;
 }
 
 /* ===== TÍTULOS ===== */
 
-h2 {
-    text-align: center;
-    background-color: #009C3B;
-    color: white;
-    padding: 10px;
-    border-radius: 6px;
-    margin-bottom: 15px;
+h2{
+
+    text-align:center;
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-purple),
+        var(--fifa-blue)
+    );
+
+    color:white;
+
+    padding:10px;
+
+    border-radius:6px;
+
+    margin-bottom:15px;
 }
 
-h3 {
-    margin: 15px 0 10px 0;
-    color: #002776;
+h3{
+
+    margin:15px 0 10px 0;
+
+    color:var(--fifa-purple);
 }
 
 /* ===== TABELAS ===== */
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 20px;
-    background-color: #f9f9f9;
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+    margin-bottom:20px;
+
+    background-color:var(--fifa-light);
 }
 
-th {
-    background-color: #002776;
-    color: #FFDF00;
-    padding: 8px;
-    font-size: 13px;
+th{
+
+    background:linear-gradient(
+        90deg,
+        var(--fifa-purple),
+        var(--fifa-blue)
+    );
+
+    color:white;
+
+    padding:8px;
+
+    font-size:13px;
 }
 
-td {
-    padding: 8px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
+td{
+
+    padding:8px;
+
+    text-align:center;
+
+    border-bottom:1px solid #ddd;
 }
 
-tr:hover {
-    background-color: #e6f5ec;
-    transition: 0.3s;
+tr:hover{
+
+    background-color:#eef1ff;
+
+    transition:0.3s;
 }
 
 /* Destaque placar */
-strong {
-    color: #009C3B;
-    font-size: 15px;
+
+strong{
+
+    color:var(--fifa-red);
+
+    font-size:15px;
 }
 
 /* ===== RESPONSIVO ===== */
-@media (max-width: 768px) {
 
-    #grupos {
-        grid-template-columns: 1fr;
+@media (max-width:768px){
+
+    #grupos{
+        grid-template-columns:1fr;
     }
 
-    .demo-form {
-        width: 90%;
+    .demo-form{
+        width:90%;
     }
 
-    table {
-        font-size: 12px;
+    table{
+        font-size:12px;
     }
 
 }
 
+/* ===== MENU HAMBURGUER ===== */
 
-/* ===== BOTÃO HAMBURGUER ===== */
-
-/* ===== BOTÃO HAMBURGUER ===== */
-
-.menu-toggle {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    width: 35px;
-    cursor: pointer;
-    z-index: 1100;
+.menu-toggle{
+    position:fixed;
+    top:20px;
+    left:20px;
+    width:35px;
+    cursor:pointer;
+    z-index:1100;
 }
 
-.menu-toggle div {
-    height: 4px;
-    background-color: #ffffff; /* BRANCO sempre */
-    margin: 6px 0;
-    border-radius: 3px;
-    transition: 0.3s ease;
+.menu-toggle div{
+    height:4px;
+    background:white;
+    margin:6px 0;
+    border-radius:3px;
+    transition:0.3s;
 }
 
-/* Mantém branco mesmo quando estiver ativo ou menu aberto */
+/* Mantém branco mesmo quando ativo */
 
-.menu-lateral.ativo ~ .menu-toggle div,
-.menu-toggle.ativo div {
-    background-color: #ffffff; /* continua branco */
+.menu-toggle.ativo div,
+.menu-lateral.ativo ~ .menu-toggle div{
+    background:white;
 }
 
 
-/* ===== MENU LATERAL RETRÁTIL ===== */
+/* ===== MENU LATERAL ===== */
 
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -260px; /* escondido fora da tela */
-    width: 250px;
-    height: 100vh;
-    background: linear-gradient(180deg, #002776, #009C3B);
-    padding: 80px 20px 20px 20px;
-    box-shadow: 5px 0 20px rgba(0,0,0,0.4);
-    transition: left 0.4s ease;
-    display: flex;
-    flex-direction: column;
-    z-index: 1050;
+.menu-lateral{
+
+    position:fixed;
+    top:0;
+    left:-260px;
+
+    width:250px;
+    height:100vh;
+
+    background:linear-gradient(180deg,#6a00ff,#3557ff,#00c853);
+
+    padding:80px 20px 20px;
+
+    box-shadow:5px 0 20px rgba(0,0,0,0.4);
+
+    transition:0.4s;
+
+    display:flex;
+    flex-direction:column;
+
+    z-index:1050;
 }
 
-/* Quando estiver ativo */
-.menu-lateral.ativo {
-    left: 0;
+.menu-lateral.ativo{
+    left:0;
 }
 
-/* Botões do menu */
 
-.menu-lateral button {
-    background-color: #FFDF00;
-    color: #002776;
-    border: none;
-    padding: 12px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s ease;
+/* ===== BOTÕES DO MENU ===== */
+
+.menu-lateral button{
+
+    background:linear-gradient(90deg,#ff4d00,#e10600);
+
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    margin-bottom:12px;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
 }
 
-.menu-lateral button:hover {
-    background-color: #ffffff;
-    transform: translateX(5px);
+.menu-lateral button:hover{
+
+    background:linear-gradient(90deg,#6a00ff,#3557ff);
+
+    transform:translateX(5px);
 }
 
-.menu-lateral button.ativo {
-    background-color: #009C3B;
-    color: white;
+.menu-lateral button.ativo{
+
+    background:#00c853;
+
+    color:white;
 }
 
 
 /* ===== CONTEÚDO PRINCIPAL ===== */
 
-.conteudo {
-    width: 90%;
-    margin: 100px auto 40px auto; /* espaço para o botão */
+.conteudo{
+
+    width:90%;
+
+    margin:100px auto 40px;
 }
 
 
-/* ===== ÁREAS (ABAS) ===== */
+/* ===== ABAS ===== */
 
-.area {
-    display: none;
+.area{
+    display:none;
 }
 
-/* Quando estiver ativa */
-.area.ativa {
-    display: block;
+.area.ativa{
+    display:block;
 }
 
-#grupos.area.ativa {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+/* Grid somente grupos */
+
+#grupos.area.ativa{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
 }
 
 
-/* ===== ANIMAÇÃO SUAVE ===== */
+/* ===== ANIMAÇÃO ===== */
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(5px);
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(5px);
     }
-    to {
-        opacity: 1;
-        transform: translateY(0);
+
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
+
 }
 
 
 /* ===== RESPONSIVO ===== */
 
-@media (max-width: 768px) {
+@media(max-width:768px){
 
-    .menu-lateral {
-        width: 220px;
-        left: -230px;
+    .menu-lateral{
+        width:220px;
+        left:-230px;
     }
 
-    .conteudo {
-        width: 95%;
-        margin-top: 90px;
+    .conteudo{
+        width:95%;
+        margin-top:90px;
     }
+
 }
 
 
-/* =============ARTILHEIRO -----------*/
-.card-artilheiro {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+/* ===== CARD ARTILHEIRO ===== */
+
+.card-artilheiro{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
 }
 
-.card-artilheiro select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+.card-artilheiro select{
+
+    width:100%;
+
+    padding:10px;
+
+    margin:10px 0;
 }
 
-.card-artilheiro button {
-    background-color: #009C3B;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 6px;
-    cursor: pointer;
+.card-artilheiro button{
+
+    background:linear-gradient(90deg,#ff4d00,#e10600);
+
+    color:white;
+
+    border:none;
+
+    padding:10px;
+
+    border-radius:6px;
+
+    cursor:pointer;
 }
 
-/* ===== RESULTADO FINAL DA COPA ===== */
 
-.resultado-final {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    border-left: 6px solid #009C3B; /* detalhe verde do tema */
+/* ===== RESULTADO FINAL ===== */
+
+.resultado-final{
+
+    background:white;
+
+    padding:20px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+
+    border-left:6px solid #00c853;
 }
 
-.resultado-final h3 {
-    margin-bottom: 15px;
-    color: #009C3B;
+.resultado-final h3{
+
+    margin-bottom:15px;
+
+    color:#6a00ff;
 }
 
-.resultado-final .conteudo-resultado p {
-    margin: 8px 0;
-    font-size: 16px;
+.resultado-final .conteudo-resultado p{
+
+    margin:8px 0;
+
+    font-size:16px;
 }
 
-.resultado-final span {
-    font-weight: bold;
-    color: #333;
+.resultado-final span{
+
+    font-weight:bold;
+
+    color:#333;
 }
 
-/* ===== ABA REGRAS - TEMA COPA 2026 ===== */
 
-.regras-bolao {
-    animation: fadeIn 0.4s ease-in-out;
+/* ===== REGRAS DO BOLÃO ===== */
+
+.regras-bolao{
+    animation:fadeIn 0.4s ease-in-out;
 }
 
-/* Título principal da aba */
-.regras-bolao h2 {
-    background-color: #009C3B;
-    color: white;
-    padding: 12px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
+/* Título */
+
+.regras-bolao h2{
+
+    background:linear-gradient(90deg,#6a00ff,#3557ff);
+
+    color:white;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    text-align:center;
+
+    margin-bottom:20px;
+
+    letter-spacing:1px;
 }
 
 /* Subtítulos */
-.regras-bolao h3 {
-    margin-top: 25px;
-    padding-bottom: 5px;
-    border-bottom: 3px solid #FFDF00;
-    color: #002776;
+
+.regras-bolao h3{
+
+    margin-top:25px;
+
+    padding-bottom:5px;
+
+    border-bottom:3px solid #ff4d00;
+
+    color:#6a00ff;
 }
 
-/* Subcategoria (ex: 1º palpite artilheiro) */
-.regras-bolao h4 {
-    margin-top: 15px;
-    color: #009C3B;
+.regras-bolao h4{
+
+    margin-top:15px;
+
+    color:#00c853;
 }
 
 /* Lista */
-.regras-bolao ul {
-    margin: 10px 0 15px 20px;
+
+.regras-bolao ul{
+
+    margin:10px 0 15px 20px;
 }
 
-.regras-bolao li {
-    margin-bottom: 6px;
+.regras-bolao li{
+    margin-bottom:6px;
 }
 
-/* ===== TABELA DE PONTUAÇÃO ===== */
+
+/* =======================================
+   TABELA DE PONTUAÇÃO
+======================================= */
 
 .tabela-regras {
     width: 100%;
+    margin: 15px 0 25px;
     border-collapse: collapse;
-    margin: 15px 0 25px 0;
-    background-color: #f9f9f9;
+    background: #f9f9f9;
     border-radius: 8px;
     overflow: hidden;
 }
 
 .tabela-regras th {
-    background-color: #002776;
+    background: #002776;
     color: #FFDF00;
     padding: 10px;
     font-size: 14px;
@@ -473,18 +681,20 @@ strong {
 }
 
 .tabela-regras tr:hover {
-    background-color: #e6f5ec;
+    background: #e6f5ec;
     transition: 0.3s;
 }
 
-/* Destaque exemplos */
+/* Destaques dentro das regras */
+
 .regras-bolao em {
     color: #009C3B;
     font-style: normal;
     font-weight: bold;
 }
 
-/* Caixa de destaque (multiplicador ou bônus) */
+/* Caixa de aviso ou bônus */
+
 .regras-destaque {
     background: linear-gradient(135deg, #009C3B, #002776);
     color: white;
@@ -494,7 +704,10 @@ strong {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Responsivo */
+/* =======================================
+   RESPONSIVO
+======================================= */
+
 @media (max-width: 768px) {
 
     .tabela-regras th,
@@ -506,10 +719,13 @@ strong {
     .regras-bolao h2 {
         font-size: 18px;
     }
+
 }
 
-    /*---------ranking-----------*/
-/* ===== RANKING PADRÃO (GERAL + GRUPOS) ===== */
+
+/* =======================================
+   RANKING (GERAL E GRUPOS)
+======================================= */
 
 #ranking {
     animation: fadeIn 0.4s ease-in-out;
@@ -525,6 +741,7 @@ strong {
 }
 
 /* Cabeçalho */
+
 .ranking-tabela th {
     background: linear-gradient(90deg, #002776, #009C3B);
     color: #FFDF00;
@@ -534,6 +751,7 @@ strong {
 }
 
 /* Linhas */
+
 .ranking-tabela td {
     padding: 12px;
     font-weight: bold;
@@ -541,47 +759,52 @@ strong {
     text-align: center;
 }
 
-/* Hover suave */
+/* Hover */
+
 .ranking-tabela tbody tr:hover {
-    background-color: #e6f5ec;
+    background: #e6f5ec;
     transform: scale(1.01);
     transition: 0.2s ease;
 }
 
-/* 🥇 Primeiro lugar */
+/* Top 3 */
+
 .ranking-tabela tbody tr:nth-child(1) {
     background: linear-gradient(90deg, #FFD700, #FFF4B0);
     font-size: 16px;
 }
 
-/* 🥈 Segundo lugar */
 .ranking-tabela tbody tr:nth-child(2) {
     background: linear-gradient(90deg, #C0C0C0, #E8E8E8);
 }
 
-/* 🥉 Terceiro lugar */
 .ranking-tabela tbody tr:nth-child(3) {
     background: linear-gradient(90deg, #CD7F32, #F5D6B4);
 }
 
-/* Destacar usuário logado */
+/* Usuário logado */
+
 .ranking-logado {
     border-left: 6px solid #009C3B;
-    background-color: #d9f7e4 !important;
+    background: #d9f7e4 !important;
 }
 
-/* Número/medalha maior */
+/* Medalha / posição */
+
 .ranking-tabela td:first-child {
     font-size: 18px;
 }
 
-/* ===== SUBTABS - GRUPOS ===== */
+
+/* =======================================
+   SUBTABS - GRUPOS
+======================================= */
 
 .subtabs {
     display: flex;
+    justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
-    justify-content: center;
 }
 
 .subtabs button {
@@ -601,7 +824,10 @@ strong {
     transform: scale(1.05);
 }
 
-/* ===== CARD GRUPOS ===== */
+
+/* =======================================
+   CARD - GRUPOS
+======================================= */
 
 #grupos-info .tab-content {
     background: white;
@@ -613,11 +839,12 @@ strong {
 }
 
 /* Inputs */
+
 #grupos-info input,
 #grupos-info textarea {
     width: 100%;
     padding: 10px;
-    margin: 8px 0 15px 0;
+    margin: 8px 0 15px;
     border-radius: 8px;
     border: 2px solid #009C3B;
     outline: none;
@@ -629,32 +856,36 @@ strong {
     box-shadow: 0 0 6px #FFDF00;
 }
 
-/* Botões internos */
+/* Botões */
+
 #grupos-info .tab-content button {
-    background-color: #009C3B;
+    background: #009C3B;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.3s;
 }
 
 #grupos-info .tab-content button:hover {
-    background-color: #002776;
+    background: #002776;
     transform: scale(1.03);
 }
 
-/* ===== LISTA MEUS GRUPOS ===== */
+
+/* =======================================
+   LISTA - MEUS GRUPOS
+======================================= */
 
 #myGroupsList button {
-    display: block;
     width: 100%;
+    display: block;
     margin-bottom: 10px;
     padding: 12px;
-    border-radius: 10px;
     border: none;
+    border-radius: 10px;
     font-weight: bold;
     background: linear-gradient(90deg, #002776, #009C3B);
     color: white;
@@ -668,46 +899,50 @@ strong {
     transform: translateX(5px);
 }
 
-/* ===== CARD DETALHES DO GRUPO ===== */
+
+/* =======================================
+   CARD DETALHES DO GRUPO
+======================================= */
 
 .grupo-card {
     margin-bottom: 15px;
 }
 
-/* Área interna retrátil animada */
 .grupo-detalhes {
     background: white;
     margin-top: 10px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     border-left: 6px solid #009C3B;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
 
     max-height: 0;
     overflow: hidden;
     padding: 0 20px;
+    opacity: 0;
 
-    transition: 
+    transition:
         max-height 0.4s ease,
         padding 0.3s ease,
         opacity 0.3s ease;
-
-    opacity: 0;
 }
 
-/* Quando estiver aberto */
 .grupo-detalhes.ativo {
-    max-height: 1000px; /* valor alto suficiente */
+    max-height: 1000px;
     padding: 20px;
     opacity: 1;
 }
 
-/* ===== ABA JOGOS DO BRASIL ===== */
+
+/* =======================================
+   JOGOS DO BRASIL
+======================================= */
 
 .jogos-brasil {
     animation: fadeIn 0.4s ease-in-out;
 }
 
 /* Título */
+
 .jogos-brasil h2 {
     background: linear-gradient(90deg, #009C3B, #002776);
     color: white;
@@ -718,14 +953,15 @@ strong {
     letter-spacing: 1px;
 }
 
-/* Card de cada jogo */
+/* Card do jogo */
+
 .jogo {
     background: white;
     padding: 20px;
-    border-radius: 12px;
     margin-bottom: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-radius: 12px;
     border-left: 6px solid #009C3B;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
     transition: 0.3s ease;
 }
 
@@ -734,12 +970,14 @@ strong {
 }
 
 /* Nome do jogo */
+
 .jogo strong {
     font-size: 18px;
     color: #002776;
 }
 
-/* Palpite */
+/* Texto */
+
 .jogo p {
     margin: 8px 0;
     font-weight: bold;
@@ -747,16 +985,19 @@ strong {
 }
 
 /* Botões */
+
 .jogo button {
-    background: linear-gradient(90deg, #009C3B, #002776);
-    color: white;
-    border: none;
+    margin-top: 8px;
     padding: 10px 18px;
+    border: none;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
+
+    background: linear-gradient(90deg, #009C3B, #002776);
+    color: white;
+
     transition: 0.3s ease;
-    margin-top: 8px;
 }
 
 .jogo button:hover {
@@ -765,7 +1006,11 @@ strong {
     transform: scale(1.05);
 }
 
-/* Container dos selects */
+
+/* =======================================
+   JOGADORES DO BRASIL
+======================================= */
+
 .containerJogadores {
     margin-top: 15px;
     padding: 15px;
@@ -774,16 +1019,18 @@ strong {
     border: 2px solid #009C3B;
 }
 
-/* Select estilizado */
 .select-jogador {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
+
     border-radius: 8px;
     border: 2px solid #009C3B;
-    outline: none;
+
     font-weight: bold;
     color: #002776;
+
+    outline: none;
     transition: 0.2s ease;
 }
 
@@ -792,16 +1039,22 @@ strong {
     box-shadow: 0 0 6px #FFDF00;
 }
 
-/* Linha divisória */
+/* Divisor */
+
 .jogo hr {
     border: none;
     height: 2px;
-    background: linear-gradient(90deg, #009C3B, #FFDF00, #002776);
     margin-top: 20px;
+    background: linear-gradient(90deg, #009C3B, #FFDF00, #002776);
 }
 
-/* Responsivo */
+
+/* =======================================
+   RESPONSIVO
+======================================= */
+
 @media (max-width: 768px) {
+
     .jogo {
         padding: 15px;
     }
@@ -809,4 +1062,5 @@ strong {
     .jogo strong {
         font-size: 16px;
     }
+
 }
