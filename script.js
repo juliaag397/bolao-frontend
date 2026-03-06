@@ -592,6 +592,13 @@ function verificarPeriodoArtilheiros() {
 // SALVAR ARTILHEIRO
 function salvarAposta(tipo) {
 
+    let jogador = document.getElementById(
+        tipo === 1 ? "jogador1" : "jogador2"
+    ).value;
+
+    // remove o país
+    jogador = jogador.split(" (")[0];
+
     fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
         method: "POST",
         headers: {
@@ -600,9 +607,7 @@ function salvarAposta(tipo) {
         credentials: "include",
         body: JSON.stringify({
             tipo: tipo === 1 ? "inicial" : "pos_grupos",
-            jogador: document.getElementById(
-                tipo === 1 ? "jogador1" : "jogador2"
-            ).value
+            jogador: jogador
         })
     })
     .then(res => {
