@@ -1163,24 +1163,6 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const jogoDiv = botao.closest(".jogo");
 
-    // 🔒 pegar data do jogo
-    const data = jogoDiv.dataset.data;
-
-    if (!data) {
-        console.log("Jogo sem data");
-        return;
-    }
-
-    const agora = new Date();
-    const dataJogo = new Date(data);
-
-    // 🔒 bloquear se começou
-    if (agora >= dataJogo) {
-        alert("Apostas de jogadores encerradas para este jogo!");
-        return;
-    }
-
-    // impedir abrir duas vezes
     if (jogoDiv.querySelector(".containerJogadores")) {
         return;
     }
@@ -1188,18 +1170,39 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     const container = document.createElement("div");
     container.classList.add("containerJogadores");
 
+    jogoDiv.appendChild(container);
+
+    criarSelectJogadores(golsBrasil, container);
+
+    // 🔥 carregar jogadores já apostados
+    if (aposta_id) {
+        carregarJogadores(aposta_id, container);
+    }
+
+    // 🔒 verificar se jogo já começou
+    const data = jogoDiv.dataset.data;
+
+    if (!data) return;
+
+    const agora = new Date();
+    const dataJogo = new Date(data);
+
+    if (agora >= dataJogo) {
+
+        // ❌ não deixa editar
+        const selects = container.querySelectorAll("select");
+        selects.forEach(s => s.disabled = true);
+
+        // ❌ não mostra botão salvar
+        return;
+    }
+
+    // ✅ se jogo não começou → pode salvar
     const btnSalvar = document.createElement("button");
     btnSalvar.textContent = "Salvar jogadores";
     btnSalvar.onclick = (e) => salvarJogadores(aposta_id, e.target);
 
-    jogoDiv.appendChild(container);
     jogoDiv.appendChild(btnSalvar);
-
-    criarSelectJogadores(golsBrasil, container);
-
-    if (aposta_id) {
-        carregarJogadores(aposta_id, container);
-    }
 }
 
 async function carregarJogadores(aposta_id, container) {
