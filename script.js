@@ -1191,24 +1191,22 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const container = document.createElement("div");
     container.classList.add("containerJogadores");
+
     jogoDiv.appendChild(container);
 
     const data = jogoDiv.dataset.data;
     const agora = new Date();
     const dataJogo = new Date(data);
 
-    // 🔒 SE O JOGO JÁ COMEÇOU
+    // 🔒 JOGO JÁ COMEÇOU
     if (agora >= dataJogo) {
 
-        // apenas mostra jogadores apostados
-        if (aposta_id) {
-            carregarJogadores(aposta_id, container);
-        }
-
+        mostrarJogadoresSalvos(aposta_id, container);
         return;
+
     }
 
-    // ✅ SE O JOGO NÃO COMEÇOU
+    // ✅ JOGO NÃO COMEÇOU
 
     criarSelectJogadores(golsBrasil, container);
 
@@ -1272,6 +1270,37 @@ async function carregarPontosJogadores(aposta_id, div) {
     console.error("Erro ao carregar pontos", erro);
 
   }
+
+}
+
+async function mostrarJogadoresSalvos(aposta_id, container) {
+
+    try {
+
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`
+        );
+
+        const jogadores = await response.json();
+
+        if (!jogadores.length) {
+            container.innerHTML = "<p>Nenhum jogador escolhido.</p>";
+            return;
+        }
+
+        let html = "<strong>Seus jogadores:</strong><br>";
+
+        jogadores.forEach(j => {
+            html += `⚽ ${j.jogador_nome}<br>`;
+        });
+
+        container.innerHTML = html;
+
+    } catch (err) {
+
+        console.error("Erro ao carregar jogadores", err);
+
+    }
 
 }
 
