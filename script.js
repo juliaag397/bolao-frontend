@@ -1072,6 +1072,17 @@ async function carregarGolsBrasil(jogo_id, jogoDiv) {
 
 function criarSelectJogadores(golsBrasil, container) {
 
+    // 🔒 Verificar se o jogo já começou
+    const jogoDiv = container.closest(".jogo");
+    const data = jogoDiv.dataset.data;
+
+    const agora = new Date();
+    const dataJogo = new Date(data);
+
+    if (agora >= dataJogo) {
+        return; // não cria selects
+    }
+
     container.innerHTML = "";
 
     golsBrasil = Math.min(golsBrasil, 4);
