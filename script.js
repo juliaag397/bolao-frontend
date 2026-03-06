@@ -493,6 +493,7 @@ async function verificarLogin() {
         await carregarApostas();
         bloquearJogosPassados();
         await carregarPontosPorJogo();
+        await carregarPontosArtilheiro();
         await carregarArtilheiros();
         await carregarRanking();
         await loadUserGroups();
@@ -605,15 +606,6 @@ function salvarAposta(tipo) {
 
 // ===== ATUALIZAR RESULTADO FINAL ARTILHEIRO=====
 
-function atualizarResultadoFinal(nome, gols) {
-
-    // Atualiza nome do artilheiro
-    document.getElementById("artilheiroOficial").innerText = nome;
-
-    // Atualiza total de gols
-    document.getElementById("golsOficial").innerText = gols + " gols";
-}
-
 async function carregarArtilheiroOficial() {
 
     try {
@@ -634,6 +626,32 @@ async function carregarArtilheiroOficial() {
     } catch (erro) {
 
         console.log("Erro ao carregar artilheiro:", erro);
+
+    }
+}
+
+async function carregarPontosArtilheiro() {
+
+    try {
+
+        const response = await fetch(
+            "https://bolao-backend-k56l.onrender.com/pontos-artilheiro",
+            { credentials: "include" }
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+
+        const span = document.getElementById("pontosArtilheiro");
+
+        if (span) {
+            span.textContent = data.pontos + " pts";
+        }
+
+    } catch (erro) {
+
+        console.log("Erro ao carregar pontos artilheiro:", erro);
 
     }
 }
