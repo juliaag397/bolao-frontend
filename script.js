@@ -1033,17 +1033,13 @@ async function carregarJogosBrasil() {
 
             const btn = div.querySelector(".btn-jogadores");
 
-            const agora = new Date();
-            const dataJogo = new Date(aposta.data_jogo);
-
             btn.onclick = function () {
 
-                if (agora >= dataJogo) {
-                    alert("Este jogo já começou. Não é possível alterar jogadores.");
-                    return;
-                }
+                const agora = new Date();
+                const dataJogo = new Date(aposta.data_jogo);
 
                 abrirJogadores(aposta.id, aposta.gols_brasil, btn);
+
             };
 
             carregarGolsBrasil(aposta.jogo_id, div);
@@ -1201,9 +1197,17 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     // 🔒 JOGO JÁ COMEÇOU
     if (agora >= dataJogo) {
 
-        mostrarJogadoresSalvos(aposta_id, container);
-        return;
+        // cria os selects
+        criarSelectJogadores(golsBrasil, container);
 
+        // carrega os jogadores escolhidos
+        carregarJogadores(aposta_id, container);
+
+        // bloqueia edição
+        const selects = container.querySelectorAll(".select-jogador");
+        selects.forEach(s => s.disabled = true);
+
+        return;
     }
 
     // ✅ JOGO NÃO COMEÇOU
