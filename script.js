@@ -1163,6 +1163,15 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 
     const jogoDiv = botao.closest(".jogo");
 
+    // 🔒 BLOQUEIO POR DATA
+    const agora = new Date();
+    const dataJogo = new Date(jogoDiv.dataset.data);
+
+    if (agora >= dataJogo) {
+        alert("Apostas de jogadores encerradas para este jogo!");
+        return;
+    }
+
     if (jogoDiv.querySelector(".containerJogadores")) {
         return;
     }
@@ -1183,7 +1192,6 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
     if (aposta_id) {
         carregarJogadores(aposta_id, container);
     }
-
 }
 
 async function carregarJogadores(aposta_id, container) {
