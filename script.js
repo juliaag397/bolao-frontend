@@ -144,7 +144,7 @@ function fazerLogin() {
             document.getElementById("area-logada").style.display = "block";
 
             document.getElementById("boas-vindas").textContent =
-                "👋 Bem-vinda, " + data.nome;
+                "👋 Bem-vindo(a), " + data.nome;
 
             fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
                 credentials: "include"
@@ -235,7 +235,7 @@ function abrirAposta(celula) {
         event.stopPropagation();
 
         if (input1.value === "" || input2.value === "") {
-            alert("Preencha os dois gols!");
+            alert("Preencha os dois campos!");
             return;
         }
 
