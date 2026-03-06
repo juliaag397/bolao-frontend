@@ -541,8 +541,8 @@ function verificarPeriodoArtilheiros() {
     const hoje = new Date();
 
     const inicioCopa = new Date("2026-06-11");
-    const fimFaseGrupos = new Date("2026-06-25");
-    const inicioMataMata = new Date("2026-06-28");
+    const fimFaseGrupos = new Date("2026-06-28T01:30:00");
+    const inicioMataMata = new Date("2026-06-28T16:00:00");
 
     const aposta1 = document.getElementById("aposta1");
     const aposta2 = document.getElementById("aposta2");
