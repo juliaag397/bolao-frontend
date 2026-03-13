@@ -1515,6 +1515,20 @@ function irParaJogo(jogoId) {
 
 }
 
+    // PODIO
+function atualizarBandeira(posicao, selectElement) {
+    const codPais = selectElement.value;
+    const imgBandeira = document.getElementById(`flag-${posicao}`);
+
+    if (codPais) {
+        // Usando a API FlagCDN para carregar as bandeiras automaticamente
+        imgBandeira.src = `https://flagcdn.com/w80/${codPais}.png`;
+    } else {
+        // Volta para o placeholder se desmarcar
+        imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
+    }
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();
