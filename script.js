@@ -1420,7 +1420,8 @@ function montarJogosPorDia() {
             selecao1,
             selecao2,
             resultado,
-            aposta
+            aposta,
+            jogoId
         });
 
     });
@@ -1442,6 +1443,8 @@ function montarJogosPorDia() {
 
         dias[dia].forEach(jogo => {
 
+            const jogoId = celula.dataset.jogoId;
+
             const item = document.createElement("div");
 
             item.className = "jogo-dia";
@@ -1457,7 +1460,7 @@ function montarJogosPorDia() {
 
                 <span class="separador">|</span>
 
-                <span class="aposta">🎯 ${jogo.aposta}</span>
+                <span class="aposta" onclick="irParaJogo(${jogo.jogoId})">🎯 ${jogo.aposta}</span>
             `;
 
             lista.appendChild(item);
@@ -1467,6 +1470,35 @@ function montarJogosPorDia() {
         container.appendChild(bloco);
 
     });
+
+}
+
+function irParaJogo(jogoId) {
+
+    // abrir aba fase de grupos
+    document.querySelectorAll(".area").forEach(a => a.classList.remove("ativa"));
+    document.getElementById("grupos").classList.add("ativa");
+
+    // encontrar célula do jogo
+    const celula = document.querySelector(
+        `.celula-aposta[data-jogo-id="${jogoId}"]`
+    );
+
+    if (celula) {
+
+        const linha = celula.closest("tr");
+
+        linha.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+        linha.style.background = "#fff3cd";
+
+        setTimeout(() => {
+            linha.style.background = "";
+        }, 2000);
+    }
 
 }
 
