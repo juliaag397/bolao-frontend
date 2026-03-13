@@ -2,18 +2,15 @@
 
 :root{
 
---fifa-purple:#5b3cc4;
---fifa-blue:#3b6edb;
---fifa-green:#3dbb7a;
---fifa-orange:#ff7a45;
---fifa-red:#e94b4b;
+--fifa-red:#e10600;
+--fifa-purple:#6a00ff;
+--fifa-blue:#3557ff;
+--fifa-green:#00c853;
+--fifa-orange:#ff4d00;
 
---fifa-bg:#f4f6fb;
---fifa-card:#ffffff;
---fifa-border:#e2e6f2;
-
---fifa-text:#1f2a44;
---fifa-text-light:#5b6785;
+--fifa-dark:#111;
+--fifa-white:#ffffff;
+--fifa-light:#f3f3f3;
 
 }
 
@@ -25,17 +22,17 @@
 
 body{
 
-font-family:Arial, Helvetica, sans-serif;
+    font-family:Arial, Helvetica, sans-serif;
 
-background:linear-gradient(
-120deg,
-#eef1f8,
-#f7f8fc
-);
+    background:linear-gradient(
+        135deg,
+        var(--fifa-purple),
+        var(--fifa-blue),
+        var(--fifa-green)
+    );
 
-color:var(--fifa-text);
-
-min-height:100vh;
+    color:var(--fifa-white);
+    min-height:100vh;
 
 }
 
@@ -43,19 +40,26 @@ min-height:100vh;
 
 header{
 
-background:linear-gradient(
-120deg,
-var(--fifa-purple),
-var(--fifa-blue)
-);
+    background:linear-gradient(
+        90deg,
+        var(--fifa-red),
+        var(--fifa-orange)
+    );
 
-color:white;
+    color:white;
 
-text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 
-padding:25px 10px;
+    text-align:center;
 
-box-shadow:0 6px 20px rgba(0,0,0,0.15);
+    padding:25px 10px;
+
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);
+
+    position:relative;
 
 }
 
@@ -247,15 +251,17 @@ header p{
 
 section{
 
-background:var(--fifa-card);
+    background:var(--fifa-white);
 
-border-radius:12px;
+    color:#333;
 
-padding:25px;
+    padding:25px;
 
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    border-radius:12px;
 
-border:1px solid var(--fifa-border);
+    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+
+    margin-bottom:0;
 
 }
 
@@ -302,13 +308,17 @@ table{
 
 th{
 
-background:var(--fifa-purple);
+    background:linear-gradient(
+        90deg,
+        var(--fifa-purple),
+        var(--fifa-blue)
+    );
 
-color:white;
+    color:white;
 
-padding:10px;
+    padding:8px;
 
-font-size:13px;
+    font-size:13px;
 
 }
 
@@ -423,13 +433,25 @@ strong{
 
 .menu-lateral{
 
-background:linear-gradient(
-180deg,
-var(--fifa-purple),
-var(--fifa-blue)
-);
+    position:fixed;
+    top:0;
+    left:-260px;
 
-color:white;
+    width:250px;
+    height:100vh;
+
+    background:linear-gradient(180deg,#6a00ff,#3557ff,#00c853);
+
+    padding:80px 20px 20px;
+
+    box-shadow:5px 0 20px rgba(0,0,0,0.4);
+
+    transition:0.4s;
+
+    display:flex;
+    flex-direction:column;
+
+    z-index:1050;
 
 }
 
@@ -442,17 +464,31 @@ color:white;
 
 .menu-lateral button{
 
-background:rgba(255,255,255,0.15);
+    background:linear-gradient(90deg,#ff4d00,#e10600);
 
-color:white;
+    color:white;
+
+    border:none;
+
+    padding:12px;
+
+    margin-bottom:12px;
+
+    border-radius:8px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:0.3s;
 
 }
 
 .menu-lateral button:hover{
 
-background:white;
+    background:linear-gradient(90deg,#6a00ff,#3557ff);
 
-color:var(--fifa-purple);
+    transform:translateX(5px);
 
 }
 
@@ -746,17 +782,19 @@ color:var(--fifa-purple);
 
 /* Cabeçalho */
 
-.ranking-tabela th{
-
-background:var(--fifa-blue);
-
-color:white;
+.ranking-tabela th {
+    background: linear-gradient(90deg, #002776, #009C3B);
+    color: #FFDF00;
+    padding: 12px;
+    font-size: 14px;
+    letter-spacing: 1px;
 
 }
 
 .ranking-logado{
 
-border-left:5px solid var(--fifa-green);
+    border-left: 6px solid #009C3B;
+    background: #d9f7e4 !important;
 
 }
 
