@@ -80,6 +80,11 @@ function fazerCadastro() {
     document.getElementById("ca-email").value = "";
     document.getElementById("ca-senha").value = "";
     document.getElementById("ca-confirma").value = "";
+
+    // voltar para tela de login automaticamente
+    setTimeout(() => {
+        showDemo("login");
+    }, 1500);
 })
 .catch(err => {
         console.error(err);
