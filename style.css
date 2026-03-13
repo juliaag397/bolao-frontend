@@ -1080,3 +1080,33 @@ strong{
     }
 
 }
+
+.jogo-dia{
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    background:#ffffff;
+
+    padding:8px 12px;
+
+    margin-bottom:6px;
+
+    border-radius:6px;
+
+    border-left:4px solid #2ECCAC;
+
+    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+}
+
+.hora{
+    font-weight:bold;
+    color:#42766C;
+}
+
+.aposta{
+    margin-left:auto;
+    font-weight:bold;
+    color:#1E2120;
+}
