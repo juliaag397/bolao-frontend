@@ -354,7 +354,7 @@ strong{
 @media (max-width:768px){
 
     #grupos.area.ativa{
-        grid-template-columns:1fr;
+        grid-template-columns:1fr !important;
         gap:15px;
     }
 
