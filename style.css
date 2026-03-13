@@ -1251,7 +1251,7 @@ strong{
     font-size: 13px;
     cursor: pointer;
     z-index: 10;
-    /* Aqui removemos o margin-top de 40px que estava matando a separação */
+    /* Aqui removemos o margin-top de 40px que estava matando a separação *
 }
 
 @media (max-width: 600px) {
