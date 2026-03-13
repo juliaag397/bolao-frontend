@@ -1,17 +1,16 @@
-/* ===== PALETA COPA 2026 ===== */
+/* ===== PALETA ===== */
 
 :root{
 
---fifa-red:#e10600;
---fifa-purple:#6a00ff;
---fifa-blue:#3557ff;
---fifa-green:#00c853;
---fifa-orange:#ff4d00;
+--cor-primaria:#2ECCAC;
+--cor-secundaria:#3FA18D;
+--cor-terciaria:#42766C;
 
---fifa-dark:#0f1221;
---fifa-card:#1a1f3a;
---fifa-white:#ffffff;
---fifa-light:#2a2f55;
+--cor-fundo:#DEF7F1;
+--cor-texto:#1E2120;
+
+--cor-card:#ffffff;
+--cor-borda:#cfe9e4;
 
 }
 
@@ -25,16 +24,10 @@ body{
 
     font-family:Arial, Helvetica, sans-serif;
 
-    background:
-    radial-gradient(circle at 20% 20%, rgba(106,0,255,0.25), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(53,87,255,0.25), transparent 40%),
-    linear-gradient(
-        135deg,
-        #0f1221,
-        #15193a
-    );
+    background:var(--cor-fundo);
 
-    color:var(--fifa-white);
+    color:var(--cor-texto);
+
     min-height:100vh;
 
 }
@@ -43,11 +36,7 @@ body{
 
 header{
 
-    background:linear-gradient(
-        120deg,
-        var(--fifa-red),
-        var(--fifa-orange)
-    );
+    background:var(--cor-primaria);
 
     color:white;
 
@@ -60,7 +49,7 @@ header{
 
     padding:28px 10px;
 
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    box-shadow:0 6px 18px rgba(0,0,0,0.15);
 
     position:relative;
 
@@ -82,8 +71,7 @@ header p{
 
 .demo-form{
 
-    background:var(--fifa-card);
-    color:white;
+    background:var(--cor-card);
 
     width:350px;
     margin:35px auto;
@@ -92,9 +80,9 @@ header p{
 
     border-radius:14px;
 
-    border:1px solid rgba(255,255,255,0.08);
+    border:1px solid var(--cor-borda);
 
-    box-shadow:0 15px 35px rgba(0,0,0,0.5);
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
 }
 
 .demo-form h3{
@@ -102,7 +90,7 @@ header p{
     text-align:center;
     margin-bottom:18px;
 
-    color:var(--fifa-green);
+    color:var(--cor-terciaria);
 }
 
 .demo-form label{
@@ -119,20 +107,18 @@ header p{
 
     border-radius:6px;
 
-    border:2px solid rgba(255,255,255,0.15);
+    border:2px solid var(--cor-borda);
 
-    background:var(--fifa-light);
-
-    color:white;
+    background:#f8fffd;
 
     outline:none;
 }
 
 .demo-form input:focus{
 
-    border-color:var(--fifa-purple);
+    border-color:var(--cor-primaria);
 
-    box-shadow:0 0 6px rgba(106,0,255,0.5);
+    box-shadow:0 0 5px rgba(46,204,172,0.4);
 }
 
 .form-btn{
@@ -140,11 +126,7 @@ header p{
     width:100%;
     padding:11px;
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
-    );
+    background:var(--cor-secundaria);
 
     color:white;
 
@@ -161,13 +143,9 @@ header p{
 
 .form-btn:hover{
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-red),
-        var(--fifa-orange)
-    );
+    background:var(--cor-terciaria);
 
-    transform:scale(1.04);
+    transform:scale(1.03);
 }
 
 .toggle-link{
@@ -183,7 +161,7 @@ header p{
 
 .toggle-link span{
 
-    color:var(--fifa-green);
+    color:var(--cor-secundaria);
 
     font-weight:bold;
 
@@ -192,7 +170,7 @@ header p{
 
 .error-msg{
 
-    color:#ff5a5a;
+    color:#e74c3c;
 
     font-size:13px;
 
@@ -203,7 +181,7 @@ header p{
 
     display:none;
 
-    color:var(--fifa-green);
+    color:#2ecc71;
 
     font-size:13px;
 
@@ -218,11 +196,7 @@ header p{
     justify-content:space-between;
     align-items:center;
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
-    );
+    background:var(--cor-secundaria);
 
     padding:15px 30px;
 
@@ -245,13 +219,9 @@ header p{
     font-weight:bold;
     font-size:18px;
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-green),
-        #7dff9c
-    );
+    background:white;
 
-    color:#0b1a0b;
+    color:var(--cor-terciaria);
 
     padding:8px 15px;
 
@@ -266,17 +236,15 @@ header p{
 
 section{
 
-    background:var(--fifa-card);
-
-    color:white;
+    background:var(--cor-card);
 
     padding:28px;
 
     border-radius:14px;
 
-    border:1px solid rgba(255,255,255,0.05);
+    border:1px solid var(--cor-borda);
 
-    box-shadow:0 12px 30px rgba(0,0,0,0.45);
+    box-shadow:0 8px 20px rgba(0,0,0,0.1);
 
     margin-bottom:0;
 
@@ -288,11 +256,7 @@ h2{
 
     text-align:center;
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
-    );
+    background:var(--cor-secundaria);
 
     color:white;
 
@@ -307,7 +271,7 @@ h3{
 
     margin:15px 0 10px 0;
 
-    color:var(--fifa-green);
+    color:var(--cor-terciaria);
 }
 
 /* ===== TABELAS ===== */
@@ -320,7 +284,7 @@ table{
 
     margin-bottom:20px;
 
-    background:var(--fifa-light);
+    background:#f8fffd;
 
     border-radius:8px;
 
@@ -329,11 +293,7 @@ table{
 
 th{
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
-    );
+    background:var(--cor-primaria);
 
     color:white;
 
@@ -349,12 +309,12 @@ td{
 
     text-align:center;
 
-    border-bottom:1px solid rgba(255,255,255,0.08);
+    border-bottom:1px solid var(--cor-borda);
 }
 
 tr:hover{
 
-    background:rgba(255,255,255,0.05);
+    background:#eafaf6;
 
     transition:0.25s;
 }
@@ -363,7 +323,7 @@ tr:hover{
 
 strong{
 
-    color:var(--fifa-orange);
+    color:var(--cor-secundaria);
 
     font-size:15px;
 }
