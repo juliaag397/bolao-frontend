@@ -45,11 +45,19 @@ header{
     );
 
     color:white;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
     text-align:center;
 
     padding:25px 10px;
 
     box-shadow:0 6px 20px rgba(0,0,0,0.4);
+
+    position:relative;
 }
 
 header h1{
@@ -194,9 +202,7 @@ header p{
 .topo-usuario{
 
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 
     background:linear-gradient(
@@ -210,25 +216,23 @@ header p{
     border-radius:8px;
 
     color:white;
+
+    flex-wrap:wrap; /* permite quebrar no celular */
 }
 
 .info-usuario{
 
     display:flex;
-
     align-items:center;
-
     gap:20px;
 }
 
 #pontuacao-total{
 
     font-weight:bold;
-
     font-size:18px;
 
     background:gold;
-
     color:black;
 
     padding:8px 15px;
@@ -380,12 +384,17 @@ strong{
         font-size:12px;
     }
 
+    header h1{
+        font-size:24px;
+        padding:0 40px;
+    }
+
 }
 
 /* ===== MENU HAMBURGUER ===== */
 
 .menu-toggle{
-    position:fixed;
+    position:absolute;
     top:20px;
     left:20px;
     width:35px;
