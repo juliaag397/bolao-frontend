@@ -1394,6 +1394,8 @@ function montarJogosPorDia() {
 
         const tr = celula.closest("tr");
 
+        const jogoId = celula.dataset.jogoId;
+
         const dataISO = celula.dataset.data;
         const data = new Date(dataISO);
 
@@ -1442,8 +1444,6 @@ function montarJogosPorDia() {
         const lista = bloco.querySelector(".jogos-dia");
 
         dias[dia].forEach(jogo => {
-
-            const jogoId = celula.dataset.jogoId;
 
             const item = document.createElement("div");
 
