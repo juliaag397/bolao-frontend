@@ -342,8 +342,22 @@ strong{
 
 @media (max-width:768px){
 
-    #grupos{
+    #grupos.area.ativa{
         grid-template-columns:1fr;
+        gap:15px;
+    }
+
+    #grupos table{
+        border-radius:8px;
+        overflow:hidden;
+    }
+
+    th,td{
+        padding:6px 4px;
+    }
+
+    th{
+        font-size:11px;
     }
 
     .demo-form{
