@@ -338,6 +338,17 @@ strong{
     font-size:15px;
 }
 
+/* Grid somente grupos */
+
+#grupos.area.ativa{
+
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:25px;
+}
+
 /* ===== RESPONSIVO ===== */
 
 @media (max-width:768px){
@@ -485,16 +496,7 @@ strong{
     display:block;
 }
 
-/* Grid somente grupos */
 
-#grupos.area.ativa{
-
-    display:grid;
-
-    grid-template-columns:1fr 1fr;
-
-    gap:25px;
-}
 
 
 /* ===== ANIMAÇÃO ===== */
