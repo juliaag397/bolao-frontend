@@ -1182,12 +1182,13 @@ strong{
     transform:scale(1.05);
 }
 
-/* Container que segura os três pés do pódio */
+/* ===== ESTILO DO PÓDIO (VERSÃO FINAL) ===== */
+
 .podio-container {
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Alinha todos na base */
-    gap: 0; /* Cola um bloco no outro */
+    align-items: flex-end;
+    gap: 0;
     margin: 80px auto;
     width: 100%;
     max-width: 600px;
@@ -1202,73 +1203,34 @@ strong{
     position: relative;
 }
 
-/* Estilo do bloco colorido (trapézio) */
 .podio-item .bloco {
     width: 100%;
     position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 15px 0;
-    /* Efeito de inclinação nas laterais */
+    justify-content: space-between; /* Empurra o número pra cima e o select pra baixo */
+    padding: 10px 0 20px 0; /* Mais espaço embaixo para o select */
     clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
 }
 
-/* Alturas e Cores baseadas na sua paleta */
-.posicao-1 .bloco { 
-    height: 180px; 
-    background-color: var(--cor-terciaria);
-    z-index: 3;
-}
-.posicao-2 .bloco { 
-    height: 130px; 
-    background-color: var(--cor-secundaria);
-    z-index: 2;
-}
-.posicao-3 .bloco { 
-    height: 100px; 
-    background-color: var(--cor-primaria);
-    z-index: 1;
-}
+/* Cores e Alturas */
+.posicao-1 .bloco { height: 180px; background-color: var(--cor-terciaria); z-index: 3; }
+.posicao-2 .bloco { height: 130px; background-color: var(--cor-secundaria); z-index: 2; }
+.posicao-3 .bloco { height: 100px; background-color: var(--cor-primaria); z-index: 1; }
 
-/* O número (1, 2, 3) grande por trás */
-/* Ajuste para os números ficarem legíveis */
 .podio-item .bloco span {
-    font-size: 60px; /* Um pouco menor para caber melhor */
+    font-size: 60px;
     font-weight: 900;
-    
-    /* Cor: Um branco com mais opacidade para dar contraste */
-    color: rgba(255, 255, 255, 0.4); 
-    
+    color: rgba(255, 255, 255, 0.4);
     position: relative;
     margin-top: 5px;
-    
-    pointer-events: none; 
-    font-family: 'Arial Black', sans-serif; /* Fonte bem grossa */
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra leve para destacar */
+    pointer-events: none;
+    font-family: 'Arial Black', sans-serif;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     line-height: 1;
 }
 
-/* Garante que o select não cubra o número totalmente se for muito grande */
-.select-pais {
-    width: 85%;
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-    background: white;
-    font-weight: bold;
-    font-size: 13px;
-    cursor: pointer;
-    
-    /* Garante que o select não sobreponha o número e fique clicável */
-    z-index: 10; 
-    
-    /* A MÁGICA DA SEPARAÇÃO ESTÁ AQUI */
-    margin-bottom: 5px;   
-}
-
-/* Bandeiras flutuando acima do bloco */
 .bandeira-podio {
     width: 70px;
     height: 45px;
@@ -1279,21 +1241,19 @@ strong{
     border: 2px solid white;
 }
 
-/* Select em cima do bloco colorido */
 .select-pais {
-    width: 80%;
-    padding: 5px;
+    width: 85%;
+    padding: 8px; /* Aumentei um pouco para facilitar o clique */
     border-radius: 4px;
     border: none;
     background: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
-    z-index: 5;
-    margin-top: 40px; /* Desce o select para o meio do bloco */
+    z-index: 10;
+    /* Aqui removemos o margin-top de 40px que estava matando a separação */
 }
 
-/* Ajuste para mobile */
 @media (max-width: 600px) {
     .podio-container { transform: scale(0.8); }
 }
