@@ -1110,3 +1110,39 @@ strong{
     font-weight:bold;
     color:#1E2120;
 }
+
+.jogo-dia{
+
+    display:flex;
+    align-items:center;
+
+    gap:8px;
+
+    background:#eeeeee;
+
+    padding:10px;
+
+    border-radius:8px;
+
+    margin-bottom:6px;
+
+    font-size:14px;
+}
+
+.hora{
+    font-weight:bold;
+    width:55px;
+}
+
+.placar{
+    font-weight:bold;
+}
+
+.separador{
+    margin-left:auto;
+    color:#777;
+}
+
+.aposta{
+    font-weight:bold;
+}

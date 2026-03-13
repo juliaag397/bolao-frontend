@@ -1448,10 +1448,16 @@ function montarJogosPorDia() {
 
             item.innerHTML = `
                 <span class="hora">${jogo.hora}</span>
+
                 <span class="time">${jogo.selecao1}</span>
-                <strong>${jogo.resultado}</strong>
+
+                <span class="placar">${jogo.resultado}</span>
+
                 <span class="time">${jogo.selecao2}</span>
-                <span class="aposta">${jogo.aposta}</span>
+
+                <span class="separador">|</span>
+
+                <span class="aposta">🎯 ${jogo.aposta}</span>
             `;
 
             lista.appendChild(item);
