@@ -376,7 +376,6 @@ strong{
     }
 
 }
-
 /* ===== MENU HAMBURGUER ===== */
 
 .menu-toggle{
@@ -396,8 +395,6 @@ strong{
     transition:0.3s;
 }
 
-/* Mantém branco mesmo quando ativo */
-
 .menu-toggle.ativo div,
 .menu-lateral.ativo ~ .menu-toggle div{
     background:white;
@@ -415,11 +412,11 @@ strong{
     width:250px;
     height:100vh;
 
-    background:linear-gradient(180deg,#6a00ff,#3557ff,#00c853);
+    background:#42766C;
 
     padding:80px 20px 20px;
 
-    box-shadow:5px 0 20px rgba(0,0,0,0.4);
+    box-shadow:5px 0 20px rgba(0,0,0,0.15);
 
     transition:0.4s;
 
@@ -439,7 +436,7 @@ strong{
 
 .menu-lateral button{
 
-    background:linear-gradient(90deg,#ff4d00,#e10600);
+    background:#2ECCAC;
 
     color:white;
 
@@ -455,13 +452,13 @@ strong{
 
     cursor:pointer;
 
-    transition:0.3s;
+    transition:0.25s;
 
 }
 
 .menu-lateral button:hover{
 
-    background:linear-gradient(90deg,#6a00ff,#3557ff);
+    background:#3FA18D;
 
     transform:translateX(5px);
 
@@ -469,9 +466,9 @@ strong{
 
 .menu-lateral button.ativo{
 
-    background:#00c853;
+    background:#DEF7F1;
 
-    color:white;
+    color:#1E2120;
 }
 
 
@@ -494,8 +491,6 @@ strong{
 .area.ativa{
     display:block;
 }
-
-
 
 
 /* ===== ANIMAÇÃO ===== */
@@ -544,7 +539,9 @@ strong{
 
     margin-bottom:20px;
 
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
+
+    border:1px solid #cfe9e4;
 }
 
 .card-artilheiro select{
@@ -554,11 +551,15 @@ strong{
     padding:10px;
 
     margin:10px 0;
+
+    border:1px solid #cfe9e4;
+
+    border-radius:6px;
 }
 
 .card-artilheiro button{
 
-    background:linear-gradient(90deg,#ff4d00,#e10600);
+    background:#2ECCAC;
 
     color:white;
 
@@ -569,6 +570,13 @@ strong{
     border-radius:6px;
 
     cursor:pointer;
+
+    transition:0.25s;
+}
+
+.card-artilheiro button:hover{
+
+    background:#3FA18D;
 }
 
 
@@ -584,16 +592,16 @@ strong{
 
     margin-bottom:20px;
 
-    box-shadow:0 5px 15px rgba(0,0,0,0.2);
+    box-shadow:0 5px 15px rgba(0,0,0,0.08);
 
-    border-left:6px solid #00c853;
+    border-left:6px solid #2ECCAC;
 }
 
 .resultado-final h3{
 
     margin-bottom:15px;
 
-    color:#6a00ff;
+    color:#42766C;
 }
 
 .resultado-final .conteudo-resultado p{
@@ -607,7 +615,7 @@ strong{
 
     font-weight:bold;
 
-    color:#333;
+    color:#1E2120;
 }
 
 
@@ -621,7 +629,7 @@ strong{
 
 .regras-bolao h2{
 
-    background:linear-gradient(90deg,#6a00ff,#3557ff);
+    background:#3FA18D;
 
     color:white;
 
@@ -644,16 +652,16 @@ strong{
 
     padding-bottom:5px;
 
-    border-bottom:3px solid #ff4d00;
+    border-bottom:3px solid #2ECCAC;
 
-    color:#6a00ff;
+    color:#42766C;
 }
 
 .regras-bolao h4{
 
     margin-top:15px;
 
-    color:#00c853;
+    color:#3FA18D;
 }
 
 /* Lista */
@@ -676,14 +684,14 @@ strong{
     width: 100%;
     margin: 15px 0 25px;
     border-collapse: collapse;
-    background: #f9f9f9;
+    background: white;
     border-radius: 8px;
     overflow: hidden;
 }
 
 .tabela-regras th {
-    background: #002776;
-    color: #FFDF00;
+    background: #2ECCAC;
+    color: white;
     padding: 10px;
     font-size: 14px;
     text-transform: uppercase;
@@ -691,19 +699,19 @@ strong{
 
 .tabela-regras td {
     padding: 10px;
-    border-bottom: 1px solid #ddd;
-    color: #002776;
+    border-bottom: 1px solid #e6f2ef;
+    color: #1E2120;
 }
 
 .tabela-regras tr:hover {
-    background: #e6f5ec;
+    background: #eafaf6;
     transition: 0.3s;
 }
 
 /* Destaques dentro das regras */
 
 .regras-bolao em {
-    color: #009C3B;
+    color: #3FA18D;
     font-style: normal;
     font-weight: bold;
 }
@@ -711,13 +719,14 @@ strong{
 /* Caixa de aviso ou bônus */
 
 .regras-destaque {
-    background: linear-gradient(135deg, #009C3B, #002776);
+    background:#42766C;
     color: white;
     padding: 15px;
     border-radius: 10px;
     margin: 15px 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
+
 
 /* =======================================
    RESPONSIVO
@@ -736,8 +745,6 @@ strong{
     }
 
 }
-
-
 /* =======================================
    RANKING (GERAL E GRUPOS)
 ======================================= */
@@ -752,25 +759,22 @@ strong{
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 }
 
 /* Cabeçalho */
 
 .ranking-tabela th {
-    background: linear-gradient(90deg, #002776, #009C3B);
-    color: #FFDF00;
+    background: #3FA18D;
+    color: white;
     padding: 12px;
     font-size: 14px;
     letter-spacing: 1px;
-
 }
 
 .ranking-logado{
-
-    border-left: 6px solid #009C3B;
-    background: #d9f7e4 !important;
-
+    border-left: 6px solid #2ECCAC;
+    background: #eafaf6 !important;
 }
 
 /* Linhas */
@@ -778,14 +782,14 @@ strong{
 .ranking-tabela td {
     padding: 12px;
     font-weight: bold;
-    color: #002776;
+    color: #1E2120;
     text-align: center;
 }
 
 /* Hover */
 
 .ranking-tabela tbody tr:hover {
-    background: #e6f5ec;
+    background: #eafaf6;
     transform: scale(1.01);
     transition: 0.2s ease;
 }
@@ -793,19 +797,19 @@ strong{
 /* Top 3 */
 
 .ranking-tabela tbody tr:nth-child(1) {
-    background: linear-gradient(90deg, #FFD700, #FFF4B0);
+    background: #fff7cc;
     font-size: 16px;
 }
 
 .ranking-tabela tbody tr:nth-child(2) {
-    background: linear-gradient(90deg, #C0C0C0, #E8E8E8);
+    background: #f2f2f2;
 }
 
 .ranking-tabela tbody tr:nth-child(3) {
-    background: linear-gradient(90deg, #CD7F32, #F5D6B4);
+    background: #f9e5d5;
 }
 
-/* Medalha / posição */
+/* Medalha */
 
 .ranking-tabela td:first-child {
     font-size: 18px;
@@ -824,19 +828,18 @@ strong{
 }
 
 .subtabs button {
-    background: linear-gradient(90deg, #009C3B, #002776);
+    background: #2ECCAC;
     color: white;
     border: none;
     padding: 10px 18px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.25s;
 }
 
 .subtabs button:hover {
-    background: #FFDF00;
-    color: #002776;
+    background: #3FA18D;
     transform: scale(1.05);
 }
 
@@ -847,10 +850,10 @@ strong{
 
 #grupos-info .tab-content {
     background: white;
-    color: #002776;
+    color: #1E2120;
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
     animation: fadeIn 0.4s ease-in-out;
 }
 
@@ -862,31 +865,31 @@ strong{
     padding: 10px;
     margin: 8px 0 15px;
     border-radius: 8px;
-    border: 2px solid #009C3B;
+    border: 2px solid #2ECCAC;
     outline: none;
 }
 
 #grupos-info input:focus,
 #grupos-info textarea:focus {
-    border-color: #FFDF00;
-    box-shadow: 0 0 6px #FFDF00;
+    border-color: #3FA18D;
+    box-shadow: 0 0 6px rgba(63,161,141,0.4);
 }
 
 /* Botões */
 
 #grupos-info .tab-content button {
-    background: #009C3B;
+    background: #3FA18D;
     color: white;
     border: none;
     padding: 10px 20px;
     border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
 }
 
 #grupos-info .tab-content button:hover {
-    background: #002776;
+    background: #42766C;
     transform: scale(1.03);
 }
 
@@ -903,15 +906,14 @@ strong{
     border: none;
     border-radius: 10px;
     font-weight: bold;
-    background: linear-gradient(90deg, #002776, #009C3B);
+    background: #3FA18D;
     color: white;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: 0.25s;
 }
 
 #myGroupsList button:hover {
-    background: #FFDF00;
-    color: #002776;
+    background: #2ECCAC;
     transform: translateX(5px);
 }
 
@@ -928,8 +930,8 @@ strong{
     background: white;
     margin-top: 10px;
     border-radius: 12px;
-    border-left: 6px solid #009C3B;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    border-left: 6px solid #2ECCAC;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
 
     max-height: 0;
     overflow: hidden;
@@ -960,13 +962,12 @@ strong{
 /* Título */
 
 .jogos-brasil h2 {
-    background: linear-gradient(90deg, #009C3B, #002776);
+    background: #3FA18D;
     color: white;
     padding: 14px;
     border-radius: 10px;
     text-align: center;
     margin-bottom: 25px;
-    letter-spacing: 1px;
 }
 
 /* Card do jogo */
@@ -976,9 +977,9 @@ strong{
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 12px;
-    border-left: 6px solid #009C3B;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    transition: 0.3s ease;
+    border-left: 6px solid #2ECCAC;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    transition: 0.25s ease;
 }
 
 .jogo:hover {
@@ -989,7 +990,7 @@ strong{
 
 .jogo strong {
     font-size: 18px;
-    color: #002776;
+    color: #42766C;
 }
 
 /* Texto */
@@ -997,7 +998,7 @@ strong{
 .jogo p {
     margin: 8px 0;
     font-weight: bold;
-    color: #333;
+    color: #1E2120;
 }
 
 /* Botões */
@@ -1010,15 +1011,14 @@ strong{
     font-weight: bold;
     cursor: pointer;
 
-    background: linear-gradient(90deg, #009C3B, #002776);
+    background: #2ECCAC;
     color: white;
 
-    transition: 0.3s ease;
+    transition: 0.25s;
 }
 
 .jogo button:hover {
-    background: #FFDF00;
-    color: #002776;
+    background: #3FA18D;
     transform: scale(1.05);
 }
 
@@ -1030,9 +1030,9 @@ strong{
 .containerJogadores {
     margin-top: 15px;
     padding: 15px;
-    background: #f9f9f9;
+    background: #f8fffd;
     border-radius: 10px;
-    border: 2px solid #009C3B;
+    border: 2px solid #2ECCAC;
 }
 
 .select-jogador {
@@ -1041,18 +1041,18 @@ strong{
     margin-bottom: 10px;
 
     border-radius: 8px;
-    border: 2px solid #009C3B;
+    border: 2px solid #2ECCAC;
 
     font-weight: bold;
-    color: #002776;
+    color: #1E2120;
 
     outline: none;
     transition: 0.2s ease;
 }
 
 .select-jogador:focus {
-    border-color: #FFDF00;
-    box-shadow: 0 0 6px #FFDF00;
+    border-color: #3FA18D;
+    box-shadow: 0 0 6px rgba(63,161,141,0.4);
 }
 
 /* Divisor */
@@ -1061,7 +1061,7 @@ strong{
     border: none;
     height: 2px;
     margin-top: 20px;
-    background: linear-gradient(90deg, #009C3B, #FFDF00, #002776);
+    background: #3FA18D;
 }
 
 
