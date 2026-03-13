@@ -1,16 +1,19 @@
-/* ===== TEMA COPA DO MUNDO 2026 ===== */
+/* ===== PALETA COPA 2026 SUAVE ===== */
 
 :root{
 
---fifa-red:#e10600;
---fifa-purple:#6a00ff;
---fifa-blue:#3557ff;
---fifa-green:#00c853;
---fifa-orange:#ff4d00;
+--fifa-purple:#5b3cc4;
+--fifa-blue:#3b6edb;
+--fifa-green:#3dbb7a;
+--fifa-orange:#ff7a45;
+--fifa-red:#e94b4b;
 
---fifa-dark:#111;
---fifa-white:#ffffff;
---fifa-light:#f3f3f3;
+--fifa-bg:#f4f6fb;
+--fifa-card:#ffffff;
+--fifa-border:#e2e6f2;
+
+--fifa-text:#1f2a44;
+--fifa-text-light:#5b6785;
 
 }
 
@@ -21,43 +24,39 @@
 }
 
 body{
-    font-family:Arial, Helvetica, sans-serif;
 
-    background:linear-gradient(
-        135deg,
-        var(--fifa-purple),
-        var(--fifa-blue),
-        var(--fifa-green)
-    );
+font-family:Arial, Helvetica, sans-serif;
 
-    color:var(--fifa-white);
-    min-height:100vh;
+background:linear-gradient(
+120deg,
+#eef1f8,
+#f7f8fc
+);
+
+color:var(--fifa-text);
+
+min-height:100vh;
+
 }
 
 /* ===== HEADER ===== */
 
 header{
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-red),
-        var(--fifa-orange)
-    );
+background:linear-gradient(
+120deg,
+var(--fifa-purple),
+var(--fifa-blue)
+);
 
-    color:white;
+color:white;
 
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+text-align:center;
 
-    text-align:center;
+padding:25px 10px;
 
-    padding:25px 10px;
+box-shadow:0 6px 20px rgba(0,0,0,0.15);
 
-    box-shadow:0 6px 20px rgba(0,0,0,0.4);
-
-    position:relative;
 }
 
 header h1{
@@ -248,17 +247,16 @@ header p{
 
 section{
 
-    background:var(--fifa-white);
+background:var(--fifa-card);
 
-    color:#333;
+border-radius:12px;
 
-    padding:25px;
+padding:25px;
 
-    border-radius:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
 
-    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+border:1px solid var(--fifa-border);
 
-    margin-bottom:0;
 }
 
 /* ===== TÍTULOS ===== */
@@ -304,17 +302,20 @@ table{
 
 th{
 
-    background:linear-gradient(
-        90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
-    );
+background:var(--fifa-purple);
 
-    color:white;
+color:white;
 
-    padding:8px;
+padding:10px;
 
-    font-size:13px;
+font-size:13px;
+
+}
+
+tr:hover{
+
+background:#f2f4fa;
+
 }
 
 td{
@@ -422,25 +423,14 @@ strong{
 
 .menu-lateral{
 
-    position:fixed;
-    top:0;
-    left:-260px;
+background:linear-gradient(
+180deg,
+var(--fifa-purple),
+var(--fifa-blue)
+);
 
-    width:250px;
-    height:100vh;
+color:white;
 
-    background:linear-gradient(180deg,#6a00ff,#3557ff,#00c853);
-
-    padding:80px 20px 20px;
-
-    box-shadow:5px 0 20px rgba(0,0,0,0.4);
-
-    transition:0.4s;
-
-    display:flex;
-    flex-direction:column;
-
-    z-index:1050;
 }
 
 .menu-lateral.ativo{
@@ -452,30 +442,18 @@ strong{
 
 .menu-lateral button{
 
-    background:linear-gradient(90deg,#ff4d00,#e10600);
+background:rgba(255,255,255,0.15);
 
-    color:white;
+color:white;
 
-    border:none;
-
-    padding:12px;
-
-    margin-bottom:12px;
-
-    border-radius:8px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:0.3s;
 }
 
 .menu-lateral button:hover{
 
-    background:linear-gradient(90deg,#6a00ff,#3557ff);
+background:white;
 
-    transform:translateX(5px);
+color:var(--fifa-purple);
+
 }
 
 .menu-lateral button.ativo{
@@ -768,12 +746,18 @@ strong{
 
 /* Cabeçalho */
 
-.ranking-tabela th {
-    background: linear-gradient(90deg, #002776, #009C3B);
-    color: #FFDF00;
-    padding: 12px;
-    font-size: 14px;
-    letter-spacing: 1px;
+.ranking-tabela th{
+
+background:var(--fifa-blue);
+
+color:white;
+
+}
+
+.ranking-logado{
+
+border-left:5px solid var(--fifa-green);
+
 }
 
 /* Linhas */
@@ -806,13 +790,6 @@ strong{
 
 .ranking-tabela tbody tr:nth-child(3) {
     background: linear-gradient(90deg, #CD7F32, #F5D6B4);
-}
-
-/* Usuário logado */
-
-.ranking-logado {
-    border-left: 6px solid #009C3B;
-    background: #d9f7e4 !important;
 }
 
 /* Medalha / posição */
