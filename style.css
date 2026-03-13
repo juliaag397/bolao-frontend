@@ -1,4 +1,4 @@
-/* ===== PALETA COPA 2026 SUAVE ===== */
+/* ===== PALETA COPA 2026 ===== */
 
 :root{
 
@@ -8,9 +8,10 @@
 --fifa-green:#00c853;
 --fifa-orange:#ff4d00;
 
---fifa-dark:#111;
+--fifa-dark:#0f1221;
+--fifa-card:#1a1f3a;
 --fifa-white:#ffffff;
---fifa-light:#f3f3f3;
+--fifa-light:#2a2f55;
 
 }
 
@@ -24,11 +25,13 @@ body{
 
     font-family:Arial, Helvetica, sans-serif;
 
-    background:linear-gradient(
+    background:
+    radial-gradient(circle at 20% 20%, rgba(106,0,255,0.25), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(53,87,255,0.25), transparent 40%),
+    linear-gradient(
         135deg,
-        var(--fifa-purple),
-        var(--fifa-blue),
-        var(--fifa-green)
+        #0f1221,
+        #15193a
     );
 
     color:var(--fifa-white);
@@ -41,7 +44,7 @@ body{
 header{
 
     background:linear-gradient(
-        90deg,
+        120deg,
         var(--fifa-red),
         var(--fifa-orange)
     );
@@ -55,9 +58,9 @@ header{
 
     text-align:center;
 
-    padding:25px 10px;
+    padding:28px 10px;
 
-    box-shadow:0 6px 20px rgba(0,0,0,0.4);
+    box-shadow:0 10px 30px rgba(0,0,0,0.5);
 
     position:relative;
 
@@ -66,37 +69,40 @@ header{
 header h1{
     font-size:32px;
     text-transform:uppercase;
-    letter-spacing:2px;
+    letter-spacing:3px;
 }
 
 header p{
     font-weight:bold;
-    margin-top:5px;
+    margin-top:6px;
+    opacity:0.9;
 }
 
-/* ===== FORMULÁRIOS (LOGIN / CADASTRO) ===== */
+/* ===== FORMULÁRIOS ===== */
 
 .demo-form{
 
-    background:var(--fifa-white);
-    color:#333;
+    background:var(--fifa-card);
+    color:white;
 
     width:350px;
-    margin:30px auto;
+    margin:35px auto;
 
-    padding:25px;
+    padding:28px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.08);
+
+    box-shadow:0 15px 35px rgba(0,0,0,0.5);
 }
 
 .demo-form h3{
 
     text-align:center;
-    margin-bottom:15px;
+    margin-bottom:18px;
 
-    color:var(--fifa-purple);
+    color:var(--fifa-green);
 }
 
 .demo-form label{
@@ -107,13 +113,17 @@ header p{
 .demo-form input{
 
     width:100%;
-    padding:8px;
+    padding:9px;
 
     margin:6px 0 12px 0;
 
     border-radius:6px;
 
-    border:2px solid var(--fifa-blue);
+    border:2px solid rgba(255,255,255,0.15);
+
+    background:var(--fifa-light);
+
+    color:white;
 
     outline:none;
 }
@@ -122,18 +132,18 @@ header p{
 
     border-color:var(--fifa-purple);
 
-    box-shadow:0 0 6px var(--fifa-purple);
+    box-shadow:0 0 6px rgba(106,0,255,0.5);
 }
 
 .form-btn{
 
     width:100%;
-    padding:10px;
+    padding:11px;
 
     background:linear-gradient(
         90deg,
-        var(--fifa-red),
-        var(--fifa-orange)
+        var(--fifa-purple),
+        var(--fifa-blue)
     );
 
     color:white;
@@ -146,18 +156,18 @@ header p{
 
     cursor:pointer;
 
-    transition:0.3s;
+    transition:0.25s;
 }
 
 .form-btn:hover{
 
     background:linear-gradient(
         90deg,
-        var(--fifa-purple),
-        var(--fifa-blue)
+        var(--fifa-red),
+        var(--fifa-orange)
     );
 
-    transform:scale(1.05);
+    transform:scale(1.04);
 }
 
 .toggle-link{
@@ -173,7 +183,7 @@ header p{
 
 .toggle-link span{
 
-    color:var(--fifa-purple);
+    color:var(--fifa-green);
 
     font-weight:bold;
 
@@ -182,7 +192,7 @@ header p{
 
 .error-msg{
 
-    color:#ff4d4d;
+    color:#ff5a5a;
 
     font-size:13px;
 
@@ -193,7 +203,7 @@ header p{
 
     display:none;
 
-    color:#00c853;
+    color:var(--fifa-green);
 
     font-size:13px;
 
@@ -216,11 +226,11 @@ header p{
 
     padding:15px 30px;
 
-    border-radius:8px;
+    border-radius:10px;
 
     color:white;
 
-    flex-wrap:wrap; /* permite quebrar no celular */
+    flex-wrap:wrap;
 }
 
 .info-usuario{
@@ -235,8 +245,13 @@ header p{
     font-weight:bold;
     font-size:18px;
 
-    background:gold;
-    color:black;
+    background:linear-gradient(
+        90deg,
+        var(--fifa-green),
+        #7dff9c
+    );
+
+    color:#0b1a0b;
 
     padding:8px 15px;
 
@@ -251,15 +266,17 @@ header p{
 
 section{
 
-    background:var(--fifa-white);
+    background:var(--fifa-card);
 
-    color:#333;
+    color:white;
 
-    padding:25px;
+    padding:28px;
 
-    border-radius:12px;
+    border-radius:14px;
 
-    box-shadow:0 10px 25px rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.05);
+
+    box-shadow:0 12px 30px rgba(0,0,0,0.45);
 
     margin-bottom:0;
 
@@ -279,18 +296,18 @@ h2{
 
     color:white;
 
-    padding:10px;
+    padding:12px;
 
-    border-radius:6px;
+    border-radius:8px;
 
-    margin-bottom:15px;
+    margin-bottom:18px;
 }
 
 h3{
 
     margin:15px 0 10px 0;
 
-    color:var(--fifa-purple);
+    color:var(--fifa-green);
 }
 
 /* ===== TABELAS ===== */
@@ -303,7 +320,11 @@ table{
 
     margin-bottom:20px;
 
-    background-color:var(--fifa-light);
+    background:var(--fifa-light);
+
+    border-radius:8px;
+
+    overflow:hidden;
 }
 
 th{
@@ -316,39 +337,33 @@ th{
 
     color:white;
 
-    padding:8px;
+    padding:9px;
 
     font-size:13px;
 
 }
 
-tr:hover{
-
-background:#f2f4fa;
-
-}
-
 td{
 
-    padding:8px;
+    padding:9px;
 
     text-align:center;
 
-    border-bottom:1px solid #ddd;
+    border-bottom:1px solid rgba(255,255,255,0.08);
 }
 
 tr:hover{
 
-    background-color:#eef1ff;
+    background:rgba(255,255,255,0.05);
 
-    transition:0.3s;
+    transition:0.25s;
 }
 
 /* Destaque placar */
 
 strong{
 
-    color:var(--fifa-red);
+    color:var(--fifa-orange);
 
     font-size:15px;
 }
