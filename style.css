@@ -1106,7 +1106,6 @@ strong{
 }
 
 .aposta{
-    margin-left:auto;
     font-weight:bold;
     color:#1E2120;
 }
@@ -1139,10 +1138,11 @@ strong{
 }
 
 .separador{
-    margin-left:auto;
+    margin-left:20px;
     color:#777;
 }
 
 .aposta{
+    margin-left:5px;
     font-weight:bold;
 }
