@@ -528,6 +528,7 @@ async function verificarLogin() {
         await carregarJogosBrasil();
         await carregarArtilheiroOficial();
         await carregarResultadoArtilheiro();
+        montarJogosPorDia();
 
     } else {
 
@@ -1375,6 +1376,91 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
     } catch (err) {
         console.error("Erro ao carregar jogadores", err);
     }
+
+}
+
+    //MOSTRAR JOGOS POR DIA
+
+function montarJogosPorDia() {
+
+    const container = document.getElementById("lista-jogos-dia");
+    container.innerHTML = "";
+
+    const jogos = document.querySelectorAll(".celula-aposta");
+
+    let dias = {};
+
+    jogos.forEach(celula => {
+
+        const tr = celula.closest("tr");
+
+        const dataISO = celula.dataset.data;
+        const data = new Date(dataISO);
+
+        const dia = data.toLocaleDateString("pt-BR");
+
+        const hora = data.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+
+        const selecao1 = tr.children[1].innerHTML;
+        const selecao2 = tr.children[3].innerHTML;
+
+        const resultado = tr.querySelector(".placar-oficial").textContent;
+
+        const aposta = celula.textContent;
+
+        if (!dias[dia]) {
+            dias[dia] = [];
+        }
+
+        dias[dia].push({
+            hora,
+            selecao1,
+            selecao2,
+            resultado,
+            aposta
+        });
+
+    });
+
+    Object.keys(dias).sort((a,b)=>{
+        const d1 = new Date(a.split("/").reverse().join("-"));
+        const d2 = new Date(b.split("/").reverse().join("-"));
+        return d1 - d2;
+    }).forEach(dia => {
+
+        const bloco = document.createElement("div");
+
+        bloco.innerHTML = `
+            <h3>${dia}</h3>
+            <div class="jogos-dia"></div>
+        `;
+
+        const lista = bloco.querySelector(".jogos-dia");
+
+        dias[dia].forEach(jogo => {
+
+            const item = document.createElement("div");
+
+            item.className = "jogo-dia";
+
+            item.innerHTML = `
+                <span class="hora">${jogo.hora}</span>
+                <span class="time">${jogo.selecao1}</span>
+                <strong>${jogo.resultado}</strong>
+                <span class="time">${jogo.selecao2}</span>
+                <span class="aposta">${jogo.aposta}</span>
+            `;
+
+            lista.appendChild(item);
+
+        });
+
+        container.appendChild(bloco);
+
+    });
 
 }
 
