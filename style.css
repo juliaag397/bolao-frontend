@@ -1209,8 +1209,8 @@ strong{
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    z-index: 1;
+    justify-content: space-between;
+    padding: 15px 0;
     /* Efeito de inclinação nas laterais */
     clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
 }
@@ -1235,40 +1235,37 @@ strong{
 /* O número (1, 2, 3) grande por trás */
 /* Ajuste para os números ficarem legíveis */
 .podio-item .bloco span {
-    font-size: 80px; /* Um pouco menor para caber melhor */
+    font-size: 60px; /* Um pouco menor para caber melhor */
     font-weight: 900;
     
     /* Cor: Um branco com mais opacidade para dar contraste */
     color: rgba(255, 255, 255, 0.4); 
     
-    position: absolute;
-    top: 50%;         /* Centraliza verticalmente */
-    left: 50%;        /* Centraliza horizontalmente */
-    transform: translate(-50%, -50%); /* Ajuste fino da posição */
+    position: relative;
+    margin-top: 5px;
     
     pointer-events: none; 
     font-family: 'Arial Black', sans-serif; /* Fonte bem grossa */
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra leve para destacar */
-    z-index: 5;
+    line-height: 1;
 }
 
 /* Garante que o select não cubra o número totalmente se for muito grande */
 .select-pais {
-    width: 80%;
-    padding: 5px;
+    width: 85%;
+    padding: 6px;
     border-radius: 4px;
     border: none;
     background: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 13px;
     cursor: pointer;
     
     /* Garante que o select não sobreponha o número e fique clicável */
     z-index: 10; 
     
     /* A MÁGICA DA SEPARAÇÃO ESTÁ AQUI */
-    margin-top: auto;      /* Empurra o select para o fundo do bloco */
-    margin-bottom: 20px;   /* Adiciona um respiro da borda inferior */
+    margin-bottom: 5px;   /* Adiciona um respiro da borda inferior */
 }
 
 /* Bandeiras flutuando acima do bloco */
