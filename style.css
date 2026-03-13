@@ -1146,3 +1146,23 @@ strong{
     margin-left:5px;
     font-weight:bold;
 }
+
+.aposta{
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    color:#0a6cff;
+
+    text-decoration:underline;
+
+    transition:0.2s;
+}
+
+.aposta:hover{
+
+    color:#ff3b3b;
+
+    transform:scale(1.05);
+}

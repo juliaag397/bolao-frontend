@@ -386,16 +386,30 @@ function mostrarArea(areaId, event) {
         areaSelecionada.classList.add("ativa");
     }
 
-    // Marca botão como ativo
+    // Se veio de clique
     if (event && event.target) {
         event.target.classList.add("ativo");
     }
 
-    // Fecha o menu
+    // Se veio do script (ex: Jogos por dia)
+    else {
+
+        const botao = document.querySelector(
+            `.menu-lateral button[onclick*="${areaId}"]`
+        );
+
+        if (botao) {
+            botao.classList.add("ativo");
+        }
+
+    }
+
+    // Fecha menu mobile
     const menu = document.getElementById("menu");
     if (menu) {
         menu.classList.remove("ativo");
     }
+
 }
 
 
@@ -1476,8 +1490,7 @@ function montarJogosPorDia() {
 function irParaJogo(jogoId) {
 
     // abrir aba fase de grupos
-    document.querySelectorAll(".area").forEach(a => a.classList.remove("ativa"));
-    document.getElementById("grupos").classList.add("ativa");
+    mostrarArea("grupos");
 
     // encontrar célula do jogo
     const celula = document.querySelector(
