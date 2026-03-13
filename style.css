@@ -1182,112 +1182,92 @@ strong{
     transform:scale(1.05);
 }
 
-/* ===== ESTILO DO PÓDIO (ESTILO COPA) ===== */
-
+/* Container que segura os três pés do pódio */
 .podio-container {
     display: flex;
     justify-content: center;
-    align-items: flex-end; /* Alinha os blocos por baixo */
-    margin: 60px auto;
-    max-width: 500px;
-    height: 250px;
+    align-items: flex-end; /* Alinha todos na base */
+    gap: 0; /* Cola um bloco no outro */
+    margin: 80px auto;
+    width: 100%;
+    max-width: 600px;
+    height: 300px;
 }
 
 .podio-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    flex: 1; /* Faz os blocos dividirem o espaço igualmente */
+    flex: 1;
     position: relative;
+}
+
+/* Estilo do bloco colorido (trapézio) */
+.podio-item .bloco {
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-bottom: none;
+    /* Efeito de inclinação nas laterais */
+    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+}
+
+/* Alturas e Cores baseadas na sua paleta */
+.posicao-1 .bloco { 
+    height: 180px; 
+    background-color: var(--cor-terciaria);
+    z-index: 3;
+}
+.posicao-2 .bloco { 
+    height: 130px; 
+    background-color: var(--cor-secundaria);
+    z-index: 2;
+}
+.posicao-3 .bloco { 
+    height: 100px; 
+    background-color: var(--cor-primaria);
     z-index: 1;
 }
 
-/* Deixa o 1º lugar na frente visualmente */
-.posicao-1 { z-index: 2; }
-
-/* Blocos do Pódio com efeito 3D */
-.podio-item .bloco {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    color: rgba(255, 255, 255, 0.6); /* Número semi-transparente */
+/* O número (1, 2, 3) grande por trás */
+.podio-item .bloco span {
+    font-size: 80px;
     font-weight: 900;
-    font-size: 50px; /* Número bem grande igual à inspiração */
-    padding-top: 10px;
-    border-radius: 10px 10px 0 0;
-    position: relative;
-    box-shadow: inset 0 10px 20px rgba(0,0,0,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255, 255, 255, 0.2);
+    position: absolute;
+    top: 10px;
+    pointer-events: none; /* Pro select funcionar por cima */
 }
 
-/* Alturas e Cores - Usando sua paleta com profundidade */
-.posicao-1 .bloco { 
-    height: 160px; 
-    background: linear-gradient(to bottom, var(--cor-terciaria), #2d524a); 
-}
-.posicao-2 .bloco { 
-    height: 120px; 
-    background: linear-gradient(to bottom, var(--cor-secundaria), #328171);
-    border-right: none;
-}
-.posicao-3 .bloco { 
-    height: 90px; 
-    background: linear-gradient(to bottom, var(--cor-primaria), #5ea191);
-    border-left: none;
-}
-
-/* Bandeiras Flutuantes */
+/* Bandeiras flutuando acima do bloco */
 .bandeira-podio {
     width: 70px;
     height: 45px;
     object-fit: cover;
+    margin-bottom: 10px;
     border-radius: 4px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     border: 2px solid white;
-    background: #eee;
 }
 
-/* Dropdown customizado para ficar "dentro" ou "em cima" do bloco */
+/* Select em cima do bloco colorido */
 .select-pais {
-    position: absolute;
-    bottom: 20px; /* Joga o select para dentro do bloco colorido */
-    width: 85%;
-    padding: 8px;
-    border-radius: 5px;
+    width: 80%;
+    padding: 5px;
+    border-radius: 4px;
     border: none;
     background: white;
-    color: var(--cor-texto);
     font-weight: bold;
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    outline: none;
+    z-index: 5;
+    margin-top: 40px; /* Desce o select para o meio do bloco */
 }
 
-/* Balão de "Atualizado" (Badge) */
-.badge-vencedor {
-    position: absolute;
-    top: -40px;
-    background: white;
-    color: var(--cor-terciaria);
-    font-size: 11px;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: bold;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 10;
-    white-space: nowrap;
-    border: 1px solid var(--cor-borda);
-    display: none; /* Só aparece via JS quando mudar */
-}
-
-/* Ajuste para telas pequenas */
-@media (max-width: 480px) {
-    .podio-container { gap: 5px; }
-    .podio-item .bloco { font-size: 35px; }
-    .select-pais { font-size: 10px; padding: 5px; }
-    .bandeira-podio { width: 50px; height: 32px; }
+/* Ajuste para mobile */
+@media (max-width: 600px) {
+    .podio-container { transform: scale(0.8); }
 }

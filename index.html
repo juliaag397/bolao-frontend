@@ -3421,66 +3421,42 @@
 
         <div id="especiais" class="area">
 
-            <div class="podium-wrapper">
+            <div class="podio-container">
                 
-                <div class="podium-step">
-                    <img id="flag-2" src="https://flagcdn.com/w80/br.png" alt="Bandeira 2º Lugar">
-                    <div class="podium-block">2º Lugar</div>
-                    
-                    <select onchange="atualizarBandeira(2, this)"></select>
-                    <option value="">Selecione o país...</option>
-                    <option value="br" selected>Brasil</option>
-                    <option value="ar">Argentina</option>
-                    <option value="us">Estados Unidos</option>
-                    <option value="mx">México</option>
-                    <option value="ca">Canadá</option>
-                    <option value="fr">França</option>
-                    <option value="es">Espanha</option>
-                    <option value="pt">Portugal</option>
-                    <option value="de">Alemanha</option>
-                    <option value="uy">Uruguai</option>
-                    </select>
+                <div class="podio-item posicao-2">
+                    <img id="flag-2" class="bandeira-podio" src="https://flagcdn.com/w80/br.png">
+                    <div class="bloco">
+                        <span>2</span>
+                        <select class="select-pais" onchange="atualizarBandeira(2, this)">
+                            <option value="br">Brasil</option>
+                            <option value="ar">Argentina</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="podium-step">
-                    <img id="flag-1" src="https://flagcdn.com/w80/es.png" alt="Bandeira 1º Lugar">
-                    <div class="podium-block">1º Lugar</div>
-                    
-                    <select onchange="changeFlag(1, this)">
-                    <option value="">Selecione o país...</option>
-                    <option value="br">Brasil</option>
-                    <option value="ar">Argentina</option>
-                    <option value="us">Estados Unidos</option>
-                    <option value="mx">México</option>
-                    <option value="ca">Canadá</option>
-                    <option value="fr">França</option>
-                    <option value="es" selected>Espanha</option>
-                    <option value="pt">Portugal</option>
-                    <option value="de">Alemanha</option>
-                    <option value="uy">Uruguai</option>
-                    </select>
+                <div class="podio-item posicao-1">
+                    <img id="flag-1" class="bandeira-podio" src="https://flagcdn.com/w80/es.png">
+                    <div class="bloco">
+                        <span>1</span>
+                        <select class="select-pais" onchange="atualizarBandeira(1, this)">
+                            <option value="es">Espanha</option>
+                            <option value="fr">França</option>
+                        </select>
+                    </div>
                 </div>
 
-                <div class="podium-step">
-                    <img id="flag-3" src="https://flagcdn.com/w80/pt.png" alt="Bandeira 3º Lugar">
-                    <div class="podium-block">3º Lugar</div>
-                    
-                    <select onchange="changeFlag(3, this)">
-                    <option value="">Selecione o país...</option>
-                    <option value="br">Brasil</option>
-                    <option value="ar">Argentina</option>
-                    <option value="us">Estados Unidos</option>
-                    <option value="mx">México</option>
-                    <option value="ca">Canadá</option>
-                    <option value="fr">França</option>
-                    <option value="es">Espanha</option>
-                    <option value="pt" selected>Portugal</option>
-                    <option value="de">Alemanha</option>
-                    <option value="uy">Uruguai</option>
-                    </select>
+                <div class="podio-item posicao-3">
+                    <img id="flag-3" class="bandeira-podio" src="https://flagcdn.com/w80/pt.png">
+                    <div class="bloco">
+                        <span>3</span>
+                        <select class="select-pais" onchange="atualizarBandeira(3, this)">
+                            <option value="pt">Portugal</option>
+                            <option value="de">Alemanha</option>
+                        </select>
+                    </div>
                 </div>
 
-                </div>
+            </div>
 
             <h2>Artilheiro</h2>
 
