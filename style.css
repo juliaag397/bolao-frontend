@@ -1210,7 +1210,7 @@ strong{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border-bottom: none;
+    z-index: 1;
     /* Efeito de inclinação nas laterais */
     clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
 }
@@ -1235,7 +1235,7 @@ strong{
 /* O número (1, 2, 3) grande por trás */
 /* Ajuste para os números ficarem legíveis */
 .podio-item .bloco span {
-    font-size: 70px; /* Um pouco menor para caber melhor */
+    font-size: 80px; /* Um pouco menor para caber melhor */
     font-weight: 900;
     
     /* Cor: Um branco com mais opacidade para dar contraste */
@@ -1244,21 +1244,31 @@ strong{
     position: absolute;
     top: 50%;         /* Centraliza verticalmente */
     left: 50%;        /* Centraliza horizontalmente */
-    transform: translate(-50%, -70%); /* Ajuste fino da posição */
+    transform: translate(-50%, -50%); /* Ajuste fino da posição */
     
     pointer-events: none; 
     font-family: 'Arial Black', sans-serif; /* Fonte bem grossa */
     text-shadow: 2px 2px 4px rgba(0,0,0,0.1); /* Sombra leve para destacar */
+    z-index: 5;
 }
 
 /* Garante que o select não cubra o número totalmente se for muito grande */
 .select-pais {
-    position: relative;
-    z-index: 10;
-    width: 85%;
-    margin-top: auto;   /* Empurra o select para o fundo do bloco */
-    margin-bottom: 15px; /* Espaço da base */
-    border: 1px solid #ccc;
+    width: 80%;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    background: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    
+    /* Garante que o select não sobreponha o número e fique clicável */
+    z-index: 10; 
+    
+    /* A MÁGICA DA SEPARAÇÃO ESTÁ AQUI */
+    margin-top: auto;      /* Empurra o select para o fundo do bloco */
+    margin-bottom: 20px;   /* Adiciona um respiro da borda inferior */
 }
 
 /* Bandeiras flutuando acima do bloco */
