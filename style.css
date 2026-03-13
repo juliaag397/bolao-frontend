@@ -1085,84 +1085,100 @@ strong{
 
     display:flex;
     align-items:center;
+
     gap:10px;
 
     background:#ffffff;
 
-    padding:8px 12px;
+    padding:10px 14px;
 
-    margin-bottom:6px;
+    border-radius:10px;
 
-    border-radius:6px;
+    margin-bottom:8px;
+
+    font-size:14px;
+
+    transition:0.2s;
 
     border-left:4px solid #2ECCAC;
 
-    box-shadow:0 2px 6px rgba(0,0,0,0.05);
+    box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
+
+.jogo-dia:hover{
+    background:#DEF7F1;
+}
+
+/* hora */
 
 .hora{
     font-weight:bold;
     color:#42766C;
+    min-width:45px;
 }
 
-.aposta{
-    font-weight:bold;
-    color:#1E2120;
-}
+/* times */
 
-.jogo-dia{
-
+.time{
     display:flex;
     align-items:center;
-
-    gap:8px;
-
-    background:#eeeeee;
-
-    padding:10px;
-
-    border-radius:8px;
-
-    margin-bottom:6px;
-
-    font-size:14px;
+    gap:5px;
 }
 
-.hora{
-    font-weight:bold;
-    width:55px;
-}
+/* PLACAR */
 
 .placar{
+
+    background:#3FA18D;
+
+    color:white;
+
     font-weight:bold;
+
+    padding:4px 10px;
+
+    border-radius:6px;
+
+    font-size:14px;
+
+    letter-spacing:1px;
+
+    min-width:45px;
+
+    text-align:center;
 }
+
+/* separador */
 
 .separador{
-    margin-left:20px;
-    color:#777;
+    margin-left:auto;
+    color:#8aa6a1;
 }
 
-.aposta{
-    margin-left:5px;
-    font-weight:bold;
-}
+/* aposta */
 
 .aposta{
-
-    font-weight:bold;
 
     cursor:pointer;
 
-    color:#0a6cff;
+    background:#DEF7F1;
 
-    text-decoration:underline;
+    padding:4px 8px;
+
+    border-radius:6px;
+
+    font-weight:bold;
+
+    color:#1E2120;
 
     transition:0.2s;
 }
 
 .aposta:hover{
 
-    color:#ff3b3b;
+    background:#2ECCAC;
+
+    color:white;
 
     transform:scale(1.05);
 }
