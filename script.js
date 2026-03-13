@@ -1529,6 +1529,48 @@ function atualizarBandeira(posicao, selectElement) {
     }
 }
 
+function salvarPodio() {
+    // Pega os valores selecionados nos 3 selects
+    const primeiro = document.getElementById("select-1").value;
+    const segundo = document.getElementById("select-2").value;
+    const terceiro = document.getElementById("select-3").value;
+
+    if (!primeiro || !segundo || !terceiro) {
+        alert("Selecione os três países antes de salvar!");
+        return;
+    }
+
+    fetch("https://bolao-backend-k56l.onrender.com/salvar-podio", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        credentials: "include", // Importante para manter a sessão do usuário
+        body: JSON.stringify({
+            primeiro: primeiro,
+            segundo: segundo,
+            terceiro: terceiro
+        })
+    })
+    .then(res => {
+        if (res.status === 401) {
+            alert("Sessão expirada. Faça login novamente.");
+            return;
+        }
+        return res.json();
+    })
+    .then(data => {
+        if (data?.erro) {
+            alert("Erro ao salvar aposta: " + data.erro);
+            return;
+        }
+        alert("Pódio salvo com sucesso!");
+    })
+    .catch(() => {
+        alert("Erro ao conectar com servidor");
+    });
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
     await carregarJogos();

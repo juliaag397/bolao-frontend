@@ -1216,9 +1216,9 @@ strong{
 }
 
 /* Cores e Alturas */
-.posicao-1 .bloco { height: 180px; background-color: var(--cor-terciaria); z-index: 3; }
-.posicao-2 .bloco { height: 130px; background-color: var(--cor-secundaria); z-index: 2; }
-.posicao-3 .bloco { height: 100px; background-color: var(--cor-primaria); z-index: 1; }
+.posicao-1 .bloco { height: 200px; background-color: var(--cor-terciaria); z-index: 3; }
+.posicao-2 .bloco { height: 150px; background-color: var(--cor-secundaria); z-index: 2; }
+.posicao-3 .bloco { height: 120px; background-color: var(--cor-primaria); z-index: 1; }
 
 .podio-item .bloco span {
     font-size: 65px;
