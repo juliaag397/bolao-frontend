@@ -1552,7 +1552,6 @@ function salvarPodio() {
     const terceiro = document.getElementById("select-3").value;
 
     if (!primeiro || !segundo || !terceiro) {
-        alert("Selecione os três países antes de salvar!");
         return;
     }
 
@@ -1580,7 +1579,7 @@ function salvarPodio() {
             alert("Erro ao salvar aposta: " + data.erro);
             return;
         }
-        alert("Pódio salvo com sucesso!");
+        console.log("Salvo automaticamente:", data);
     })
     .catch(() => {
         alert("Erro ao conectar com servidor");
