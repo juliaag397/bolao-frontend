@@ -1533,7 +1533,7 @@ function atualizarBandeira(posicao, selectElement) {
     if (duplicado) {
         alert("Este país já foi escolhido em outra posição do pódio!");
         selectElement.value = ""; // Reseta o select atual
-        imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
+        imgBandeira.src = "https://via.placeholder.com/80x50/cccccc/cccccc";
         return;
     }
 
@@ -1541,7 +1541,7 @@ function atualizarBandeira(posicao, selectElement) {
         imgBandeira.src = `https://flagcdn.com/w80/${codPais}.png`;
         salvarPodio(); 
     } else {
-        imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
+        imgBandeira.src = "https://via.placeholder.com/80x50/cccccc/cccccc";
     }
 }
 
@@ -1593,17 +1593,23 @@ function carregarPalpitesPodio() {
     })
     .then(res => res.json())
     .then(data => {
+        // Dentro do .then(data => { ... }) da função carregarPalpitesPodio
+
         if (data) {
-            // Preenche os selects
             document.getElementById("select-1").value = data.primeiro_lugar || "";
             document.getElementById("select-2").value = data.segundo_lugar || "";
             document.getElementById("select-3").value = data.terceiro_lugar || "";
 
-            // Atualiza as bandeiras visualmente
+            // Atualiza as bandeiras ou limpa se estiver vazio
             [1, 2, 3].forEach(pos => {
                 const select = document.getElementById(`select-${pos}`);
-                if (select.value) {
-                    document.getElementById(`flag-${pos}`).src = `https://flagcdn.com/w80/${select.value}.png`;
+                const img = document.getElementById(`flag-${pos}`);
+                
+                if (select.value && select.value !== "") {
+                    img.src = `https://flagcdn.com/w80/${select.value}.png`;
+                } else {
+                    // Se não tem valor (usuário novo), mostra o interrogação
+                    img.src = "https://via.placeholder.com/80x50/cccccc/cccccc";
                 }
             });
         }
