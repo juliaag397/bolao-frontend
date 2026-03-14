@@ -543,6 +543,7 @@ async function verificarLogin() {
         await carregarArtilheiroOficial();
         await carregarResultadoArtilheiro();
         montarJogosPorDia();
+        carregarPalpitesPodio();
 
     } else {
 
@@ -1584,6 +1585,31 @@ function salvarPodio() {
     .catch(() => {
         alert("Erro ao conectar com servidor");
     });
+}
+
+// Função que preenche o pódio com o que vem do banco
+function carregarPalpitesPodio() {
+    fetch("https://bolao-backend-k56l.onrender.com/obter-podio", {
+        credentials: "include"
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data) {
+            // Preenche os selects
+            document.getElementById("select-1").value = data.primeiro_lugar || "";
+            document.getElementById("select-2").value = data.segundo_lugar || "";
+            document.getElementById("select-3").value = data.terceiro_lugar || "";
+
+            // Atualiza as bandeiras visualmente
+            [1, 2, 3].forEach(pos => {
+                const select = document.getElementById(`select-${pos}`);
+                if (select.value) {
+                    document.getElementById(`flag-${pos}`).src = `https://flagcdn.com/w80/${select.value}.png`;
+                }
+            });
+        }
+    })
+    .catch(err => console.error("Erro ao carregar pódio:", err));
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
