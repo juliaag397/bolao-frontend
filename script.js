@@ -1521,10 +1521,12 @@ function atualizarBandeira(posicao, selectElement) {
     const imgBandeira = document.getElementById(`flag-${posicao}`);
 
     if (codPais) {
-        // Usando a API FlagCDN para carregar as bandeiras automaticamente
+        // 1. Atualiza visualmente a bandeira
         imgBandeira.src = `https://flagcdn.com/w80/${codPais}.png`;
+        
+        // 2. Tenta salvar o pódio completo no banco de dados automaticamente
+        salvarPodio(); 
     } else {
-        // Volta para o placeholder se desmarcar
         imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
     }
 }
