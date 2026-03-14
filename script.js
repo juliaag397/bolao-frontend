@@ -540,10 +540,11 @@ async function verificarLogin() {
         await carregarRanking();
         await loadUserGroups();
         await carregarJogosBrasil();
-        await carregarArtilheiroOficial();
         await carregarResultadoArtilheiro();
         montarJogosPorDia();
         carregarPalpitesPodio();
+        bloquearPalpitesSeExpirado();
+        await carregarConfiguracoesGerais();
 
     } else {
 
@@ -655,30 +656,6 @@ function salvarAposta(tipo) {
 }
 
 // ===== ATUALIZAR RESULTADO FINAL ARTILHEIRO=====
-
-async function carregarArtilheiroOficial() {
-
-    try {
-
-        const res = await fetch(
-            "https://bolao-backend-k56l.onrender.com/artilheiro-oficial"
-        );
-
-        const data = await res.json();
-
-        if (data.artilheiro_oficial) {
-
-            document.getElementById("artilheiroOficial").innerText =
-                data.artilheiro_oficial;
-
-        }
-
-    } catch (erro) {
-
-        console.log("Erro ao carregar artilheiro:", erro);
-
-    }
-}
 
 async function carregarPontosArtilheiro() {
 
@@ -1615,6 +1592,62 @@ function carregarPalpitesPodio() {
         }
     })
     .catch(err => console.error("Erro ao carregar pódio:", err));
+}
+
+function bloquearPalpitesSeExpirado() {
+    fetch("https://bolao-backend-k56l.onrender.com/obter-configuracoes") // Crie essa rota GET se não tiver
+    .then(res => res.json())
+    .then(config => {
+        const dataLimite = new Date(config.data_limite_podio);
+        const agora = new Date();
+
+        if (agora > dataLimite) {
+            // Desabilita os selects do pódio
+            document.querySelectorAll("#select-1, #select-2, #select-3").forEach(select => {
+                select.disabled = true;
+            });
+            
+            // Opcional: Avisar o usuário
+            console.log("Apostas encerradas.");
+        }
+    });
+}
+
+async function carregarConfiguracoesGerais() {
+    try {
+        // Chamando a nova rota que traz todos os dados
+        const res = await fetch(
+            "https://bolao-backend-k56l.onrender.com/obter-configuracoes"
+        );
+        const data = await res.json();
+
+        if (data) {
+            // 1. Atualiza o Artilheiro Oficial (o que a antiga já fazia)
+            if (data.artilheiro_oficial) {
+                document.getElementById("artilheiroOficial").innerText = data.artilheiro_oficial;
+            }
+
+            // 2. BLOQUEIO DE SEGURANÇA (Data Limite)
+            const dataLimite = new Date(data.data_limite_podio);
+            const agora = new Date();
+
+            if (agora > dataLimite) {
+                console.log("🔒 Prazo encerrado. Bloqueando selects...");
+                // Desabilita os selects do pódio
+                const selects = ["select-1", "select-2", "select-3"];
+                selects.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.disabled = true;
+                });
+                
+                // Opcional: Avisar o usuário na tela
+                const statusApostas = document.getElementById("status-apostas");
+                if (statusApostas) statusApostas.innerText = "Apostas encerradas!";
+            }
+        }
+    } catch (erro) {
+        console.log("Erro ao carregar configurações:", erro);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
