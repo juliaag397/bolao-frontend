@@ -1520,11 +1520,24 @@ function atualizarBandeira(posicao, selectElement) {
     const codPais = selectElement.value;
     const imgBandeira = document.getElementById(`flag-${posicao}`);
 
+    // Verifica se esse país já foi escolhido nos outros selects
+    const todosSelects = [
+        document.getElementById("select-1"),
+        document.getElementById("select-2"),
+        document.getElementById("select-3")
+    ];
+
+    const duplicado = todosSelects.some(s => s !== selectElement && s.value === codPais && codPais !== "");
+
+    if (duplicado) {
+        alert("Este país já foi escolhido em outra posição do pódio!");
+        selectElement.value = ""; // Reseta o select atual
+        imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
+        return;
+    }
+
     if (codPais) {
-        // 1. Atualiza visualmente a bandeira
         imgBandeira.src = `https://flagcdn.com/w80/${codPais}.png`;
-        
-        // 2. Tenta salvar o pódio completo no banco de dados automaticamente
         salvarPodio(); 
     } else {
         imgBandeira.src = "https://via.placeholder.com/80x50?text=?";
