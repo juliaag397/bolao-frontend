@@ -1333,13 +1333,13 @@ strong{
 
 /* Linha vertical que une o par (Esquerda) */
 .bracket-column[id$="-left"] .match-card:nth-child(odd)::after {
-    height: calc(50% + 100%); /* Ajusta conforme o gap visual */
+    height: calc(50% + 15px); /* Ajusta conforme o gap visual */
     border-right: 2px dashed #b1d8c6;
     top: 50%;
 }
 /* O de baixo para de subir a linha no meio */
 .bracket-column[id$="-left"] .match-card:nth-child(even)::after {
-    height: 50%; 
+    height: calc(50% + 15px); 
     border-right: 2px dashed #b1d8c6;
     bottom: 50%;
     top: auto;
@@ -1359,13 +1359,13 @@ strong{
 
 /* Linha vertical que une o par (Direita) */
 .bracket-column[id$="-right"] .match-card:nth-child(odd)::before {
-    height: calc(50% + 100%); 
+    height: calc(50% + 15px); 
     border-left: 2px dashed #b1d8c6;
     top: 50%;
 }
 
 .bracket-column[id$="-right"] .match-card:nth-child(even)::before {
-    height: 50%;
+    height: calc(50% + 15px);
     border-left: 2px dashed #b1d8c6;
     bottom: 50%;
     top: auto;

@@ -1712,24 +1712,32 @@ async function carregarMataMata() {
                 </div>
             `;
 
-            // Dentro do seu loop forEach(jogo => { ... })
             const id = parseInt(jogo.id);
 
-            // Lado Esquerdo
-            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) document.getElementById('round-32-left').innerHTML += cardHTML;
+            // ESQUERDA - Ordem para as linhas casarem (Par 1: 81 e 82 -> leva ao 89)
+            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) {
+                const container = document.getElementById('round-32-left');
+                // Para manter a ordem exata da planilha:
+                const ordem = [74, 77, 73, 75, 83, 84, 81, 82];
+                renderizarNaOrdem(jogo, container, ordem);
+            } 
             else if ([89, 90, 93, 94].includes(id)) document.getElementById('round-16-left').innerHTML += cardHTML;
             else if ([97, 98].includes(id)) document.getElementById('round-8-left').innerHTML += cardHTML;
-            else if (id === 101) document.getElementById('semi-left').innerHTML += cardHTML; 
+            else if (id === 101) document.getElementById('semi-left').innerHTML += cardHTML;
 
-            // Lado Direito
-            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) document.getElementById('round-32-right').innerHTML += cardHTML;
+            // DIREITA - Ordem para as linhas casarem (Par 1: 78 e 76 -> leva ao 91)
+            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) {
+                const container = document.getElementById('round-32-right');
+                const ordem = [76, 78, 79, 80, 86, 88, 85, 87];
+                renderizarNaOrdem(jogo, container, ordem);
+            }
             else if ([91, 92, 95, 96].includes(id)) document.getElementById('round-16-right').innerHTML += cardHTML;
             else if ([99, 100].includes(id)) document.getElementById('round-8-right').innerHTML += cardHTML;
             else if (id === 102) document.getElementById('semi-right').innerHTML += cardHTML;
 
-            // Centro (Final e 3º Lugar)
-            else if (id === 104) document.getElementById('grand-final').innerHTML += cardHTML;
-            else if (id === 103) document.getElementById('third-place').innerHTML += `<p class="label-3">3º LUGAR</p>` + cardHTML;
+            // CENTRO
+            else if (id === 104) document.getElementById('grand-final').innerHTML = cardHTML;
+            else if (id === 103) document.getElementById('third-place').innerHTML = cardHTML;
         });
 
         // Finaliza carregando os dados do usuário
