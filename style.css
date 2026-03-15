@@ -1285,20 +1285,29 @@ strong{
 .bracket-container {
     display: flex;
     justify-content: center;
-    align-items: stretch; /* Garante que as colunas tenham a mesma altura para o alinhamento */
+    align-items: stretch;
     background-color: var(--cor-fundo);
     padding: 40px 20px;
-    gap: 30px; /* Aumentado para dar espaço às linhas */
+    gap: 40px; /* Espaço para as conexões respirarem */
     overflow-x: auto;
 }
 
-/* Colunas: O Segredo do alinhamento centralizado está aqui */
+/* Colunas */
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Alinha o card da frente no meio dos dois de trás */
+    justify-content: space-around;
     min-height: 850px;
     position: relative;
+}
+
+/* Container do Par: O segredo para as linhas em "Y" sem sobras */
+.match-pair {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaço entre os dois jogos do mesmo confronto */
+    margin-bottom: 20px;
 }
 
 /* O Card do Jogo */
@@ -1310,68 +1319,75 @@ strong{
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
-    position: relative; /* Necessário para as linhas */
+    position: relative;
     z-index: 2;
-}
-
-.match-card:hover {
-    border-color: var(--cor-primaria);
-    transform: translateY(-2px);
 }
 
 /* --- CONECTORES LADO ESQUERDO --- */
 
-/* Linha horizontal saindo para a direita */
+/* 1. Linha horizontal que sai de CADA card até o meio do caminho */
 .bracket-column[id$="-left"] .match-card::after {
     content: "";
     position: absolute;
-    right: -32px;
+    right: -20px;
     top: 50%;
-    width: 32px;
-    border-top: 2px dashed #b1d8c6;
+    width: 20px;
+    border-top: 2px solid #b1d8c6;
 }
 
-/* Linha vertical que une o par (Esquerda) */
-.bracket-column[id$="-left"] .match-card:nth-child(odd)::after {
-    height: calc(50% + 110%); /* Ajusta conforme o gap visual */
-    border-right: 2px dashed #b1d8c6;
-    top: 50%;
+/* 2. Linha VERTICAL que une o par (A parte verde vertical) */
+.bracket-column[id$="-left"] .match-pair::after {
+    content: "";
+    position: absolute;
+    right: -20px;
+    top: 25%;    /* Começa no meio do card de cima */
+    bottom: 25%; /* Termina no meio do card de baixo */
+    border-right: 2px solid #b1d8c6;
 }
-/* O de baixo para de subir a linha no meio */
-.bracket-column[id$="-left"] .match-card:nth-child(even)::after {
-    height: 50%; 
-    border-right: 2px dashed #b1d8c6;
-    bottom: 50%;
-    top: auto;
+
+/* 3. A "perninha" horizontal que entra na próxima fase (Ex: para o jogo 89) */
+.bracket-column[id$="-left"] .match-pair::before {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: 50%;    /* Meio exato do par */
+    width: 20px;
+    border-top: 2px solid #b1d8c6;
 }
 
 /* --- CONECTORES LADO DIREITO --- */
 
-/* Linha horizontal saindo para a esquerda */
+/* 1. Linha horizontal saindo para a esquerda */
 .bracket-column[id$="-right"] .match-card::before {
     content: "";
     position: absolute;
-    left: -32px;
+    left: -20px;
     top: 50%;
-    width: 32px;
-    border-top: 2px dashed #b1d8c6;
+    width: 20px;
+    border-top: 2px solid #b1d8c6;
 }
 
-/* Linha vertical que une o par (Direita) */
-.bracket-column[id$="-right"] .match-card:nth-child(odd)::before {
-    height: calc(50% + 110%); 
-    border-left: 2px dashed #b1d8c6;
+/* 2. Linha vertical do par (Direita) */
+.bracket-column[id$="-right"] .match-pair::before {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 25%;
+    bottom: 25%;
+    border-left: 2px solid #b1d8c6;
+}
+
+/* 3. A "perninha" que entra no jogo da esquerda (Direita -> Centro) */
+.bracket-column[id$="-right"] .match-pair::after {
+    content: "";
+    position: absolute;
+    left: -40px;
     top: 50%;
+    width: 20px;
+    border-top: 2px solid #b1d8c6;
 }
 
-.bracket-column[id$="-right"] .match-card:nth-child(even)::before {
-    height: 50%;
-    border-left: 2px dashed #b1d8c6;
-    bottom: 50%;
-    top: auto;
-}
-
-/* --- ELEMENTOS INTERNOS DO CARD --- */
+/* --- ELEMENTOS INTERNOS E ESTILOS GERAIS --- */
 
 .match-date {
     display: block;
@@ -1406,7 +1422,6 @@ strong{
     font-weight: bold;
 }
 
-/* Estilo para Final e 3º Lugar no Centro */
 .central-flow {
     display: flex;
     flex-direction: column;
@@ -1414,11 +1429,8 @@ strong{
     gap: 50px;
 }
 
-.final-box h3 {
-    text-align: center;
-    background: var(--cor-secundaria);
-    color: white;
-    padding: 5px;
-    border-radius: 5px;
-    margin-bottom: 10px;
+/* Remove linhas de colunas que não precisam de conectores (como a Final) */
+.central-flow .match-card::after, 
+.central-flow .match-card::before {
+    display: none;
 }

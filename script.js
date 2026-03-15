@@ -1711,14 +1711,18 @@ async function carregarMataMata() {
                     <small style="display:block; text-align:center; color:#999; font-size:9px; margin-top:5px;">Jogo ${jogo.id}</small>
                 </div>
             `;
-
             const id = parseInt(jogo.id);
 
-            // ESQUERDA (Seguindo o fluxo da imagem da planilha)
+            // Configuração das ordens (idêntico à sua planilha)
             const ordemEsquerda32 = [74, 77, 73, 75, 83, 84, 81, 82]; 
             const ordemEsquerda16 = [89, 90, 93, 94];
             const ordemEsquerda08 = [97, 98];
 
+            const ordemDireita32 = [76, 78, 79, 80, 86, 88, 85, 87];
+            const ordemDireita16 = [91, 92, 95, 96];
+            const ordemDireita08 = [99, 100];
+
+            // Lógica de Renderização
             if (ordemEsquerda32.includes(id)) {
                 renderizarNaOrdem(jogo, document.getElementById('round-32-left'), ordemEsquerda32, cardHTML);
             } else if (ordemEsquerda16.includes(id)) {
@@ -1727,14 +1731,7 @@ async function carregarMataMata() {
                 renderizarNaOrdem(jogo, document.getElementById('round-8-left'), ordemEsquerda08, cardHTML);
             } else if (id === 101) {
                 document.getElementById('semi-left').innerHTML = cardHTML;
-            }
-
-            // DIREITA (Seguindo o fluxo da imagem da planilha)
-            const ordemDireita32 = [76, 78, 79, 80, 86, 88, 85, 87];
-            const ordemDireita16 = [91, 92, 95, 96];
-            const ordemDireita08 = [99, 100];
-
-            if (ordemDireita32.includes(id)) {
+            } else if (ordemDireita32.includes(id)) {
                 renderizarNaOrdem(jogo, document.getElementById('round-32-right'), ordemDireita32, cardHTML);
             } else if (ordemDireita16.includes(id)) {
                 renderizarNaOrdem(jogo, document.getElementById('round-16-right'), ordemDireita16, cardHTML);
@@ -1742,11 +1739,11 @@ async function carregarMataMata() {
                 renderizarNaOrdem(jogo, document.getElementById('round-8-right'), ordemDireita08, cardHTML);
             } else if (id === 102) {
                 document.getElementById('semi-right').innerHTML = cardHTML;
+            } else if (id === 104) {
+                document.getElementById('grand-final').innerHTML = cardHTML;
+            } else if (id === 103) {
+                document.getElementById('third-place').innerHTML = cardHTML;
             }
-
-            // CENTRO
-            else if (id === 104) document.getElementById('grand-final').innerHTML = cardHTML;
-            else if (id === 103) document.getElementById('third-place').innerHTML = cardHTML;
         });
 
         // Finaliza carregando os dados do usuário
@@ -1763,11 +1760,22 @@ function renderizarNaOrdem(jogo, container, listaOrdem, html) {
     container.armazenamento[jogo.id] = html;
     
     container.innerHTML = ""; // Limpa para reordenar
-    listaOrdem.forEach(idBusca => {
-        if (container.armazenamento[idBusca]) {
-            container.innerHTML += container.armazenamento[idBusca];
+    
+    // Itera pela lista de IDs em passos de 2 para criar os pares
+    for (let i = 0; i < listaOrdem.length; i += 2) {
+        const id1 = listaOrdem[i];
+        const id2 = listaOrdem[i + 1];
+        
+        // Só cria o par se pelo menos um dos jogos já existir no armazenamento
+        if (container.armazenamento[id1] || container.armazenamento[id2]) {
+            let parHTML = '<div class="match-pair">';
+            parHTML += container.armazenamento[id1] || '<div class="match-card empty"></div>'; // Card vazio se o jogo não carregou
+            parHTML += container.armazenamento[id2] || '<div class="match-card empty"></div>';
+            parHTML += '</div>';
+            
+            container.innerHTML += parHTML;
         }
-    });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
