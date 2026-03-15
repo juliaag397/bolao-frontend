@@ -1279,46 +1279,99 @@ strong{
 .pontos-verde { color: #28a745; } /* Para 10 pts */
 .pontos-vermelho { color: #dc3545; } /* Para 0 pts */
 
-    /* -------------------------MATA MATA------------------------- */
-/* Layout Geral do Mata-Mata */
+/* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
+
 .bracket-container {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    background-color: #1a4a7c; /* Azul fundo da imagem */
-    padding: 20px;
-    min-width: 1200px; /* Garante que não esmague os cards */
-    color: white;
+    align-items: flex-start;
+    background-color: var(--cor-fundo); /* Agora usa o fundo verde clarinho */
+    padding: 40px 20px;
+    gap: 15px;
+    overflow-x: auto; /* Permite scroll se a tela for pequena */
 }
 
 .bracket-column {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: 800px; /* Ajuste conforme o tamanho da tela */
+    min-height: 800px;
 }
 
-/* Estilo do Card de Jogo */
+/* O Card do Jogo */
 .match-card {
-    background: white;
-    color: #333;
-    padding: 5px;
-    border-radius: 4px;
-    margin: 10px 0;
-    width: 180px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    background: var(--cor-card);
+    border: 2px solid var(--cor-borda);
+    border-radius: 10px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
 }
 
-.team-slot {
+.match-card:hover {
+    border-color: var(--cor-primaria);
+    transform: translateY(-2px);
+}
+
+/* Data do Jogo no topo do card */
+.match-date {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+    font-weight: bold;
+    color: var(--cor-terciaria);
+    border-bottom: 1px solid var(--cor-borda);
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+}
+
+/* Linha de cada time */
+.team-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 2px 0;
+    margin: 5px 0;
 }
 
-.user-bet {
-    width: 35px;
+.team-name {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--cor-texto);
+    flex-grow: 1;
+}
+
+/* Estilo do input de aposta igual aos seus formulários */
+.match-card input {
+    width: 40px;
+    padding: 4px;
     text-align: center;
-    border: 1px solid #ccc;
-    background: #f9f9f9;
+    border-radius: 4px;
+    border: 1px solid var(--cor-borda);
+    background: #f8fffd;
+    font-weight: bold;
+    color: var(--cor-secundaria);
+    margin: 0 5px;
+}
+
+.match-card input:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+}
+
+/* Placar oficial (menor e discreto) */
+.official-score {
+    font-size: 12px;
+    color: #999;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: right;
+}
+
+.final-box h3 {
+    text-align: center;
+    background: var(--cor-secundaria);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
 }

@@ -1679,61 +1679,78 @@ async function carregarMataMata() {
         const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
         const jogos = await res.json();
 
-        // Filtra apenas os jogos do mata-mata (Substitua 74 pelo ID onde começa o seu mata-mata)
+        // Filtra apenas os jogos do mata-mata (conforme sua planilha, começam no 73/74)
         const jogosMataMata = jogos.filter(j => j.id >= 73);
 
         jogosMataMata.forEach(jogo => {
-            // Divide a string "Brasil x Argentina" ou "? x ?"
-            const times = jogo.jogo.split(" x ");
-            const timeCasa = times[0] || "?";
-            const timeFora = times[1] || "?";
+            // Lógica de interrogação se o time ainda não estiver definido
+            const times = jogo.jogo ? jogo.jogo.split(" x ") : ["?", "?"];
+            const timeCasa = times[0]?.trim() || "?";
+            const timeFora = times[1]?.trim() || "?";
 
-            // Se você for atualizar os placares oficiais manualmente no banco depois:
+            // Placar oficial (vencido pelo banco de dados)
             const placarOficial = (jogo.gols_casa !== null && jogo.gols_fora !== null) 
                 ? `${jogo.gols_casa} x ${jogo.gols_fora}` 
                 : "- x -";
 
-            // Cria o HTML do card do jogo
+            // Card estruturado com suas classes para CSS temático
             const cardHTML = `
                 <div class="match-card">
-                    <div class="match-info">
-                        <small>${new Date(jogo.data_jogo).toLocaleDateString()}</small>
-                        <small>Jogo ${jogo.id}</small>
-                    </div>
+                    <span class="match-date">📅 ${new Date(jogo.data_jogo).toLocaleDateString('pt-BR')}</span>
                     
-                    <div class="team-names">
-                        <strong>${timeCasa}</strong> vs <strong>${timeFora}</strong>
+                    <div class="team-row">
+                        <span class="team-name">${timeCasa}</span>
+                        <div class="placar-oficial" data-jogo-id="${jogo.id}">
+                             ${placarOficial}
+                        </div>
+                        <span class="team-name" style="text-align:right;">${timeFora}</span>
                     </div>
 
-                    <div class="match-actions">
-                        <div class="placar-oficial" data-jogo-id="${jogo.id}">
-                            Oficial: ${placarOficial}
-                        </div>
-
+                    <div class="match-actions" style="margin-top:10px;">
                         <div class="celula-aposta" 
                              data-jogo-id="${jogo.id}" 
                              data-data="${jogo.data_jogo}" 
-                             onclick="abrirAposta(this)">
-                             Clique para apostar
+                             onclick="abrirAposta(this)"
+                             style="cursor:pointer; text-align:center; padding:5px; border:1px dashed var(--cor-borda); border-radius:5px;">
+                             Apostar
                         </div>
                     </div>
+                    <small style="display:block; text-align:center; color:#999; font-size:9px; margin-top:5px;">Jogo ${jogo.id}</small>
                 </div>
             `;
 
-            // Lógica para jogar o card na coluna certa do HTML (Baseado na sua planilha)
-            if (jogo.id >= 74 && jogo.id <= 84) {
-                const coluna = document.getElementById('round-32-left');
-                if (coluna) coluna.innerHTML += cardHTML;
-            } else if (jogo.id >= 89 && jogo.id <= 93) {
-                const coluna = document.getElementById('round-16-left');
+            // DISTRIBUIÇÃO CONFORME A PLANILHA
+            let colunaId = "";
+
+            const id = parseInt(jogo.id);
+
+            // Lado Esquerdo
+            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) colunaId = "round-32-left";
+            else if ([89, 90, 93, 94].includes(id)) colunaId = "round-16-left";
+            else if ([97, 98].includes(id)) colunaId = "round-8-left";
+            else if (id === 101) colunaId = "semifinal-top";
+
+            // Centro (Final e 3º Lugar)
+            else if (id === 104) colunaId = "grand-final";
+            else if (id === 103) {
+                 const col3 = document.getElementById("semifinal-bottom"); // Ou crie uma div específica
+                 if(col3) col3.innerHTML += cardHTML;
+                 return;
+            }
+
+            // Lado Direito
+            else if (id === 102) colunaId = "semifinal-bottom"; // Ajuste se for usar div central
+            else if ([99, 100].includes(id)) colunaId = "round-8-right";
+            else if ([91, 92, 95, 96].includes(id)) colunaId = "round-16-right";
+            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) colunaId = "round-32-right";
+
+            if (colunaId) {
+                const coluna = document.getElementById(colunaId);
                 if (coluna) coluna.innerHTML += cardHTML;
             }
-            // ... Adicione os outros IDs e IDs da direita conforme a sua estrutura
         });
 
-        // 🔥 O PULO DO GATO:
-        // Depois de criar todo o HTML na tela, chamamos as suas funções que já existem!
-        // Elas vão varrer a tela procurando as classes '.celula-aposta' e preencher tudo.
+        // Preenche as apostas já feitas e bloqueia as passadas
         await carregarApostas();
         bloquearJogosPassados();
 
