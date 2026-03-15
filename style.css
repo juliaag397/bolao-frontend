@@ -1281,156 +1281,78 @@ strong{
 
 /* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
 
-/* Container Principal */
-.bracket-container {
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-    background-color: var(--cor-fundo);
-    padding: 40px 20px;
-    gap: 40px; /* Espaço para as conexões respirarem */
-    overflow-x: auto;
-}
-
-/* Colunas */
-.bracket-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    min-height: 850px;
-    position: relative;
-}
-
-/* Container do Par: O segredo para as linhas em "Y" sem sobras */
+/* Container do Par */
 .match-pair {
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 30px; /* Espaço entre os dois jogos do mesmo confronto */
-    margin-bottom: 20px;
+    justify-content: center;
+    flex-grow: 1;
+    width: 100%;
+    /* O GAP agora pode ser diferente para cada fase sem quebrar as linhas */
 }
 
-/* O Card do Jogo */
-.match-card {
-    background: var(--cor-card);
-    border: 2px solid var(--cor-borda);
-    border-radius: 10px;
-    width: 200px;
-    padding: 10px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    transition: 0.3s;
-    position: relative;
-    z-index: 2;
-}
+/* --- LADO ESQUERDO --- */
 
-/* --- CONECTORES LADO ESQUERDO --- */
-
-/* 1. Linha horizontal que sai de CADA card até o meio do caminho */
-.bracket-column[id$="-left"] .match-card::after {
-    content: "";
-    position: absolute;
-    right: -20px;
-    top: 50%;
-    width: 20px;
-    border-top: 2px solid #b1d8c6;
-}
-
-/* 2. Linha VERTICAL que une o par (A parte verde vertical) */
+/* Linha VERTICAL Elástica (Esquerda) */
 .bracket-column[id$="-left"] .match-pair::after {
     content: "";
     position: absolute;
     right: -20px;
-    top: 25%;    /* Começa no meio do card de cima */
-    bottom: 25%; /* Termina no meio do card de baixo */
+    /* Faz a linha começar no meio do primeiro card e terminar no meio do último */
+    top: calc(50% / 2); 
+    bottom: calc(50% / 2);
     border-right: 2px solid #b1d8c6;
+    z-index: 1;
 }
 
-/* 3. A "perninha" horizontal que entra na próxima fase (Ex: para o jogo 89) */
-.bracket-column[id$="-left"] .match-pair::before {
-    content: "";
-    position: absolute;
-    right: -40px;
-    top: 50%;    /* Meio exato do par */
-    width: 20px;
-    border-top: 2px solid #b1d8c6;
+/* Ajuste específico para quando os cards estão muito longe (Oitavas/Semis) */
+/* Usamos seletores para forçar a linha a ligar os centros reais */
+.bracket-column[id$="-left"] .match-pair {
+    padding: 20px 0; /* Ajuda no respiro interno */
 }
 
-/* --- CONECTORES LADO DIREITO --- */
-
-/* 1. Linha horizontal saindo para a esquerda */
-.bracket-column[id$="-right"] .match-card::before {
-    content: "";
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    width: 20px;
-    border-top: 2px solid #b1d8c6;
+/* Seletores dinâmicos para a linha vertical não sobrar */
+.bracket-column[id$="-left"] .match-pair::after {
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* Altura baseada na distância entre os centros dos cards */
+    height: calc(100% - 110px); 
 }
 
-/* 2. Linha vertical do par (Direita) */
+/* --- LADO DIREITO --- */
+
+/* Linha VERTICAL Elástica (Direita) */
 .bracket-column[id$="-right"] .match-pair::before {
     content: "";
     position: absolute;
     left: -20px;
-    top: 25%;
-    bottom: 25%;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    height: calc(100% - 110px);
     border-left: 2px solid #b1d8c6;
+    z-index: 1;
 }
 
-/* 3. A "perninha" que entra no jogo da esquerda (Direita -> Centro) */
-.bracket-column[id$="-right"] .match-pair::after {
-    content: "";
-    position: absolute;
-    left: -40px;
-    top: 50%;
-    width: 20px;
-    border-top: 2px solid #b1d8c6;
-}
+/* --- AJUSTES POR FASE (DISTÂNCIAS DINÂMICAS) --- */
 
-/* --- ELEMENTOS INTERNOS E ESTILOS GERAIS --- */
+/* Pré-Oitavas (Fase 32) */
+#round-32-left .match-pair, #round-32-right .match-pair { gap: 20px; }
 
-.match-date {
-    display: block;
-    text-align: center;
-    font-size: 11px;
-    font-weight: bold;
-    color: var(--cor-terciaria);
-    border-bottom: 1px solid var(--cor-borda);
-    margin-bottom: 8px;
-    padding-bottom: 4px;
-}
+/* Oitavas (Fase 16) */
+#round-16-left .match-pair, #round-16-right .match-pair { gap: 140px; }
 
-.team-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 5px 0;
-}
+/* Quartas (Fase 8) */
+#round-8-left .match-pair, #round-8-right .match-pair { gap: 300px; }
 
-.team-name {
-    font-size: 13px;
-    font-weight: bold;
-    color: var(--cor-texto);
-}
+/* Semifinais */
+#semi-left .match-pair, #semi-right .match-pair { gap: 500px; }
 
-.match-card input {
-    width: 35px;
-    padding: 3px;
-    text-align: center;
-    border-radius: 4px;
-    border: 1px solid var(--cor-borda);
-    font-weight: bold;
-}
-
-.central-flow {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 50px;
-}
-
-/* Remove linhas de colunas que não precisam de conectores (como a Final) */
-.central-flow .match-card::after, 
-.central-flow .match-card::before {
-    display: none;
+/* Ajuste fino para os conectores acompanharem o GAP maior */
+.match-pair {
+    min-height: 150px; /* Garante que haja espaço para o cálculo do centro */
 }
