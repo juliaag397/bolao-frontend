@@ -1679,33 +1679,26 @@ async function carregarMataMata() {
         const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
         const jogos = await res.json();
 
-        // Filtra apenas os jogos do mata-mata (conforme sua planilha, começam no 73/74)
+        // Filtra apenas os jogos do mata-mata
         const jogosMataMata = jogos.filter(j => j.id >= 73);
 
         jogosMataMata.forEach(jogo => {
-            // Lógica de interrogação se o time ainda não estiver definido
             const times = jogo.jogo ? jogo.jogo.split(" x ") : ["?", "?"];
             const timeCasa = times[0]?.trim() || "?";
             const timeFora = times[1]?.trim() || "?";
 
-            // Placar oficial (vencido pelo banco de dados)
             const placarOficial = (jogo.gols_casa !== null && jogo.gols_fora !== null) 
                 ? `${jogo.gols_casa} x ${jogo.gols_fora}` 
                 : "- x -";
 
-            // Card estruturado com suas classes para CSS temático
             const cardHTML = `
                 <div class="match-card">
                     <span class="match-date">📅 ${new Date(jogo.data_jogo).toLocaleDateString('pt-BR')}</span>
-                    
                     <div class="team-row">
                         <span class="team-name">${timeCasa}</span>
-                        <div class="placar-oficial" data-jogo-id="${jogo.id}">
-                             ${placarOficial}
-                        </div>
+                        <div class="placar-oficial" data-jogo-id="${jogo.id}">${placarOficial}</div>
                         <span class="team-name" style="text-align:right;">${timeFora}</span>
                     </div>
-
                     <div class="match-actions" style="margin-top:10px;">
                         <div class="celula-aposta" 
                              data-jogo-id="${jogo.id}" 
@@ -1719,12 +1712,10 @@ async function carregarMataMata() {
                 </div>
             `;
 
-            // DISTRIBUIÇÃO CONFORME A PLANILHA
-            let colunaId = "";
-
             const id = parseInt(jogo.id);
 
-            // Lado Esquerdo - Seguindo a imagem de cima para baixo
+            // DISTRIBUIÇÃO DIRETA NAS COLUNAS
+            // Lado Esquerdo
             if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) {
                 document.getElementById('round-32-left').innerHTML += cardHTML;
             } 
@@ -1734,8 +1725,7 @@ async function carregarMataMata() {
             else if ([97, 98].includes(id)) {
                 document.getElementById('round-8-left').innerHTML += cardHTML;
             }
-
-            // Lado Direito - Seguindo a imagem de cima para baixo
+            // Lado Direito
             else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) {
                 document.getElementById('round-32-right').innerHTML += cardHTML;
             } 
@@ -1745,24 +1735,17 @@ async function carregarMataMata() {
             else if ([99, 100].includes(id)) {
                 document.getElementById('round-8-right').innerHTML += cardHTML;
             }
-
-            // Centro (Semifinais e Final)
+            // Centro
             else if (id === 101) document.getElementById('semifinal-top').innerHTML += cardHTML;
             else if (id === 102) document.getElementById('semifinal-bottom').innerHTML += cardHTML;
             else if (id === 104) document.getElementById('grand-final').innerHTML += cardHTML;
             else if (id === 103) {
-                // 3º Lugar fica na caixa da final ou logo abaixo
                 const grandFinal = document.getElementById('grand-final');
                 if (grandFinal) grandFinal.innerHTML += `<p style='margin:10px 0; font-size:12px; font-weight:bold;'>3º LUGAR</p>` + cardHTML;
             }
-
-            if (colunaId) {
-                const coluna = document.getElementById(colunaId);
-                if (coluna) coluna.innerHTML += cardHTML;
-            }
         });
 
-        // Preenche as apostas já feitas e bloqueia as passadas
+        // Finaliza carregando os dados do usuário
         await carregarApostas();
         bloquearJogosPassados();
 
