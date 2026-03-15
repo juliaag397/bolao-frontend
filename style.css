@@ -1278,3 +1278,47 @@ strong{
 /* Cores dinâmicas que o JS vai aplicar */
 .pontos-verde { color: #28a745; } /* Para 10 pts */
 .pontos-vermelho { color: #dc3545; } /* Para 0 pts */
+
+    /* -------------------------MATA MATA------------------------- */
+/* Layout Geral do Mata-Mata */
+.bracket-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1a4a7c; /* Azul fundo da imagem */
+    padding: 20px;
+    min-width: 1200px; /* Garante que não esmague os cards */
+    color: white;
+}
+
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 800px; /* Ajuste conforme o tamanho da tela */
+}
+
+/* Estilo do Card de Jogo */
+.match-card {
+    background: white;
+    color: #333;
+    padding: 5px;
+    border-radius: 4px;
+    margin: 10px 0;
+    width: 180px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.team-slot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0;
+}
+
+.user-bet {
+    width: 35px;
+    text-align: center;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+}
