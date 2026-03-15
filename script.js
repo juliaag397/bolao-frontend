@@ -545,6 +545,7 @@ async function verificarLogin() {
         carregarPalpitesPodio();
         bloquearPalpitesSeExpirado();
         await carregarConfiguracoesGerais();
+        await carregarMataMata();
 
     } else {
 
@@ -1669,6 +1670,75 @@ async function carregarConfiguracoesGerais() {
         }
     } catch (erro) {
         console.log("Erro ao carregar configurações:", erro);
+    }
+}
+
+    //MATA-MATA------------------------------
+async function carregarMataMata() {
+    try {
+        const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
+        const jogos = await res.json();
+
+        // Filtra apenas os jogos do mata-mata (Substitua 74 pelo ID onde começa o seu mata-mata)
+        const jogosMataMata = jogos.filter(j => j.id >= 73);
+
+        jogosMataMata.forEach(jogo => {
+            // Divide a string "Brasil x Argentina" ou "? x ?"
+            const times = jogo.jogo.split(" x ");
+            const timeCasa = times[0] || "?";
+            const timeFora = times[1] || "?";
+
+            // Se você for atualizar os placares oficiais manualmente no banco depois:
+            const placarOficial = (jogo.gols_casa !== null && jogo.gols_fora !== null) 
+                ? `${jogo.gols_casa} x ${jogo.gols_fora}` 
+                : "- x -";
+
+            // Cria o HTML do card do jogo
+            const cardHTML = `
+                <div class="match-card">
+                    <div class="match-info">
+                        <small>${new Date(jogo.data_jogo).toLocaleDateString()}</small>
+                        <small>Jogo ${jogo.id}</small>
+                    </div>
+                    
+                    <div class="team-names">
+                        <strong>${timeCasa}</strong> vs <strong>${timeFora}</strong>
+                    </div>
+
+                    <div class="match-actions">
+                        <div class="placar-oficial" data-jogo-id="${jogo.id}">
+                            Oficial: ${placarOficial}
+                        </div>
+
+                        <div class="celula-aposta" 
+                             data-jogo-id="${jogo.id}" 
+                             data-data="${jogo.data_jogo}" 
+                             onclick="abrirAposta(this)">
+                             Clique para apostar
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Lógica para jogar o card na coluna certa do HTML (Baseado na sua planilha)
+            if (jogo.id >= 74 && jogo.id <= 84) {
+                const coluna = document.getElementById('round-32-left');
+                if (coluna) coluna.innerHTML += cardHTML;
+            } else if (jogo.id >= 89 && jogo.id <= 93) {
+                const coluna = document.getElementById('round-16-left');
+                if (coluna) coluna.innerHTML += cardHTML;
+            }
+            // ... Adicione os outros IDs e IDs da direita conforme a sua estrutura
+        });
+
+        // 🔥 O PULO DO GATO:
+        // Depois de criar todo o HTML na tela, chamamos as suas funções que já existem!
+        // Elas vão varrer a tela procurando as classes '.celula-aposta' e preencher tudo.
+        await carregarApostas();
+        bloquearJogosPassados();
+
+    } catch (erro) {
+        console.error("Erro ao montar mata-mata:", erro);
     }
 }
 
