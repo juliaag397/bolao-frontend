@@ -1281,78 +1281,152 @@ strong{
 
 /* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
 
-/* Container do Par */
+/* --- CONFIGURAÇÕES GERAIS --- */
+:root {
+    --cor-linha: #b1d8c6;
+    --largura-conector: 20px;
+    --altura-card: 110px; /* Ajuste conforme a altura real do seu card */
+}
+
+.bracket-container {
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    background-color: var(--cor-fundo);
+    padding: 40px 20px;
+    gap: 60px; /* Espaço maior entre colunas para os conectores */
+    overflow-x: auto;
+}
+
+/* --- COLUNAS E ALINHAMENTO --- */
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* O SEGREDO: Centraliza os jogos em relação à fase anterior */
+    min-height: 900px;
+    position: relative;
+    width: 200px;
+}
+
+/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-grow: 1;
     width: 100%;
-    /* O GAP agora pode ser diferente para cada fase sem quebrar as linhas */
+    flex-grow: 1; /* Faz o par ocupar o espaço vertical disponível */
 }
 
-/* --- LADO ESQUERDO --- */
+.match-card {
+    background: var(--cor-card);
+    border: 2px solid var(--cor-borda);
+    border-radius: 10px;
+    width: 200px;
+    padding: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
+    position: relative;
+    z-index: 2;
+    margin: 10px 0; /* Respiro mínimo entre cards do mesmo par */
+}
 
-/* Linha VERTICAL Elástica (Esquerda) */
+/* --- CONECTORES ESQUERDA (SAÍDA -> DIREITA) --- */
+
+/* Linha horizontal saindo de cada card */
+.bracket-column[id$="-left"] .match-card::after {
+    content: "";
+    position: absolute;
+    right: calc(var(--largura-conector) * -1);
+    top: 50%;
+    width: var(--largura-conector);
+    border-top: 2px solid var(--cor-linha);
+}
+
+/* Linha Vertical do Par (Une os dois cards) */
 .bracket-column[id$="-left"] .match-pair::after {
     content: "";
     position: absolute;
-    right: -20px;
-    /* Faz a linha começar no meio do primeiro card e terminar no meio do último */
-    top: calc(50% / 2); 
-    bottom: calc(50% / 2);
-    border-right: 2px solid #b1d8c6;
+    right: calc(var(--largura-conector) * -1);
+    /* Inicia no meio do card de cima e termina no de baixo */
+    top: calc(var(--altura-card) / 2 + 10px); 
+    bottom: calc(var(--altura-card) / 2 + 10px);
+    border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
-/* Ajuste específico para quando os cards estão muito longe (Oitavas/Semis) */
-/* Usamos seletores para forçar a linha a ligar os centros reais */
-.bracket-column[id$="-left"] .match-pair {
-    padding: 20px 0; /* Ajuda no respiro interno */
+/* Perninha que entra no próximo jogo */
+.bracket-column[id$="-left"] .match-pair::before {
+    content: "";
+    position: absolute;
+    right: calc(var(--largura-conector) * -2);
+    top: 50%;
+    width: var(--largura-conector);
+    border-top: 2px solid var(--cor-linha);
 }
 
-/* Seletores dinâmicos para a linha vertical não sobrar */
-.bracket-column[id$="-left"] .match-pair::after {
-    top: 0;
-    bottom: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-    /* Altura baseada na distância entre os centros dos cards */
-    height: calc(100% - 110px); 
+/* --- CONECTORES DIREITA (SAÍDA -> ESQUERDA) --- */
+
+/* Linha horizontal saindo de cada card */
+.bracket-column[id$="-right"] .match-card::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--largura-conector) * -1);
+    top: 50%;
+    width: var(--largura-conector);
+    border-top: 2px solid var(--cor-linha);
 }
 
-/* --- LADO DIREITO --- */
-
-/* Linha VERTICAL Elástica (Direita) */
+/* Linha Vertical do Par */
 .bracket-column[id$="-right"] .match-pair::before {
     content: "";
     position: absolute;
-    left: -20px;
-    top: 0;
-    bottom: 0;
-    margin-top: auto;
-    margin-bottom: auto;
-    height: calc(100% - 110px);
-    border-left: 2px solid #b1d8c6;
+    left: calc(var(--largura-conector) * -1);
+    top: calc(var(--altura-card) / 2 + 10px);
+    bottom: calc(var(--altura-card) / 2 + 10px);
+    border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
-/* --- AJUSTES POR FASE (DISTÂNCIAS DINÂMICAS) --- */
-
-/* Pré-Oitavas (Fase 32) */
-#round-32-left .match-pair, #round-32-right .match-pair { gap: 20px; }
-
-/* Oitavas (Fase 16) */
-#round-16-left .match-pair, #round-16-right .match-pair { gap: 140px; }
-
-/* Quartas (Fase 8) */
-#round-8-left .match-pair, #round-8-right .match-pair { gap: 300px; }
-
-/* Semifinais */
-#semi-left .match-pair, #semi-right .match-pair { gap: 500px; }
-
-/* Ajuste fino para os conectores acompanharem o GAP maior */
-.match-pair {
-    min-height: 150px; /* Garante que haja espaço para o cálculo do centro */
+/* Perninha que entra no próximo jogo */
+.bracket-column[id$="-right"] .match-pair::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--largura-conector) * -2);
+    top: 50%;
+    width: var(--largura-conector);
+    border-top: 2px solid var(--cor-linha);
 }
+
+/* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
+
+/* Fase de 32 (Mais juntos) */
+[id^="round-32"] .match-pair { gap: 10px; }
+
+/* Oitavas (Mais afastados) */
+[id^="round-16"] .match-pair { gap: 150px; }
+
+/* Quartas (Bem afastados) */
+[id^="round-8"] .match-pair { gap: 350px; }
+
+/* --- BLOCO CENTRAL (FINAL E 3º) --- */
+.central-flow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 40px;
+}
+
+/* Remove conectores da coluna central */
+.central-flow .match-card::after,
+.central-flow .match-card::before,
+.central-flow .match-pair::after,
+.central-flow .match-pair::before {
+    display: none;
+}
+
+/* Estilos de Texto e Inputs */
+.match-date { display: block; text-align: center; font-size: 11px; font-weight: bold; color: var(--cor-terciaria); border-bottom: 1px solid var(--cor-borda); margin-bottom: 8px; padding-bottom: 4px; }
+.team-row { display: flex; align-items: center; justify-content: space-between; margin: 5px 0; }
+.team-name { font-size: 13px; font-weight: bold; color: var(--cor-texto); }
+.match-card input { width: 35px; padding: 3px; text-align: center; border-radius: 4px; border: 1px solid var(--cor-borda); font-weight: bold; }
