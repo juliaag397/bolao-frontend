@@ -1384,46 +1384,57 @@ strong{
     gap: 20px;
 }
 
-/* Base dos conectores */
+/* Limpa as duplicatas e foca nos conectores */
 .match-card {
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 30px; /* Aumentado para dar espaço às linhas */
+    z-index: 2;
 }
 
-/* Linhas saindo da Esquerda para a Direita */
-.bracket-column[id*="-left"] .match-card::after {
+/* Linha Horizontal saindo dos cards da ESQUERDA */
+.bracket-column[id$="-left"] .match-card::after {
     content: "";
     position: absolute;
-    right: -22px;
+    right: -25px;
     top: 50%;
-    width: 22px;
-    border-top: 2px dashed #ccc;
+    width: 25px;
+    border-top: 2px dashed #b1d8c6;
 }
 
-/* Linhas saindo da Direita para a Esquerda */
-.bracket-column[id*="-right"] .match-card::after {
+/* Linha Horizontal saindo dos cards da DIREITA */
+.bracket-column[id$="-right"] .match-card::before {
     content: "";
     position: absolute;
-    left: -22px;
+    left: -25px;
     top: 50%;
-    width: 22px;
-    border-top: 2px dashed #ccc;
+    width: 25px;
+    border-top: 2px dashed #b1d8c6;
 }
 
-/* Fazendo as linhas se unirem verticalmente */
-/* Estilizamos o SEGUNDO jogo de cada par para subir uma linha e o PRIMEIRO para descer */
-.bracket-column .match-card:nth-child(even)::before {
+/* A CONEXÃO VERTICAL (O "FUNIL") */
+/* O card de cima (ímpar) cria uma linha para baixo */
+.bracket-column .match-card:nth-child(odd)::after {
+    height: calc(50% + 55px); /* Ajuste os 55px conforme o espaço entre seus cards */
+    border-right: 2px dashed #b1d8c6;
+    top: 50%;
+}
+
+/* O card de baixo (par) cria uma linha para cima */
+.bracket-column .match-card:nth-child(even)::after {
+    height: calc(50% + 55px);
+    border-right: 2px dashed #b1d8c6;
+    bottom: 50%;
+    top: auto;
+}
+
+/* Inverter a posição da linha vertical no lado DIREITO */
+.bracket-column[id$="-right"] .match-card:nth-child(odd)::before,
+.bracket-column[id$="-right"] .match-card:nth-child(even)::before {
+    border-left: 2px dashed #b1d8c6;
+    border-right: none;
+    left: -25px;
+    right: auto;
     content: "";
     position: absolute;
-    top: -50%;
-    height: 100%;
-    border-left: 2px dashed #ccc;
-}
-
-/* Ajuste específico para o lado direito (espelhado) */
-.bracket-column[id*="-right"] .match-card::before {
-    left: -22px;
-}
-.bracket-column[id*="-left"] .match-card::before {
-    right: -22px;
+    width: 25px;
 }
