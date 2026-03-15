@@ -1376,28 +1376,54 @@ strong{
     border-radius: 5px;
 }
 
-/* Linha tracejada saindo dos cards da esquerda */
-.bracket-column[id*="-left"] .match-card {
-    position: relative;
+/* Container Geral */
+.bracket-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
+
+/* Base dos conectores */
+.match-card {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+/* Linhas saindo da Esquerda para a Direita */
 .bracket-column[id*="-left"] .match-card::after {
     content: "";
     position: absolute;
-    right: -30px; /* Ajuste conforme o gap do seu container */
+    right: -22px;
     top: 50%;
-    width: 30px;
-    border-top: 2px dashed var(--cor-terciaria);
+    width: 22px;
+    border-top: 2px dashed #ccc;
 }
 
-/* Linha tracejada saindo dos cards da direita */
-.bracket-column[id*="-right"] .match-card {
-    position: relative;
-}
-.bracket-column[id*="-right"] .match-card::before {
+/* Linhas saindo da Direita para a Esquerda */
+.bracket-column[id*="-right"] .match-card::after {
     content: "";
     position: absolute;
-    left: -30px;
+    left: -22px;
     top: 50%;
-    width: 30px;
-    border-top: 2px dashed var(--cor-terciaria);
+    width: 22px;
+    border-top: 2px dashed #ccc;
+}
+
+/* Fazendo as linhas se unirem verticalmente */
+/* Estilizamos o SEGUNDO jogo de cada par para subir uma linha e o PRIMEIRO para descer */
+.bracket-column .match-card:nth-child(even)::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    height: 100%;
+    border-left: 2px dashed #ccc;
+}
+
+/* Ajuste específico para o lado direito (espelhado) */
+.bracket-column[id*="-right"] .match-card::before {
+    left: -22px;
+}
+.bracket-column[id*="-left"] .match-card::before {
+    right: -22px;
 }
