@@ -1714,26 +1714,35 @@ async function carregarMataMata() {
 
             const id = parseInt(jogo.id);
 
-            // ESQUERDA - Ordem para as linhas casarem (Par 1: 81 e 82 -> leva ao 89)
-            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) {
-                const container = document.getElementById('round-32-left');
-                // Para manter a ordem exata da planilha:
-                const ordem = [74, 77, 73, 75, 83, 84, 81, 82];
-                renderizarNaOrdem(jogo, container, ordem);
-            } 
-            else if ([89, 90, 93, 94].includes(id)) document.getElementById('round-16-left').innerHTML += cardHTML;
-            else if ([97, 98].includes(id)) document.getElementById('round-8-left').innerHTML += cardHTML;
-            else if (id === 101) document.getElementById('semi-left').innerHTML += cardHTML;
+            // ESQUERDA (Seguindo o fluxo da imagem da planilha)
+            const ordemEsquerda32 = [74, 77, 73, 75, 83, 84, 81, 82]; 
+            const ordemEsquerda16 = [89, 90, 93, 94];
+            const ordemEsquerda08 = [97, 98];
 
-            // DIREITA - Ordem para as linhas casarem (Par 1: 78 e 76 -> leva ao 91)
-            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) {
-                const container = document.getElementById('round-32-right');
-                const ordem = [76, 78, 79, 80, 86, 88, 85, 87];
-                renderizarNaOrdem(jogo, container, ordem);
+            if (ordemEsquerda32.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-32-left'), ordemEsquerda32, cardHTML);
+            } else if (ordemEsquerda16.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-16-left'), ordemEsquerda16, cardHTML);
+            } else if (ordemEsquerda08.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-8-left'), ordemEsquerda08, cardHTML);
+            } else if (id === 101) {
+                document.getElementById('semi-left').innerHTML = cardHTML;
             }
-            else if ([91, 92, 95, 96].includes(id)) document.getElementById('round-16-right').innerHTML += cardHTML;
-            else if ([99, 100].includes(id)) document.getElementById('round-8-right').innerHTML += cardHTML;
-            else if (id === 102) document.getElementById('semi-right').innerHTML += cardHTML;
+
+            // DIREITA (Seguindo o fluxo da imagem da planilha)
+            const ordemDireita32 = [76, 78, 79, 80, 86, 88, 85, 87];
+            const ordemDireita16 = [91, 92, 95, 96];
+            const ordemDireita08 = [99, 100];
+
+            if (ordemDireita32.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-32-right'), ordemDireita32, cardHTML);
+            } else if (ordemDireita16.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-16-right'), ordemDireita16, cardHTML);
+            } else if (ordemDireita08.includes(id)) {
+                renderizarNaOrdem(jogo, document.getElementById('round-8-right'), ordemDireita08, cardHTML);
+            } else if (id === 102) {
+                document.getElementById('semi-right').innerHTML = cardHTML;
+            }
 
             // CENTRO
             else if (id === 104) document.getElementById('grand-final').innerHTML = cardHTML;
@@ -1747,6 +1756,18 @@ async function carregarMataMata() {
     } catch (erro) {
         console.error("Erro ao montar mata-mata:", erro);
     }
+}
+
+function renderizarNaOrdem(jogo, container, listaOrdem, html) {
+    if (!container.armazenamento) container.armazenamento = {};
+    container.armazenamento[jogo.id] = html;
+    
+    container.innerHTML = ""; // Limpa para reordenar
+    listaOrdem.forEach(idBusca => {
+        if (container.armazenamento[idBusca]) {
+            container.innerHTML += container.armazenamento[idBusca];
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
