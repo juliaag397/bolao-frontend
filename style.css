@@ -1260,13 +1260,21 @@ strong{
     .podio-container { transform: scale(0.8); }
 }
 
+/* Estilo para a etiqueta de pontos */
 .label-pontos {
+    margin-top: 10px;
     font-weight: bold;
-    font-size: 14px;
-    margin-top: 10px; /* Dá um espaço do select */
-    background: rgba(255, 255, 255, 0.8);
+    font-size: 1.1rem;
     padding: 2px 10px;
-    border-radius: 20px;
-    display: none; /* Começa escondido, o JS mostra se tiver ponto */
+    border-radius: 15px;
+    display: none; /* Começa escondido e o JS mostra se houver resultado */
     text-align: center;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: fit-content;
+    align-self: center;
 }
+
+/* Cores dinâmicas que o JS vai aplicar */
+.pontos-verde { color: #28a745; } /* Para 10 pts */
+.pontos-vermelho { color: #dc3545; } /* Para 0 pts */

@@ -1570,23 +1570,45 @@ function carregarPalpitesPodio() {
     })
     .then(res => res.json())
     .then(data => {
-        // Dentro do .then(data => { ... }) da função carregarPalpitesPodio
-
         if (data) {
+            // Preenche os selects
             document.getElementById("select-1").value = data.primeiro_lugar || "";
             document.getElementById("select-2").value = data.segundo_lugar || "";
             document.getElementById("select-3").value = data.terceiro_lugar || "";
 
-            // Atualiza as bandeiras ou limpa se estiver vazio
+            // Mapeia os pontos vindos do backend para facilitar o loop
+            const pontosMapeados = {
+                1: data.pts1,
+                2: data.pts2,
+                3: data.pts3
+            };
+
             [1, 2, 3].forEach(pos => {
                 const select = document.getElementById(`select-${pos}`);
                 const img = document.getElementById(`flag-${pos}`);
+                const divPontos = document.getElementById(`pontos-${pos}`); // Busca a div de pontos
                 
+                // --- Lógica das Bandeiras ---
                 if (select.value && select.value !== "") {
                     img.src = `https://flagcdn.com/w80/${select.value}.png`;
                 } else {
-                    // Se não tem valor (usuário novo), mostra o interrogação
                     img.src = "https://via.placeholder.com/80x50/cccccc/cccccc";
+                }
+
+                // --- Lógica dos Pontos ---
+                const pts = pontosMapeados[pos];
+
+                if (divPontos) {
+                    // Só mostra se pts não for null (ou seja, se já houver resultado oficial)
+                    if (pts !== null && pts !== undefined) {
+                        divPontos.innerText = `${pts} pts`;
+                        divPontos.style.display = "block"; 
+                        
+                        // Estilização dinâmica
+                        divPontos.style.color = pts === 10 ? "#28a745" : "#dc3545"; // Verde ou Vermelho
+                    } else {
+                        divPontos.style.display = "none"; // Esconde se a Copa não começou/terminou
+                    }
                 }
             });
         }
