@@ -1375,3 +1375,29 @@ strong{
     padding: 5px;
     border-radius: 5px;
 }
+
+/* Linha tracejada saindo dos cards da esquerda */
+.bracket-column[id*="-left"] .match-card {
+    position: relative;
+}
+.bracket-column[id*="-left"] .match-card::after {
+    content: "";
+    position: absolute;
+    right: -30px; /* Ajuste conforme o gap do seu container */
+    top: 50%;
+    width: 30px;
+    border-top: 2px dashed var(--cor-terciaria);
+}
+
+/* Linha tracejada saindo dos cards da direita */
+.bracket-column[id*="-right"] .match-card {
+    position: relative;
+}
+.bracket-column[id*="-right"] .match-card::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    width: 30px;
+    border-top: 2px dashed var(--cor-terciaria);
+}

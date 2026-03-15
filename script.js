@@ -1724,25 +1724,37 @@ async function carregarMataMata() {
 
             const id = parseInt(jogo.id);
 
-            // Lado Esquerdo
-            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) colunaId = "round-32-left";
-            else if ([89, 90, 93, 94].includes(id)) colunaId = "round-16-left";
-            else if ([97, 98].includes(id)) colunaId = "round-8-left";
-            else if (id === 101) colunaId = "semifinal-top";
-
-            // Centro (Final e 3º Lugar)
-            else if (id === 104) colunaId = "grand-final";
-            else if (id === 103) {
-                 const col3 = document.getElementById("semifinal-bottom"); // Ou crie uma div específica
-                 if(col3) col3.innerHTML += cardHTML;
-                 return;
+            // Lado Esquerdo - Seguindo a imagem de cima para baixo
+            if ([74, 77, 73, 75, 83, 84, 81, 82].includes(id)) {
+                document.getElementById('round-32-left').innerHTML += cardHTML;
+            } 
+            else if ([89, 90, 93, 94].includes(id)) {
+                document.getElementById('round-16-left').innerHTML += cardHTML;
+            } 
+            else if ([97, 98].includes(id)) {
+                document.getElementById('round-8-left').innerHTML += cardHTML;
             }
 
-            // Lado Direito
-            else if (id === 102) colunaId = "semifinal-bottom"; // Ajuste se for usar div central
-            else if ([99, 100].includes(id)) colunaId = "round-8-right";
-            else if ([91, 92, 95, 96].includes(id)) colunaId = "round-16-right";
-            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) colunaId = "round-32-right";
+            // Lado Direito - Seguindo a imagem de cima para baixo
+            else if ([76, 78, 79, 80, 86, 88, 85, 87].includes(id)) {
+                document.getElementById('round-32-right').innerHTML += cardHTML;
+            } 
+            else if ([91, 92, 95, 96].includes(id)) {
+                document.getElementById('round-16-right').innerHTML += cardHTML;
+            } 
+            else if ([99, 100].includes(id)) {
+                document.getElementById('round-8-right').innerHTML += cardHTML;
+            }
+
+            // Centro (Semifinais e Final)
+            else if (id === 101) document.getElementById('semifinal-top').innerHTML += cardHTML;
+            else if (id === 102) document.getElementById('semifinal-bottom').innerHTML += cardHTML;
+            else if (id === 104) document.getElementById('grand-final').innerHTML += cardHTML;
+            else if (id === 103) {
+                // 3º Lugar fica na caixa da final ou logo abaixo
+                const grandFinal = document.getElementById('grand-final');
+                if (grandFinal) grandFinal.innerHTML += `<p style='margin:10px 0; font-size:12px; font-weight:bold;'>3º LUGAR</p>` + cardHTML;
+            }
 
             if (colunaId) {
                 const coluna = document.getElementById(colunaId);
