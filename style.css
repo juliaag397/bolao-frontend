@@ -1281,21 +1281,24 @@ strong{
 
 /* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
 
+/* Container Principal */
 .bracket-container {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    background-color: var(--cor-fundo); /* Agora usa o fundo verde clarinho */
+    justify-content: center;
+    align-items: stretch; /* Garante que as colunas tenham a mesma altura para o alinhamento */
+    background-color: var(--cor-fundo);
     padding: 40px 20px;
-    gap: 15px;
-    overflow-x: auto; /* Permite scroll se a tela for pequena */
+    gap: 30px; /* Aumentado para dar espaço às linhas */
+    overflow-x: auto;
 }
 
+/* Colunas: O Segredo do alinhamento centralizado está aqui */
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    min-height: 800px;
+    justify-content: space-around; /* Alinha o card da frente no meio dos dois de trás */
+    min-height: 850px;
+    position: relative;
 }
 
 /* O Card do Jogo */
@@ -1307,6 +1310,8 @@ strong{
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
+    position: relative; /* Necessário para as linhas */
+    z-index: 2;
 }
 
 .match-card:hover {
@@ -1314,7 +1319,60 @@ strong{
     transform: translateY(-2px);
 }
 
-/* Data do Jogo no topo do card */
+/* --- CONECTORES LADO ESQUERDO --- */
+
+/* Linha horizontal saindo para a direita */
+.bracket-column[id$="-left"] .match-card::after {
+    content: "";
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    width: 30px;
+    border-top: 2px dashed #b1d8c6;
+}
+
+/* Linha vertical que une o par (Esquerda) */
+.bracket-column[id$="-left"] .match-card:nth-child(odd)::after {
+    height: calc(50% + 100%); /* Ajusta conforme o gap visual */
+    border-right: 2px dashed #b1d8c6;
+    top: 50%;
+}
+/* O de baixo para de subir a linha no meio */
+.bracket-column[id$="-left"] .match-card:nth-child(even)::after {
+    height: 50%; 
+    border-right: 2px dashed #b1d8c6;
+    bottom: 50%;
+    top: auto;
+}
+
+/* --- CONECTORES LADO DIREITO --- */
+
+/* Linha horizontal saindo para a esquerda */
+.bracket-column[id$="-right"] .match-card::before {
+    content: "";
+    position: absolute;
+    left: -30px;
+    top: 50%;
+    width: 30px;
+    border-top: 2px dashed #b1d8c6;
+}
+
+/* Linha vertical que une o par (Direita) */
+.bracket-column[id$="-right"] .match-card:nth-child(odd)::before {
+    height: calc(50% + 100%); 
+    border-left: 2px dashed #b1d8c6;
+    top: 50%;
+}
+
+.bracket-column[id$="-right"] .match-card:nth-child(even)::before {
+    height: 50%;
+    border-left: 2px dashed #b1d8c6;
+    bottom: 50%;
+    top: auto;
+}
+
+/* --- ELEMENTOS INTERNOS DO CARD --- */
+
 .match-date {
     display: block;
     text-align: center;
@@ -1326,7 +1384,6 @@ strong{
     padding-bottom: 4px;
 }
 
-/* Linha de cada time */
 .team-row {
     display: flex;
     align-items: center;
@@ -1338,34 +1395,23 @@ strong{
     font-size: 13px;
     font-weight: bold;
     color: var(--cor-texto);
-    flex-grow: 1;
 }
 
-/* Estilo do input de aposta igual aos seus formulários */
 .match-card input {
-    width: 40px;
-    padding: 4px;
+    width: 35px;
+    padding: 3px;
     text-align: center;
     border-radius: 4px;
     border: 1px solid var(--cor-borda);
-    background: #f8fffd;
     font-weight: bold;
-    color: var(--cor-secundaria);
-    margin: 0 5px;
 }
 
-.match-card input:focus {
-    border-color: var(--cor-primaria);
-    outline: none;
-}
-
-/* Placar oficial (menor e discreto) */
-.official-score {
-    font-size: 12px;
-    color: #999;
-    font-weight: bold;
-    min-width: 20px;
-    text-align: right;
+/* Estilo para Final e 3º Lugar no Centro */
+.central-flow {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
 }
 
 .final-box h3 {
@@ -1374,67 +1420,5 @@ strong{
     color: white;
     padding: 5px;
     border-radius: 5px;
-}
-
-/* Container Geral */
-.bracket-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* Limpa as duplicatas e foca nos conectores */
-.match-card {
-    position: relative;
-    margin-bottom: 30px; /* Aumentado para dar espaço às linhas */
-    z-index: 2;
-}
-
-/* Linha Horizontal saindo dos cards da ESQUERDA */
-.bracket-column[id$="-left"] .match-card::after {
-    content: "";
-    position: absolute;
-    right: -25px;
-    top: 50%;
-    width: 25px;
-    border-top: 2px dashed #b1d8c6;
-}
-
-/* Linha Horizontal saindo dos cards da DIREITA */
-.bracket-column[id$="-right"] .match-card::before {
-    content: "";
-    position: absolute;
-    left: -25px;
-    top: 50%;
-    width: 25px;
-    border-top: 2px dashed #b1d8c6;
-}
-
-/* A CONEXÃO VERTICAL (O "FUNIL") */
-/* O card de cima (ímpar) cria uma linha para baixo */
-.bracket-column .match-card:nth-child(odd)::after {
-    height: calc(50% + 55px); /* Ajuste os 55px conforme o espaço entre seus cards */
-    border-right: 2px dashed #b1d8c6;
-    top: 50%;
-}
-
-/* O card de baixo (par) cria uma linha para cima */
-.bracket-column .match-card:nth-child(even)::after {
-    height: calc(50% + 55px);
-    border-right: 2px dashed #b1d8c6;
-    bottom: 50%;
-    top: auto;
-}
-
-/* Inverter a posição da linha vertical no lado DIREITO */
-.bracket-column[id$="-right"] .match-card:nth-child(odd)::before,
-.bracket-column[id$="-right"] .match-card:nth-child(even)::before {
-    border-left: 2px dashed #b1d8c6;
-    border-right: none;
-    left: -25px;
-    right: auto;
-    content: "";
-    position: absolute;
-    width: 25px;
+    margin-bottom: 10px;
 }
