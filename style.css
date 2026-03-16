@@ -1299,6 +1299,18 @@ strong{
 }
 
 /* --- COLUNAS E ALINHAMENTO --- */
+.column-title {
+    position: absolute;
+    top: -30px; /* Ajuste conforme necessário */
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    text-transform: uppercase;
+    color: var(--cor-terciaria);
+    font-size: 14px;
+    white-space: nowrap;
+}
+
 .bracket-column {
     display: flex;
     flex-direction: column;
@@ -1419,7 +1431,35 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: center;
+    justify-content: center;
     gap: 40px;
+}
+
+/* Estilo para as caixas de Vencedores */
+.podium-box {
+    text-align: center;
+    background: #f0fdf4; /* Um tom de verde suave para destaque */
+    border: 2px dashed #b1d8c6;
+    border-radius: 12px;
+    padding: 20px;
+    width: 240px;
+}
+
+.podium-box h2 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #166534;
+}
+
+.winner-slot {
+    min-height: 50px;
+    background: white;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
 /* Remove conectores da coluna central */
