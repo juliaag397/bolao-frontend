@@ -1462,6 +1462,37 @@ strong{
     font-weight: bold;
 }
 
+/* Container que protege o título do JavaScript */
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 50px; /* Garante que o título não sobreponha os jogos */
+}
+
+/* Título fixo: ele está fora da div que o JS limpa */
+.column-title {
+    position: absolute;
+    top: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #166534; /* Verde da sua referência */
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none; /* Garante que não interfira em cliques */
+}
+
+/* Coluna onde os jogos são renderizados */
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 900px;
+    width: 200px; 
+    position: relative;
+}
+
 /* Remove conectores da coluna central */
 .central-flow .match-card::after,
 .central-flow .match-card::before,
