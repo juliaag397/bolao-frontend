@@ -1759,21 +1759,34 @@ function renderizarNaOrdem(jogo, container, listaOrdem, html) {
     if (!container.armazenamento) container.armazenamento = {};
     container.armazenamento[jogo.id] = html;
     
-    container.innerHTML = ""; // Limpa para reordenar
+    // 1. Salva o título (span) para ele não sumir
+    const titulo = container.querySelector('.column-title');
     
-    // Itera pela lista de IDs em passos de 2 para criar os pares
+    // 2. Limpa o container
+    container.innerHTML = ""; 
+    
+    // 3. Devolve o título ao topo antes de começar a colocar os jogos
+    if (titulo) {
+        container.appendChild(titulo);
+    }
+    
+    // 4. Cria os pares de forma otimizada
     for (let i = 0; i < listaOrdem.length; i += 2) {
         const id1 = listaOrdem[i];
         const id2 = listaOrdem[i + 1];
         
-        // Só cria o par se pelo menos um dos jogos já existir no armazenamento
         if (container.armazenamento[id1] || container.armazenamento[id2]) {
-            let parHTML = '<div class="match-pair">';
-            parHTML += container.armazenamento[id1] || '<div class="match-card empty"></div>'; // Card vazio se o jogo não carregou
-            parHTML += container.armazenamento[id2] || '<div class="match-card empty"></div>';
-            parHTML += '</div>';
+            const divPar = document.createElement('div');
+            divPar.className = 'match-pair';
             
-            container.innerHTML += parHTML;
+            // Insere os cards (ou o placeholder vazio)
+            const html1 = container.armazenamento[id1] || '<div class="match-card empty"></div>';
+            const html2 = container.armazenamento[id2] || '<div class="match-card empty"></div>';
+            
+            divPar.innerHTML = html1 + html2;
+            
+            // Adiciona o par no container sem resetar o que já estava lá
+            container.appendChild(divPar);
         }
     }
 }
