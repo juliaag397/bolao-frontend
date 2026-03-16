@@ -1476,7 +1476,7 @@ strong{
 /* Título fixo: ele está fora da div que o JS limpa */
 .column-title {
     position: absolute;
-    top: 10px;
+    top: 100px;
     font-weight: 800;
     font-size: 14px;
     color: #166534; /* Verde da sua referência */
