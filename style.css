@@ -1382,8 +1382,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2 + 5px);
-    bottom: calc(var(--altura-card) / 2 + 5px);
+    top: calc(var(--altura-card) / 1 + 5px);
+    bottom: calc(var(--altura-card) / 1 + 5px);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1407,7 +1407,7 @@ strong{
 [id^="round-16"] .match-pair { gap: 150px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 350px; }
+[id^="round-8"] .match-pair { gap: 400px; }
 
 /* --- BLOCO CENTRAL (FINAL E 3º) --- */
 .central-flow {
