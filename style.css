@@ -1343,14 +1343,16 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
-/* Linha Vertical do Par (Une os dois cards) */
+/* --- LADO ESQUERDO (Conector Vertical) --- */
 .bracket-column[id$="-left"] .match-pair::after {
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    /* Inicia no meio do card de cima e termina no de baixo */
-    top: calc(var(--altura-card) / 2 + 5px); 
-    bottom: calc(var(--altura-card) / 2 + 5px);
+    
+    /* O SEGREDO: 25% do topo até 25% da base sempre acerta o centro dos dois cards */
+    top: 25%;
+    bottom: 25%;
+    
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1377,13 +1379,16 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
-/* Linha Vertical do Par */
+/* --- LADO DIREITO (Conector Vertical) --- */
 .bracket-column[id$="-right"] .match-pair::before {
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2 + 20px);
-    bottom: calc(var(--altura-card) / 2 + 20px);
+    
+    /* O mesmo aqui: a linha se estica conforme o gap aumenta */
+    top: 25%;
+    bottom: 25%;
+    
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
