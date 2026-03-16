@@ -1281,56 +1281,55 @@ strong{
 
 /* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
 
+/* --- CONFIGURAÇÕES GERAIS --- */
 :root {
     --cor-linha: #b1d8c6;
     --largura-conector: 20px;
-    --altura-card: 110px;
+    --altura-card: 110px; /* Ajuste conforme a altura real do seu card */
 }
 
-/* CONTAINER PRINCIPAL */
 .bracket-container {
     display: flex;
     justify-content: center;
     align-items: stretch;
     background-color: var(--cor-fundo);
-    padding: 80px 20px; /* Aumentado para dar espaço aos títulos flutuantes */
-    gap: 60px;
+    padding: 40px 20px;
+    gap: 60px; /* Espaço maior entre colunas para os conectores */
     overflow-x: auto;
 }
 
-/* COLUNA (TRAVADA) */
-.bracket-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; /* Mantém os jogos centralizados entre si */
-    min-height: 900px;
-    position: relative; /* Base para o título absoluto */
-    width: 200px;
-}
-
-/* TÍTULO DA FASE (FLUTUANTE - NÃO MOVE AS CAIXAS) */
+/* --- COLUNAS E ALINHAMENTO --- */
 .column-title {
     position: absolute;
-    top: -50px; /* Move para fora da área da coluna, no topo */
+    top: -50px; /* Ajuste conforme necessário */
     left: 50%;
     transform: translateX(-50%);
     font-weight: 800;
-    font-size: 14px;
-    color: #166534;
+    pointer-events: none;
     text-transform: uppercase;
+    color: var(--cor-terciaria);
+    font-size: 14px;
     white-space: nowrap;
-    pointer-events: none; /* Garante que não atrapalhe cliques nos cards */
     z-index: 10;
 }
 
-/* CONTAINER DO PAR (CONECTORES DINÂMICOS) */
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* O SEGREDO: Centraliza os jogos em relação à fase anterior */
+    min-height: 900px;
+    position: relative;
+    width: 200px;
+}
+
+/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    flex-grow: 1;
+    flex-grow: 1; /* Faz o par ocupar o espaço vertical disponível */
 }
 
 .match-card {
@@ -1340,13 +1339,15 @@ strong{
     width: 200px;
     padding: 10px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s;
     position: relative;
     z-index: 2;
+    margin: 10px 0; /* Respiro mínimo entre cards do mesmo par */
 }
 
-/* --- LÓGICA DE CONECTORES (SEM REBARBAS) --- */
+/* --- CONECTORES ESQUERDA (SAÍDA -> DIREITA) --- */
 
-/* Esquerda */
+/* Linha horizontal saindo de cada card */
 .bracket-column[id$="-left"] .match-card::after {
     content: "";
     position: absolute;
@@ -1356,16 +1357,21 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
+/* --- LADO ESQUERDO (Conector Vertical) --- */
 .bracket-column[id$="-left"] .match-pair::after {
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    top: 25%;    /* Inicia no centro do card superior */
-    bottom: 25%; /* Termina no centro do card inferior */
+    
+    /* O SEGREDO: 25% do topo até 25% da base sempre acerta o centro dos dois cards */
+    top: 25%;
+    bottom: 25%;
+    
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
+/* Perninha que entra no próximo jogo */
 .bracket-column[id$="-left"] .match-pair::before {
     content: "";
     position: absolute;
@@ -1375,7 +1381,9 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
-/* Direita */
+/* --- CONECTORES DIREITA (SAÍDA -> ESQUERDA) --- */
+
+/* Linha horizontal saindo de cada card */
 .bracket-column[id$="-right"] .match-card::before {
     content: "";
     position: absolute;
@@ -1385,16 +1393,21 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
+/* --- LADO DIREITO (Conector Vertical) --- */
 .bracket-column[id$="-right"] .match-pair::before {
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
+    
+    /* O mesmo aqui: a linha se estica conforme o gap aumenta */
     top: 25%;
     bottom: 25%;
+    
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
+/* Perninha que entra no próximo jogo */
 .bracket-column[id$="-right"] .match-pair::after {
     content: "";
     position: absolute;
@@ -1404,31 +1417,44 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
-/* --- AJUSTES DE ESPAÇO --- */
-[id^="round-32"] .match-pair { gap: 10px; }
-[id^="round-16"] .match-pair { gap: 150px; }
-[id^="round-8"] .match-pair  { gap: 450px; }
+/* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
 
-/* --- BLOCO CENTRAL (PÓDIO) --- */
+/* Fase de 32 (Mais juntos) */
+[id^="round-32"] .match-pair { gap: 10px; }
+
+/* Oitavas (Mais afastados) */
+[id^="round-16"] .match-pair { gap: 150px; }
+
+/* Quartas (Bem afastados) */
+[id^="round-8"] .match-pair { gap: 450px; }
+
+/* --- BLOCO CENTRAL (FINAL E 3º) --- */
 .central-flow {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    justify-content: center;
     gap: 40px;
 }
 
+/* Estilo para as caixas de Vencedores */
 .podium-box {
     text-align: center;
-    background: #f0fdf4;
+    background: #f0fdf4; /* Um tom de verde suave para destaque */
     border: 2px dashed #b1d8c6;
     border-radius: 12px;
-    padding: 15px;
+    padding: 20px;
     width: 240px;
 }
 
+.podium-box h2 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #166534;
+}
+
 .winner-slot {
-    min-height: 45px;
+    min-height: 50px;
     background: white;
     border: 1px solid var(--cor-borda);
     border-radius: 8px;
@@ -1436,11 +1462,49 @@ strong{
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    margin-top: 10px;
 }
 
-/* Limpeza de conectores no centro */
-.central-flow .match-card::after, .central-flow .match-card::before,
-.central-flow .match-pair::after, .central-flow .match-pair::before {
+/* Container que protege o título do JavaScript */
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 50px; /* Garante que o título não sobreponha os jogos */
+}
+
+/* Título fixo: ele está fora da div que o JS limpa */
+.column-title {
+    position: absolute;
+    top: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    color: #166534; /* Verde da sua referência */
+    text-transform: uppercase;
+    white-space: nowrap;
+    pointer-events: none; /* Garante que não interfira em cliques */
+}
+
+/* Coluna onde os jogos são renderizados */
+.bracket-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 900px;
+    width: 200px; 
+    position: relative;
+}
+
+/* Remove conectores da coluna central */
+.central-flow .match-card::after,
+.central-flow .match-card::before,
+.central-flow .match-pair::after,
+.central-flow .match-pair::before {
     display: none;
 }
+
+/* Estilos de Texto e Inputs */
+.match-date { display: block; text-align: center; font-size: 11px; font-weight: bold; color: var(--cor-terciaria); border-bottom: 1px solid var(--cor-borda); margin-bottom: 8px; padding-bottom: 4px; }
+.team-row { display: flex; align-items: center; justify-content: space-between; margin: 5px 0; }
+.team-name { font-size: 13px; font-weight: bold; color: var(--cor-texto); }
+.match-card input { width: 35px; padding: 3px; text-align: center; border-radius: 4px; border: 1px solid var(--cor-borda); font-weight: bold; }
