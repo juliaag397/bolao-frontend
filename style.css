@@ -1382,8 +1382,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2);
-    bottom: calc(var(--altura-card) / 2);
+    top: calc(var(--altura-card) / 2 + 20px);
+    bottom: calc(var(--altura-card) / 2 + 20px);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
