@@ -1349,8 +1349,8 @@ strong{
     position: absolute;
     right: calc(var(--largura-conector) * -1);
     /* Inicia no meio do card de cima e termina no de baixo */
-    top: calc(var(--altura-card) / 2 + 10px); 
-    bottom: calc(var(--altura-card) / 2 + 10px);
+    top: calc(var(--altura-card) / 2 + 5px); 
+    bottom: calc(var(--altura-card) / 2 + 5px);
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1382,8 +1382,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2 + 10px);
-    bottom: calc(var(--altura-card) / 2 + 10px);
+    top: calc(var(--altura-card) / 2 + 5px);
+    bottom: calc(var(--altura-card) / 2 + 5px);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
