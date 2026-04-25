@@ -1436,49 +1436,81 @@ strong{
     gap: 60px; /* Aumentei o espaço para o campeão não "bater" no 3º lugar */
 }
 
-/* CAMPEAO E 3 LUGAR: */
+/* --- CONTAINER CENTRAL --- */
+.central-flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    gap: 60px;               /* Espaço entre as duas caixas */
+    padding: 20px;
+}
 
+/* --- ESTILO BASE DAS CAIXAS --- */
 .podium-box {
     text-align: center;
     background: #ffffff;
-    border: 2px solid #b1d8c6;
     border-radius: 12px;
-    padding: 20px;
     width: 240px;
     box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
-    margin: 0 auto; /* Garante que fique centralizado */
+    overflow: hidden; /* Garante que o fundo do h2 não saia das bordas */
+    border: 2px solid #b1d8c6;
 }
 
-/* Essa classe nova você adiciona no HTML do Campeão */
-.podium-box.champion {
-    border-color: #fbbf24; 
-    background: linear-gradient(to bottom, #ffffff, #fffbeb);
-    transform: scale(1.15); /* Dá o destaque de tamanho */
-    z-index: 10; /* Garante que ele fique por cima visualmente */
-}
-
+/* --- TÍTULOS (H2) COM FUNDO COLORIDO --- */
 .podium-box h2 {
-    margin-bottom: 12px;
+    margin: 0;
+    padding: 12px;
     font-size: 14px;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: #166534;
     font-weight: 800;
+    color: white; /* Texto branco para destacar no fundo colorido */
+    background-color: #008170; /* Verde principal do seu site */
 }
 
+/* --- SLOT DO VENCEDOR (CONTEÚDO) --- */
 .winner-slot {
-    min-height: 65px;
+    min-height: 80px;
     background: white;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    padding: 15px;
     display: flex;
     flex-direction: column; 
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    gap: 8px;
+    gap: 10px;
     color: #333;
+}
+
+/* --- DIFERENCIAÇÃO: CAMPEÃO --- */
+.podium-box.champion {
+    border: 3px solid #fbbf24; /* Borda Dourada */
+    transform: scale(1.15);    /* Maior que o resto */
+    z-index: 10;
+}
+
+.podium-box.champion h2 {
+    background-color: #fbbf24; /* Fundo Dourado no título */
+    color: #5b4500;            /* Texto escuro para ler no amarelo */
+}
+
+/* --- DIFERENCIAÇÃO: 3º LUGAR --- */
+.podium-box.third-place {
+    border: 2px solid #94a3b8; /* Borda cor de aço/bronze */
+    transform: scale(1.0);     /* Tamanho normal */
+}
+
+.podium-box.third-place h2 {
+    background-color: #64748b; /* Fundo cinza azulado */
+}
+
+/* Estilo para a bandeira dentro da box */
+.winner-slot img {
+    width: 50px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 /* Container que protege o título do JavaScript */
