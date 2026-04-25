@@ -1284,8 +1284,8 @@ strong{
 /* --- CONFIGURAÇÕES GERAIS --- */
 :root {
     --cor-linha: #b1d8c6;
-    --largura-conector: 20px;
-    --altura-card: 90px; /* Ajuste conforme a altura real do seu card */
+    --largura-conector: 25px;
+    --altura-card: 95px; /* Ajuste conforme a altura real do seu card */
 }
 
 .bracket-container {
@@ -1350,6 +1350,8 @@ strong{
     z-index: 2;
     margin: 10px 0; /* Respiro mínimo entre cards do mesmo par */
     font-size: 12px;
+    height: var(--altura-card); /* Força a altura para o cálculo bater */
+    box-sizing: border-box;
 }
 
 /* --- CONECTORES ESQUERDA (SAÍDA -> DIREITA) --- */
@@ -1369,19 +1371,21 @@ strong{
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    /* O cálculo abaixo garante que a linha comece no meio do card de cima e termine no meio do de baixo */
-    top: calc(var(--altura-card) / 2 + 10px); 
-    bottom: calc(var(--altura-card) / 2 + 10px);
+    /* O segredo: começa a 25% do topo do par e termina a 25% do fundo */
+    /* Isso sempre acerta o meio dos dois cards se o justify-content for space-around */
+    top: 25%;
+    bottom: 25%;
+    width: 0;
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
-/* Perninha que entra no próximo jogo */
 .bracket-column[id$="-left"] .match-pair::before {
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -2);
     top: 50%;
+    transform: translateY(-50%); /* Garante centralização vertical exata */
     width: var(--largura-conector);
     border-top: 2px solid var(--cor-linha);
 }
@@ -1403,33 +1407,47 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    /* Mesmo cálculo para o lado oposto */
-    top: calc(var(--altura-card) / 2 + 10px);
-    bottom: calc(var(--altura-card) / 2 + 10px);
+    top: 25%;
+    bottom: 25%;
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
 
-/* Perninha que entra no próximo jogo */
+/* Perninha horizontal que entra no próximo jogo */
 .bracket-column[id$="-right"] .match-pair::after {
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -2);
     top: 50%;
+    transform: translateY(-50%);
     width: var(--largura-conector);
     border-top: 2px solid var(--cor-linha);
+}
+
+/* Esse bloco garante que a linha saia exatamente do meio do card */
+.bracket-column[id$="-left"] .match-card::after,
+.bracket-column[id$="-right"] .match-card::before {
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+
+/* Perninha que entra no próximo jogo (centralização extra) */
+.match-pair::before, 
+.match-pair::after {
+    top: 50% !important;
+    transform: translateY(-50%);
 }
 
 /* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
 
 /* Fase de 32 (Mais juntos) */
-[id^="round-32"] .match-pair { gap: 10px; }
+[id^="round-32"] .match-pair { gap: 20px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 80px; }
+[id^="round-16"] .match-pair { gap: 120px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 200px; }
+[id^="round-8"] .match-pair { gap: 320px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
@@ -1543,8 +1561,8 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-height: 600px;
-    width: 160px; 
+    min-height: 1000px;
+    width: 180px; 
     position: relative;
 }
 
