@@ -1348,7 +1348,7 @@ strong{
     transition: 0.3s;
     position: relative;
     z-index: 2;
-    margin: 0; /* Respiro mínimo entre cards do mesmo par */
+    margin: 0 !important; /* Respiro mínimo entre cards do mesmo par */
     font-size: 12px;
     height: var(--altura-card); /* Força a altura para o cálculo bater */
     box-sizing: border-box;
@@ -1424,30 +1424,30 @@ strong{
     border-top: 2px solid var(--cor-linha);
 }
 
-/* Esse bloco garante que a linha saia exatamente do meio do card */
+/* Linhas que saem dos cards */
 .bracket-column[id$="-left"] .match-card::after,
 .bracket-column[id$="-right"] .match-card::before {
     top: 50% !important;
-    transform: translateY(-50%);
+    transform: translateY(-50%) !important;
 }
 
-/* Perninha que entra no próximo jogo (centralização extra) */
+/* Perninha que entra no próximo jogo */
 .match-pair::before, 
 .match-pair::after {
     top: 50% !important;
-    transform: translateY(-50%);
+    transform: translateY(-50%) !important;
 }
 
 /* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
 
 /* Fase de 32 (Mais juntos) */
-[id^="round-32"] .match-pair { gap: 40px; }
+[id^="round-32"] .match-pair { gap: 30px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 162px; }
+[id^="round-16"] .match-pair { gap: 155px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 425px; }
+[id^="round-8"] .match-pair { gap: 415px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
