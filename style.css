@@ -1285,7 +1285,7 @@ strong{
 :root {
     --cor-linha: #b1d8c6;
     --largura-conector: 20px;
-    --altura-card: 110px; /* Ajuste conforme a altura real do seu card */
+    --altura-card: 90px; /* Ajuste conforme a altura real do seu card */
 }
 
 .bracket-container {
@@ -1327,14 +1327,6 @@ strong{
     z-index: 10;
 }
 
-.bracket-column {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around; /* O SEGREDO: Centraliza os jogos em relação à fase anterior */
-    min-height: 800px;
-    position: relative;
-    width: 180px;
-}
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
@@ -1377,7 +1369,7 @@ strong{
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    /* Mudança aqui: usamos calc para pegar o centro exato dos cards */
+    /* O cálculo abaixo garante que a linha comece no meio do card de cima e termine no meio do de baixo */
     top: calc(var(--altura-card) / 2 + 10px); 
     bottom: calc(var(--altura-card) / 2 + 10px);
     border-right: 2px solid var(--cor-linha);
@@ -1411,6 +1403,7 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
+    /* Mesmo cálculo para o lado oposto */
     top: calc(var(--altura-card) / 2 + 10px);
     bottom: calc(var(--altura-card) / 2 + 10px);
     border-left: 2px solid var(--cor-linha);
