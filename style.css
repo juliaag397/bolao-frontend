@@ -1441,13 +1441,13 @@ strong{
 /* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
 
 /* Fase de 32 (Mais juntos) */
-[id^="round-32"] .match-pair { gap: 20px; }
+[id^="round-32"] .match-pair { gap: 10px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 145px; }
+[id^="round-16"] .match-pair { gap: 115px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 410px; }
+[id^="round-8"] .match-pair { gap: 407px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
