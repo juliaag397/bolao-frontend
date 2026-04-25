@@ -1290,17 +1290,15 @@ strong{
 
 .bracket-container {
     display: flex;
-    /* Alterado de center para flex-start para garantir que a rolagem comece do zero à esquerda */
-    justify-content: flex-start; 
-    align-items: stretch;
+    justify-content: flex-start; /* Importante para a rolagem */
+    align-items: center;
     background-color: var(--cor-fundo);
-    padding: 60px 40px; /* Aumentei o padding para dar respiro nas pontas */
-    gap: 60px;
-    
-    /* ESSENCIAIS PARA A ROLAGEM FUNCIONAR: */
+    padding: 40px;
+    gap: 40px; /* Reduzi um pouco o espaço entre fases */
     overflow-x: auto;
     width: 100%;
-    min-width: max-content; /* Impede que as chaves se "espremam" */
+    /* O segredo para o zoom: */
+    zoom: 0.8; /* Isso funciona melhor que scale para manter os conectores no lugar */
 }
 
 /* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
@@ -1333,9 +1331,9 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around; /* O SEGREDO: Centraliza os jogos em relação à fase anterior */
-    min-height: 600px;
+    min-height: 800px;
     position: relative;
-    width: 160px;
+    width: 180px;
 }
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
@@ -1379,11 +1377,9 @@ strong{
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    
-    /* O SEGREDO: 25% do topo até 25% da base sempre acerta o centro dos dois cards */
-    top: 25%;
-    bottom: 25%;
-    
+    /* Mudança aqui: usamos calc para pegar o centro exato dos cards */
+    top: calc(var(--altura-card) / 2 + 10px); 
+    bottom: calc(var(--altura-card) / 2 + 10px);
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1415,11 +1411,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    
-    /* O mesmo aqui: a linha se estica conforme o gap aumenta */
-    top: 25%;
-    bottom: 25%;
-    
+    top: calc(var(--altura-card) / 2 + 10px);
+    bottom: calc(var(--altura-card) / 2 + 10px);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1440,10 +1433,10 @@ strong{
 [id^="round-32"] .match-pair { gap: 10px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 60px; }
+[id^="round-16"] .match-pair { gap: 80px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 120px; }
+[id^="round-8"] .match-pair { gap: 200px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
