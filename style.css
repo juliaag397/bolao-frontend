@@ -1290,12 +1290,28 @@ strong{
 
 .bracket-container {
     display: flex;
-    justify-content: center;
+    /* Alterado de center para flex-start para garantir que a rolagem comece do zero à esquerda */
+    justify-content: flex-start; 
     align-items: stretch;
     background-color: var(--cor-fundo);
-    padding: 40px 20px;
-    gap: 60px; /* Espaço maior entre colunas para os conectores */
+    padding: 60px 40px; /* Aumentei o padding para dar respiro nas pontas */
+    gap: 60px;
+    
+    /* ESSENCIAIS PARA A ROLAGEM FUNCIONAR: */
     overflow-x: auto;
+    width: 100%;
+    min-width: max-content; /* Impede que as chaves se "espremam" */
+}
+
+/* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
+.column-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-top: 100px;
+    /* Garante que cada coluna mantenha seu espaço */
+    flex-shrink: 0; 
 }
 
 /* --- COLUNAS E ALINHAMENTO --- */
@@ -1440,10 +1456,11 @@ strong{
 .central-flow {
     display: flex;
     flex-direction: column;
-    align-items: center;    /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
-    gap: 60px;               /* Espaço entre as duas caixas */
-    padding: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 80px; /* Aumentado para evitar choque visual com o scale 1.15 */
+    padding: 0 40px;
+    flex-shrink: 0; /* Não deixa a coluna central encolher */
 }
 
 /* --- ESTILO BASE DAS CAIXAS --- */
