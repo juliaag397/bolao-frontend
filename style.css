@@ -1428,40 +1428,57 @@ strong{
 /* Quartas (Bem afastados) */
 [id^="round-8"] .match-pair { gap: 450px; }
 
-/* --- BLOCO CENTRAL (FINAL E 3º) --- */
+/* Mantenha este para o alinhamento */
 .central-flow {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    justify-content: center;
-    gap: 40px;
+    gap: 60px; /* Aumentei o espaço para o campeão não "bater" no 3º lugar */
 }
 
-/* Estilo para as caixas de Vencedores */
+/* CAMPEAO E 3 LUGAR: */
+
 .podium-box {
     text-align: center;
-    background: #f0fdf4; /* Um tom de verde suave para destaque */
-    border: 2px dashed #b1d8c6;
+    background: #ffffff;
+    border: 2px solid #b1d8c6;
     border-radius: 12px;
     padding: 20px;
     width: 240px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin: 0 auto; /* Garante que fique centralizado */
+}
+
+/* Essa classe nova você adiciona no HTML do Campeão */
+.podium-box.champion {
+    border-color: #fbbf24; 
+    background: linear-gradient(to bottom, #ffffff, #fffbeb);
+    transform: scale(1.15); /* Dá o destaque de tamanho */
+    z-index: 10; /* Garante que ele fique por cima visualmente */
 }
 
 .podium-box h2 {
-    margin-bottom: 10px;
-    font-size: 16px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     color: #166534;
+    font-weight: 800;
 }
 
 .winner-slot {
-    min-height: 50px;
+    min-height: 65px;
     background: white;
-    border: 1px solid var(--cor-borda);
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     display: flex;
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
     font-weight: bold;
+    gap: 8px;
+    color: #333;
 }
 
 /* Container que protege o título do JavaScript */
