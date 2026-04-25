@@ -1333,9 +1333,9 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around; /* O SEGREDO: Centraliza os jogos em relação à fase anterior */
-    min-height: 900px;
+    min-height: 600px;
     position: relative;
-    width: 200px;
+    width: 160px;
 }
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
@@ -1352,13 +1352,14 @@ strong{
     background: var(--cor-card);
     border: 2px solid var(--cor-borda);
     border-radius: 10px;
-    width: 200px;
-    padding: 10px;
+    width: 160px;
+    padding: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
     position: relative;
     z-index: 2;
     margin: 10px 0; /* Respiro mínimo entre cards do mesmo par */
+    font-size: 12px;
 }
 
 /* --- CONECTORES ESQUERDA (SAÍDA -> DIREITA) --- */
@@ -1439,17 +1440,17 @@ strong{
 [id^="round-32"] .match-pair { gap: 10px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 150px; }
+[id^="round-16"] .match-pair { gap: 60px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 450px; }
+[id^="round-8"] .match-pair { gap: 120px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 60px; /* Aumentei o espaço para o campeão não "bater" no 3º lugar */
+    gap: 30px; /* Aumentei o espaço para o campeão não "bater" no 3º lugar */
 }
 
 /* --- CONTAINER CENTRAL --- */
@@ -1458,7 +1459,7 @@ strong{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 80px; /* Aumentado para evitar choque visual com o scale 1.15 */
+    gap: 30px; /* Aumentado para evitar choque visual com o scale 1.15 */
     padding: 0 40px;
     flex-shrink: 0; /* Não deixa a coluna central encolher */
 }
@@ -1503,7 +1504,7 @@ strong{
 /* --- DIFERENCIAÇÃO: CAMPEÃO --- */
 .podium-box.champion {
     border: 3px solid #fbbf24; /* Borda Dourada */
-    transform: scale(1.15);    /* Maior que o resto */
+    transform: scale(1.05);    /* Maior que o resto */
     z-index: 10;
 }
 
@@ -1556,8 +1557,8 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-height: 900px;
-    width: 200px; 
+    min-height: 600px;
+    width: 160px; 
     position: relative;
 }
 
