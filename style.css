@@ -1585,11 +1585,6 @@ td[data-jogo-id] div {
     outline: none !important;
 }
 
-/* Remove a borda preta de todas as células da tabela de jogos */
-table td {
-    border: none !important;
-}
-
 
 /* Remove conectores da coluna central */
 .central-flow .match-card::after,
