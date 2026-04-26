@@ -1453,53 +1453,54 @@ strong{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
     flex: 1;
     width: 200px; /* Era 280px, depois 220px, agora 200px */
     min-width: 200px; 
-}
 
-/* --- ESTILO BASE DAS CAIXAS --- */
-.podium-box {
+
+}.podium-box {
     text-align: center;
     background: #ffffff;
-    border-radius: 12px;
-    width: 240px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Garante que o fundo do h2 não saia das bordas */
+    border-radius: 8px;
+    width: 130px; /* Reduzido de 160px para 130px */
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+    overflow: hidden; 
     border: 2px solid #b1d8c6;
+    transition: transform 0.3s ease;
 }
 
-/* --- TÍTULOS (H2) COM FUNDO COLORIDO --- */
+/* Títulos das caixas (Campeão / 3º Lugar) */
 .podium-box h2 {
     margin: 0;
-    padding: 12px;
-    font-size: 14px;
+    padding: 6px; /* Mais fino */
+    font-size: 10px; /* Fonte menor para caber na largura de 130px */
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     font-weight: 800;
-    color: white; /* Texto branco para destacar no fundo colorido */
-    background-color: #008170; /* Verde principal do seu site */
+    color: white; 
+    background-color: #008170; 
 }
 
-/* --- SLOT DO VENCEDOR (CONTEÚDO) --- */
+/* Slot onde vai o nome e a bandeira */
 .winner-slot {
-    min-height: 80px;
+    min-height: 50px; /* Altura reduzida */
     background: white;
-    padding: 15px;
+    padding: 8px;
     display: flex;
     flex-direction: column; 
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    gap: 10px;
+    gap: 4px;
     color: #333;
+    font-size: 10px; /* Fonte compacta */
 }
 
-/* --- DIFERENCIAÇÃO: CAMPEÃO --- */
+/* Diferenciação do Campeão (levemente maior) */
 .podium-box.champion {
-    border: 3px solid #fbbf24; /* Borda Dourada */
-    transform: scale(1.05);    /* Maior que o resto */
+    border: 3px solid #fbbf24;
+    transform: scale(1.1); /* Dá um pequeno "pop" sem ocupar muito espaço extra */
     z-index: 10;
 }
 
@@ -1520,10 +1521,9 @@ strong{
 
 /* Estilo para a bandeira dentro da box */
 .winner-slot img {
-    width: 50px;
+    width: 30px; /* Bandeira menor para não empurrar a caixa */
     height: auto;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 2px;
 }
 
 .column-container {
