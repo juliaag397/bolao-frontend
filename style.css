@@ -1329,12 +1329,13 @@ strong{
 
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
+/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 0; /* O SEGREDO ESTÁ AQUI: Mude de '10px 0' para '0' */
     width: 100%;
     flex-grow: 0;
     height: calc(var(--altura-card) * 2 + 20px);
