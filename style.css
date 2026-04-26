@@ -1570,19 +1570,24 @@ strong{
     flex-wrap: nowrap; /* Impede que quebrem para a linha de baixo */
 }
 
-.celula-aposta input {
-    width: 35px !important; /* Diminuí um pouco para caber melhor */
-    padding: 2px;
-    text-align: center;
+/* 1. Garante que a célula do palpite tenha a mesma cor de linha do resto da tabela (cinza claro), e não preto */
+td[data-jogo-id] {
+    border: 1px solid #dee2e6 !important; 
+    background-color: transparent !important;
 }
 
-/* Tira a borda dos elementos que já carregam com a página na coluna de palpites */
-td[data-jogo-id] input[readonly],
-td[data-jogo-id] div {
+/* 2. Se o palpite inicial estiver dentro de uma div ou input desativado, tira a borda preta DELE */
+td[data-jogo-id]:not(.celula-aposta) > * {
     border: none !important;
     background: transparent !important;
-    box-shadow: none !important;
     outline: none !important;
+    box-shadow: none !important;
+}
+
+/* 3. Garante que, quando você clica para apostar, as suas caixinhas VOLTEM a ter borda normal */
+.celula-aposta input {
+    border: 1px solid #ccc !important; 
+    background-color: #fff !important;
 }
 
 
