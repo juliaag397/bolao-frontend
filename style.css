@@ -1335,7 +1335,20 @@ strong{
     flex-direction: column;
     justify-content: center;
     width: 100%;
-    flex-grow: 1; /* Faz o par ocupar o espaço vertical disponível */
+    flex-grow: 0;
+    height: calc(var(--altura-card) * 2 + 20px);
+}
+
+/* Oitavas = dobro */
+#round-16-left .match-pair,
+#round-16-right .match-pair {
+    height: calc((var(--altura-card) * 2 + 20px) * 2);
+}
+
+/* Quartas = dobro de novo */
+#round-8-left .match-pair,
+#round-8-right .match-pair {
+    height: calc((var(--altura-card) * 2 + 20px) * 4);
 }
 
 .match-card {
@@ -1353,6 +1366,7 @@ strong{
     height: var(--altura-card); /* Força a altura para o cálculo bater */
     box-sizing: border-box;
 }
+
 
 /* --- CONECTORES ESQUERDA (SAÍDA -> DIREITA) --- */
 
@@ -1373,8 +1387,8 @@ strong{
     right: calc(var(--largura-conector) * -1);
     /* O segredo: começa a 25% do topo do par e termina a 25% do fundo */
     /* Isso sempre acerta o meio dos dois cards se o justify-content for space-around */
-    top: calc(var(--altura-card) / 2 - 30px); 
-    bottom: calc(var(--altura-card) / 2 - 30px);
+    top: 25%; 
+    bottom: 25%;
     width: 0;
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
@@ -1407,8 +1421,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2 - 30px);
-    bottom: calc(var(--altura-card) / 2 - 30px);
+    top: 25%;
+    bottom: 25%;
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1431,23 +1445,23 @@ strong{
     transform: translateY(-50%) !important;
 }
 
-/* Perninha que entra no próximo jogo */
-.match-pair::before, 
-.match-pair::after {
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+/* Espaçamento entre pares (cada confronto) */
+
+#round-32-left .match-pair,
+#round-32-right .match-pair {
+    margin-bottom: 20px;
 }
 
-/* --- AJUSTE DE ESPAÇAMENTO POR FASE --- */
+#round-16-left .match-pair,
+#round-16-right .match-pair {
+    margin-bottom: 0;
+}
 
-/* Fase de 32 (Mais juntos) */
-[id^="round-32"] .match-pair { gap: 10px; }
+#round-8-left .match-pair,
+#round-8-right .match-pair {
+    margin-bottom: 0;
+}
 
-/* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 145px; }
-
-/* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 390px; }
 
 /* --- OITAVAS PARA QUARTAS (Aumentar a linha) --- */
 /* Lado Esquerdo */
@@ -1585,7 +1599,8 @@ strong{
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: flex-start;
+    gap: 0;
     min-height: 970px;
     width: 180px; 
     position: relative;
