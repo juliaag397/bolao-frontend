@@ -1561,35 +1561,40 @@ strong{
     display: none !important;
 }
 
-/* 1. Tira as bordas verticais e do topo da célula, deixando APENAS a linha horizontal de baixo */
+/* 1. Base da tabela: devolve o espaçamento (respiro) vertical para a linha não ficar espremida */
 td[data-jogo-id] {
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
-    border-bottom: 1px solid #dee2e6 !important; /* Cor da linha cinza padrão do resto da tabela */
+    border-bottom: 1px solid #dee2e6 !important;
+    vertical-align: middle !important;
+    padding-top: 12px !important; /* Força o espaço em cima */
+    padding-bottom: 12px !important; /* Força o espaço embaixo */
 }
 
-/* 2. Se o "1 x 1" estiver vindo dentro de um input bloqueado do servidor, isso tira a borda preta dele */
-td[data-jogo-id]:not(.celula-aposta) input,
-td[data-jogo-id]:not(.celula-aposta) div {
+/* 2. Tira as bordas pretas do palpite inicial do servidor */
+td[data-jogo-id]:not(.celula-aposta) * {
     border: none !important;
     background-color: transparent !important;
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* 1. Força o alinhamento lado a lado, mesmo em espaços apertados */
+/* 3. Estrutura base para manter as coisas alinhadas */
 .celula-aposta {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 3px !important; /* Espaço bem pequeno entre as caixas */
-    flex-wrap: wrap !important; /* Se a tela for muito pequena, o botão OK desce sem quebrar o layout */
+    gap: 4px !important;
+    flex-wrap: wrap !important;
     width: 100% !important;
 }
 
-/* 2. Deixa as caixinhas de gol menores para caberem no chaveamento */
+/* =========================================
+   4. REGRAS PARA O CHAVEAMENTO (MATA-MATA)
+   ========================================= */
+/* Caixinhas e botão pequenos para caberem sem quebrar o layout */
 .celula-aposta input {
     width: 28px !important; 
     height: 25px !important;
@@ -1597,6 +1602,27 @@ td[data-jogo-id]:not(.celula-aposta) div {
     padding: 0 !important;
     border: 1px solid #ccc !important; 
     background-color: #fff !important;
+}
+
+.celula-aposta button {
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    cursor: pointer !important;
+}
+
+/* =========================================
+   5. REGRAS EXCLUSIVAS PARA A TABELA
+   ========================================= */
+/* O prefixo 'td' garante que isso SÓ se aplique às linhas da tabela, devolvendo o tamanho ideal */
+td .celula-aposta input {
+    width: 35px !important;
+    height: 32px !important;
+    padding: 2px !important;
+}
+
+td .celula-aposta button {
+    padding: 4px 8px !important;
+    font-size: 12px !important;
 }
 
 /* 3. Reduz o botão OK para ele não ocupar tanto espaço horizontal */
