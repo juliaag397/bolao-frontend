@@ -311,13 +311,15 @@ function abrirAposta(celula) {
         .catch(() => alert("Erro ao conectar com servidor"));
     };
 
-    // 2. APLICAÇÃO DO FLEXBOX (Isso resolve o alinhamento)
-    celula.style.display = "flex";
-    celula.style.flexDirection = "row";
-    celula.style.alignItems = "center";
-    celula.style.justifyContent = "center";
-    celula.style.gap = "2px"; 
-    celula.style.flexWrap = "nowrap"; // Impede de pular linha
+    // 2. APLICAÇÃO DO ESTILO (Apenas para o Mata-Mata!)
+    if (jogoId >= 73) {
+        celula.style.display = "flex";
+        celula.style.flexDirection = "row";
+        celula.style.alignItems = "center";
+        celula.style.justifyContent = "center";
+        celula.style.gap = "2px"; 
+        celula.style.flexWrap = "nowrap"; 
+    }
 
     // 3. MONTAGEM FINAL (Apenas uma vez!)
     input1.onclick = e => e.stopPropagation();
