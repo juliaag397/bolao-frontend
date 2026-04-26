@@ -1561,27 +1561,26 @@ strong{
     display: none !important;
 }
 
-/* 1. Base da tabela: Volta a ficar compacta (tira o 'zoom') e mantém alinhada */
+/* 1. Base da tabela: Espaçamento mínimo para matar o "zoom" de vez */
 td.celula-aposta, td[data-jogo-id] {
     display: table-cell !important;
     vertical-align: middle !important;
     text-align: center !important;
     white-space: nowrap !important;
     
-    /* Reduzimos o padding para tirar a sensação de zoom e voltar ao tamanho original */
-    padding: 6px 4px !important; 
+    /* Reduzido drasticamente: 2px em cima/embaixo, 4px nas laterais */
+    padding: 2px 4px !important; 
     
     border-top: none !important;
-    border-bottom: 1px solid #dee2e6 !important;
+    border-bottom: 1px solid #dee2e6 !important; /* Mantém a base sutil padrão */
     
-    /* Removemos bordas laterais por padrão... */
     border-left: none !important;
     border-right: none !important;
 }
 
-/* 2. DEVOLVE a linha separadora entre 'Seu Palpite' e 'Pontos' */
+/* 2. DEVOLVE a linha separadora na cor PRETA */
 td.celula-aposta {
-    border-right: 1px solid #dee2e6 !important; 
+    border-right: 1px solid black !important; 
 }
 
 /* 3. Tira as bordas pretas indesejadas do palpite salvo do servidor */
@@ -1592,11 +1591,11 @@ td[data-jogo-id]:not(.celula-aposta) * {
     box-shadow: none !important;
 }
 
-/* 4. Caixinhas de gol: levemente mais baixinhas para ajudar no visual sem zoom */
+/* 4. Caixinhas de gol: Mais curtas para acompanhar a tabela sem zoom */
 .celula-aposta input {
     display: inline-block !important;
-    width: 32px !important; 
-    height: 26px !important; /* Reduzido um pouquinho para acompanhar o layout compacto */
+    width: 28px !important; /* Levemente mais estreitas */
+    height: 22px !important; /* Bem mais baixinhas para tirar o volume da linha */
     text-align: center !important;
     border: 1px solid #ccc !important; 
     background-color: #fff !important;
@@ -1606,10 +1605,13 @@ td[data-jogo-id]:not(.celula-aposta) * {
     box-sizing: border-box !important;
 }
 
-/* 3. Reduz o botão OK para ele não ocupar tanto espaço horizontal */
+/* 5. Botão OK ajustado para o novo tamanho */
 .celula-aposta button {
-    padding: 2px 6px !important;
-    font-size: 11px !important;
+    display: inline-block !important;
+    padding: 1px 5px !important;
+    font-size: 10px !important;
+    vertical-align: middle !important;
+    margin-left: 2px !important;
     cursor: pointer !important;
 }
 
