@@ -1284,15 +1284,15 @@ strong{
 /* --- CONFIGURAÇÕES GERAIS --- */
 :root {
     --cor-linha: #b1d8c6;
-    --largura-conector: 25px;
-    --altura-card: 95px; /* Ajuste conforme a altura real do seu card */
+    --largura-conector: 15px; /* Era 25px! Isso encolhe muito a tela */
+    --altura-card: 95px; 
 }
 
 .bracket-container {
     display: flex;
     align-items: stretch;
-    justify-content: flex-start; /* Mantém o scroll saudável pra esquerda */
-    gap: 8px; /* Era 15px, agora as colunas ficam mais juntinhas */
+    justify-content: flex-start;
+    gap: 30px; /* Exatamente o dobro do conector */
     min-width: max-content;
     padding: 20px;
 }
@@ -1327,9 +1327,10 @@ strong{
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* MUDOU AQUI: de space-between para space-around */
+    justify-content: space-around;
+    align-items: center; /* Centraliza o card dentro do par */
     padding: 0; 
-    width: 100%;
+    width: 140px; /* IGUAL AO CARD! Fim do buraco invisível de 10px */
     flex-grow: 0;
     height: calc(var(--altura-card) * 2 + 20px);
 }
@@ -1350,15 +1351,15 @@ strong{
     background: var(--cor-card);
     border: 2px solid var(--cor-borda);
     border-radius: 10px;
-    width: 160px;
+    width: 140px; /* IGUAL A COLUNA! Isso faz o lado esquerdo colar perfeitamente */
     padding: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
     position: relative;
     z-index: 2;
-    margin: 0 !important; /* Respiro mínimo entre cards do mesmo par */
-    font-size: 12px;
-    height: var(--altura-card); /* Força a altura para o cálculo bater */
+    margin: 0 !important; 
+    font-size: 11px; /* Fonte levemente menor para caber na nova largura */
+    height: var(--altura-card); 
     box-sizing: border-box;
 }
 
@@ -1454,8 +1455,8 @@ strong{
     align-items: center;
     gap: 40px;
     flex: 1;
-    width: 220px; /* Era 280px */
-    min-width: 220px; 
+    width: 200px; /* Era 280px, depois 220px, agora 200px */
+    min-width: 200px; 
 }
 
 /* --- ESTILO BASE DAS CAIXAS --- */
@@ -1537,9 +1538,9 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 170px; /* Era 220px! Isso vai reduzir drasticamente o tamanho da tela toda */
-    min-width: 170px;
-    align-items: center; /* Centraliza os cards perfeitamente no eixo da coluna */
+    width: 140px; /* Reduzimos a coluna inteira */
+    min-width: 140px;
+    align-items: center; 
 }
 
 .bracket-column > div {
