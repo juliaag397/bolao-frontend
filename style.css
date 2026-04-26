@@ -1290,9 +1290,11 @@ strong{
 
 .bracket-container {
     display: flex;
-    align-items: stretch; /* O SEGREDO: Faz todas as colunas terem a mesma altura da maior coluna (Fase de 32) */
-    justify-content: center;
-    gap: 15px; /* Espaço seguro entre as colunas */
+    align-items: stretch;
+    justify-content: flex-start; /* ISSO DEVOLVE SEU SCROLL PARA A ESQUERDA! */
+    gap: 15px;
+    min-width: max-content; /* ISSO IMPEDE O ZOOM BIZARRO E O ESMAGAMENTO DAS COLUNAS! */
+    padding: 20px 40px; /* Dá uma margem nas laterais para não colar na borda */
 }
 
 /* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
@@ -1452,9 +1454,10 @@ strong{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 40px; /* Dá espaço para as caixas não se encostarem */
-    flex: 1; /* Acompanha a altura das outras colunas */
+    gap: 40px;
+    flex: 1;
     width: 280px; 
+    min-width: 280px; /* Trava o meio para não espremer o troféu */
 }
 
 /* --- ESTILO BASE DAS CAIXAS --- */
@@ -1532,11 +1535,12 @@ strong{
 }
 
 .bracket-column {
-    flex: 1; /* Ocupa todo o espaço abaixo do título */
+    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Encontra o centro exato para as linhas */
+    justify-content: space-around;
     width: 220px;
+    min-width: 220px; /* TRAVA A LARGURA: Os cards não vão mais amassar */
 }
 
 .phase-container {
