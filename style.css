@@ -1561,15 +1561,6 @@ strong{
     display: none !important;
 }
 
-.celula-aposta {
-    display: flex;
-    flex-direction: row; /* Força ficar um ao lado do outro */
-    align-items: center; /* Alinha verticalmente no centro */
-    justify-content: center; /* Centraliza no meio da célula */
-    gap: 4px; /* Dá um espacinho entre os inputs e o botão */
-    flex-wrap: nowrap; /* Impede que quebrem para a linha de baixo */
-}
-
 /* 1. Tira as bordas verticais e do topo da célula, deixando APENAS a linha horizontal de baixo */
 td[data-jogo-id] {
     border-left: none !important;
@@ -1587,10 +1578,32 @@ td[data-jogo-id]:not(.celula-aposta) div {
     box-shadow: none !important;
 }
 
-/* 3. Mantém o visual correto das caixinhas de digitar quando você clica para apostar */
+/* 1. Força o alinhamento lado a lado, mesmo em espaços apertados */
+.celula-aposta {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important; /* Espaço bem pequeno entre as caixas */
+    flex-wrap: wrap !important; /* Se a tela for muito pequena, o botão OK desce sem quebrar o layout */
+    width: 100% !important;
+}
+
+/* 2. Deixa as caixinhas de gol menores para caberem no chaveamento */
 .celula-aposta input {
+    width: 28px !important; 
+    height: 25px !important;
+    text-align: center !important;
+    padding: 0 !important;
     border: 1px solid #ccc !important; 
     background-color: #fff !important;
+}
+
+/* 3. Reduz o botão OK para ele não ocupar tanto espaço horizontal */
+.celula-aposta button {
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    cursor: pointer !important;
 }
 
 
