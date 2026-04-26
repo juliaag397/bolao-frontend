@@ -1284,17 +1284,17 @@ strong{
 /* --- CONFIGURAÇÕES GERAIS --- */
 :root {
     --cor-linha: #b1d8c6;
-    --largura-conector: 15px; /* Era 25px! Isso encolhe muito a tela */
-    --altura-card: 95px; 
+    --largura-conector: 10px; /* Era 25px! Isso encolhe muito a tela */
+    --altura-card: 75px; 
 }
 
 .bracket-container {
     display: flex;
     align-items: stretch;
     justify-content: flex-start;
-    gap: 30px; /* Exatamente o dobro do conector */
+    gap: 20px; /* Exatamente o dobro do conector */
     min-width: max-content;
-    padding: 20px;
+    padding: 15px;
 }
 
 /* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
@@ -1330,7 +1330,7 @@ strong{
     justify-content: space-around;
     align-items: center; /* Centraliza o card dentro do par */
     padding: 0; 
-    width: 140px; /* IGUAL AO CARD! Fim do buraco invisível de 10px */
+    width: 120px; /* IGUAL AO CARD! Fim do buraco invisível de 10px */
     flex-grow: 0;
     height: calc(var(--altura-card) * 2 + 20px);
 }
@@ -1350,15 +1350,15 @@ strong{
 .match-card {
     background: var(--cor-card);
     border: 2px solid var(--cor-borda);
-    border-radius: 10px;
-    width: 140px; /* IGUAL A COLUNA! Isso faz o lado esquerdo colar perfeitamente */
-    padding: 8px;
+    border-radius: 8px;
+    width: 120px; /* Encolhido para 120px */
+    padding: 5px; /* Menos respiro interno para caber tudo */
     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     transition: 0.3s;
     position: relative;
     z-index: 2;
     margin: 0 !important; 
-    font-size: 11px; /* Fonte levemente menor para caber na nova largura */
+    font-size: 10px; /* Letra um pouco menor */
     height: var(--altura-card); 
     box-sizing: border-box;
 }
@@ -1538,7 +1538,7 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 140px; /* Reduzimos a coluna inteira */
+    width: 120px; /* Reduzimos a coluna inteira */
     min-width: 140px;
     align-items: center; 
 }
