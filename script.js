@@ -210,9 +210,9 @@ function logout() {
 
     // PARA APOSTAR
 function abrirAposta(celula) {
-
     const agora = new Date();
     const dataJogo = new Date(celula.dataset.data);
+    const jogoId = parseInt(celula.dataset.jogoId);
 
     // 🔒 BLOQUEIO REAL BASEADO NA DATA
     if (agora >= dataJogo) {
@@ -223,25 +223,77 @@ function abrirAposta(celula) {
     // Se já abriu input, não cria outro
     if (celula.querySelector("input")) return;
 
+    // 1. CRIAÇÃO DOS ELEMENTOS
     const input1 = document.createElement("input");
-    input1.type = "number";
-    input1.min = "0";
-    input1.style.width = "50px";
+    input1.type = "number"; input1.min = "0"; input1.style.width = "45px";
 
     const input2 = document.createElement("input");
-    input2.type = "number";
-    input2.min = "0";
-    input2.style.width = "50px";
+    input2.type = "number"; input2.min = "0"; input2.style.width = "45px";
+
+    let selectClassificado = null;
+    if (jogoId >= 73) {
+        selectClassificado = document.createElement("select");
+        selectClassificado.style.display = "none"; // Começa escondido
+        selectClassificado.style.fontSize = "10px";
+        selectClassificado.style.margin = "5px auto";
+
+        const optDefault = new Option("Quem passa?", "");
+        const optCasa = new Option("Time Esquerda", "casa");
+        const optFora = new Option("Time Direita", "fora");
+        
+        selectClassificado.add(optDefault);
+        selectClassificado.add(optCasa);
+        selectClassificado.add(optFora);
+    }
+
+    // --- LÓGICA DE MOSTRAR SELECT APENAS NO EMPATE ---
+    const verificarEmpate = () => {
+        if (selectClassificado) {
+            const v1 = input1.value;
+            const v2 = input2.value;
+            if (v1 !== "" && v2 !== "" && v1 === v2) {
+                selectClassificado.style.display = "block";
+            } else {
+                selectClassificado.style.display = "none";
+            }
+        }
+    };
+
+    input1.oninput = verificarEmpate;
+    input2.oninput = verificarEmpate;
 
     const botao = document.createElement("button");
     botao.textContent = "OK";
+    botao.style.marginLeft = "5px";
 
+    // 2. LÓGICA DE ENVIO (FETCH)
     botao.onclick = function (event) {
         event.stopPropagation();
 
-        if (input1.value === "" || input2.value === "") {
+        const g1 = input1.value;
+        const g2 = input2.value;
+
+        if (g1 === "" || g2 === "") {
             alert("Preencha os dois campos!");
             return;
+        }
+
+        let classificadoValue = null;
+
+        // Lógica inteligente de classificação
+        if (jogoId >= 73) {
+            if (parseInt(g1) > parseInt(g2)) {
+                classificadoValue = "casa";
+            } else if (parseInt(g1) < parseInt(g2)) {
+                classificadoValue = "fora";
+            } else {
+                // Se empatou, pega o valor do Select
+                classificadoValue = selectClassificado.value;
+                if (!classificadoValue) {
+                    alert("Em caso de empate, selecione quem se classifica!");
+                    return;
+                }
+            }
         }
 
         fetch("https://bolao-backend-k56l.onrender.com/apostar", {
@@ -249,47 +301,46 @@ function abrirAposta(celula) {
             headers: { "Content-Type": "application/json" },
             credentials: "include",
             body: JSON.stringify({
-                jogo_id: celula.dataset.jogoId,
-                gols_casa: input1.value,
-                gols_fora: input2.value
+                jogo_id: jogoId,
+                gols_casa: g1,
+                gols_fora: g2,
+                classificado_apostado: classificadoValue 
             })
         })
         .then(async res => {
-
-            if (res.status === 403) {
-                alert("Este jogo já começou.");
-                bloquearJogosPassados(); // 🔥 atualiza visual
-                return;
-            }
-
-            if (res.status === 401) {
-                alert("Sessão expirada. Faça login novamente.");
-                return;
-            }
+            if (res.status === 403) { alert("Jogo já começou."); return; }
+            if (res.status === 401) { alert("Sessão expirada."); return; }
 
             const data = await res.json();
+            if (data.erro) { alert(data.erro); return; }
 
-            if (data.erro) {
-                alert(data.erro);
-                return;
+            // Visual após salvar: Placar + Setinha se for empate no mata-mata
+            let textoResultado = `${g1} x ${g2}`;
+            if (jogoId >= 73 && g1 === g2) {
+                textoResultado += ` (${classificadoValue === 'casa' ? '⬅️' : '➡️'})`;
             }
-
-            celula.innerHTML = input1.value + " x " + input2.value;
+            
+            celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
-
         })
-        .catch(() => {
-            alert("Erro ao conectar com servidor");
-        });
+        .catch(() => alert("Erro ao conectar com servidor"));
     };
 
-    input1.addEventListener("click", e => e.stopPropagation());
-    input2.addEventListener("click", e => e.stopPropagation());
+    // 3. MONTAGEM FINAL DA CÉLULA
+    input1.onclick = e => e.stopPropagation();
+    input2.onclick = e => e.stopPropagation();
+    if (selectClassificado) selectClassificado.onclick = e => e.stopPropagation();
 
     celula.innerHTML = "";
     celula.appendChild(input1);
     celula.appendChild(document.createTextNode(" x "));
     celula.appendChild(input2);
+    
+    if (selectClassificado) {
+        celula.appendChild(document.createElement("br"));
+        celula.appendChild(selectClassificado);
+    }
+    
     celula.appendChild(botao);
 }
 
@@ -1860,6 +1911,34 @@ function renderizarNaOrdem(jogo, container, listaOrdem, html) {
             container.appendChild(divPar);
         }
     }
+}
+
+function salvarResultadoOficial(jogoId) {
+    const gCasa = document.getElementById(`gols-casa-${jogoId}`).value;
+    const gFora = document.getElementById(`gols-fora-${jogoId}`).value;
+    
+    let vPenaltis = null;
+
+    // Se for empate e for jogo de mata-mata (ID >= 73)
+    if (parseInt(gCasa) === parseInt(gFora) && jogoId >= 73) {
+        vPenaltis = prompt("Jogo empatado! Quem venceu nos pênaltis? Digite 'casa' ou 'fora'");
+        
+        if (vPenaltis !== 'casa' && vPenaltis !== 'fora') {
+            alert("Você precisa digitar 'casa' ou 'fora' para salvar empates no mata-mata!");
+            return;
+        }
+    }
+
+    fetch("/admin/atualizar-resultado", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            jogo_id: jogoId,
+            gols_casa: gCasa,
+            gols_fora: gFora,
+            vencedor_penaltis: vPenaltis
+        })
+    }).then(res => res.ok ? alert("Salvo!") : alert("Erro!"));
 }
 
 document.addEventListener("DOMContentLoaded", async function () {
