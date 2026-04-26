@@ -1533,25 +1533,32 @@ strong{
 }
 
 /* Container que protege o título do JavaScript */
+/* --- CONTAINER DA COLUNA (A Capa Protetora) --- */
 .column-container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Obriga a coluna a ir até o final da tela */
+    padding-top: 100px; /* Garante aquele espaço para o título respirar */
+}
+
+/* --- COLUNA DOS JOGOS (Onde ficam os cards) --- */
+.bracket-column {
+    flex-grow: 1; /* Faz essa div esticar e empurrar os cards para os lugares certos */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Distribui os jogos perfeitamente */
+    width: 220px; /* Ajuste para a largura dos seus cards, se necessário */
+}
+
+.phase-container {
+    position: relative; /* Isso prende os títulos "FINAL" e "3º LUGAR" aqui dentro! */
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative;
-    padding-top: 100px; /* Garante que o título não sobreponha os jogos */
-}
-
-/* Coluna onde os jogos são renderizados */
-.bracket-column {
-    display: flex;
-    flex-direction: column;
-    /* MUDE AQUI: De 'center' para 'space-around' */
-    justify-content: space-around; 
-    gap: 0;
-    min-height: 970px;
-    width: 180px; 
-    position: relative;
-    padding: 0; /* Garante que nada interno desvie o centro */
+    justify-content: center;
+    /* Se precisar de um espacinho no topo para o título não colar no card: */
+    padding-top: 40px; 
 }
 
 /* Remove conectores da coluna central */
