@@ -1674,6 +1674,66 @@ async function carregarConfiguracoesGerais() {
 }
 
     //MATA-MATA------------------------------
+// Dicionário para converter o nome do banco de dados na sigla da FlagCDN
+const mapaBandeiras = {
+    "Brasil": "br",
+    "África do Sul": "za",
+    "Haiti": "ht",
+    "Escócia": "gb-sct",
+    "Argentina": "ar",
+    "México": "mx",
+    "Áustria": "at",
+    "Egito": "eg",
+    "Mexico": "mx", // Sem acento por precaução
+    "França": "fr",
+    "Alemanha": "de",
+    "Espanha": "es",
+    "Tunísia": "tn",
+    "Nova Zelândia": "nz",
+    "Costa do Marfim": "ci",
+    "Portugal": "pt",
+    "Inglaterra": "gb-eng", // Inglaterra tem sigla especial na API
+    "EUA": "us",
+    "Paraguai": "py",
+    "Uruguai": "uy",
+    "Colômbia": "co",
+    "Noruega": "no",
+    "Equador": "ec",
+    "Holanda": "nl",
+    "Bélgica": "be",
+    "Uzbequistão": "uz",
+    "Croácia": "hr",
+    "Japão": "jp",
+    "Coréia do Sul": "kr",
+    "Marrocos": "ma",
+    "Arábia Saudita": "sa",
+    "Catar": "qa",
+    "Canadá": "ca",
+    "Cabo Verde": "cv",
+    "Austrália": "au",
+    "Argélia": "dz",
+    "Gana": "gh",
+    "Panamá": "pa",
+    "Jordânia": "jo",
+    "Suíça": "ch",
+    "Irã": "ir",
+    "Senegal": "sn",
+    "Curaçao": "cw"
+    // Pode adicionar mais países aqui seguindo a mesma lógica!
+};
+
+function obterUrlBandeira(nomeTime) {
+    if (!nomeTime || nomeTime === "?") return "https://flagcdn.com/w40/un.png"; // Bandeira da ONU para jogos indefinidos
+    
+    // Limpa o nome para bater com o dicionário (remove espaços e deixa em minúsculo)
+    const nomeChave = nomeTime.trim();
+    const sigla = mapaBandeiras[nomeChave];
+    
+    return sigla 
+        ? `https://flagcdn.com/w40/${sigla.toLowerCase()}.png` 
+        : `https://placehold.co/40x26/eeeeee/999999?text=X`; // Fallback se não encontrar a sigla
+}
+
 async function carregarMataMata() {
     try {
         const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
@@ -1691,13 +1751,28 @@ async function carregarMataMata() {
                 ? `${jogo.gols_casa} x ${jogo.gols_fora}` 
                 : "- x -";
 
+            // --- NOVA LÓGICA DE BANDEIRAS ---
+            const urlCasa = obterUrlBandeira(timeCasa);
+            const urlFora = obterUrlBandeira(timeFora);
+            // --------------------------------
+
             const cardHTML = `
                 <div class="match-card">
                     <span class="match-date">📅 ${new Date(jogo.data_jogo).toLocaleDateString('pt-BR')}</span>
-                    <div class="team-row">
-                        <span class="team-name">${timeCasa}</span>
-                        <div class="placar-oficial" data-jogo-id="${jogo.id}">${placarOficial}</div>
-                        <span class="team-name" style="text-align:right;">${timeFora}</span>
+                    <div class="team-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <img src="${urlCasa}" alt="${timeCasa}" style="width: 30px; height: auto; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                            <span class="team-name" style="font-size: 11px; margin-top: 4px; text-align: center;">${timeCasa}</span>
+                        </div>
+
+                        <div class="placar-oficial" data-jogo-id="${jogo.id}" style="font-weight: bold; font-size: 1.2em; min-width: 50px; text-align: center;">
+                            ${placarOficial}
+                        </div>
+
+                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
+                            <img src="${urlFora}" alt="${timeFora}" style="width: 30px; height: auto; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
+                            <span class="team-name" style="font-size: 11px; margin-top: 4px; text-align: center;">${timeFora}</span>
+                        </div>
                     </div>
                     <div class="match-actions" style="margin-top:10px;">
                         <div class="celula-aposta" 
