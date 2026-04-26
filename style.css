@@ -1333,7 +1333,8 @@ strong{
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 0;
     width: 100%;
     flex-grow: 0;
     height: calc(var(--altura-card) * 2 + 20px);
