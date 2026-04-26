@@ -1291,10 +1291,10 @@ strong{
 .bracket-container {
     display: flex;
     align-items: stretch;
-    justify-content: flex-start; /* ISSO DEVOLVE SEU SCROLL PARA A ESQUERDA! */
-    gap: 15px;
-    min-width: max-content; /* ISSO IMPEDE O ZOOM BIZARRO E O ESMAGAMENTO DAS COLUNAS! */
-    padding: 20px 40px; /* Dá uma margem nas laterais para não colar na borda */
+    justify-content: flex-start; /* Mantém o scroll saudável pra esquerda */
+    gap: 8px; /* Era 15px, agora as colunas ficam mais juntinhas */
+    min-width: max-content;
+    padding: 20px;
 }
 
 /* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
@@ -1310,18 +1310,16 @@ strong{
 
 .column-title {
     position: relative !important;
-    top: auto !important;
-    left: auto !important;
-    transform: none !important;
     text-align: center;
     display: block;
-    margin-bottom: 20px; /* Empurra os cards para baixo gentilmente */
-    height: 30px; /* Altura CRAVADA: garante que a matemática das linhas seja idêntica em toda a tela */
+    margin-bottom: 15px; /* Reduzi um pouco para ajudar no 'zoom' */
+    height: 30px; 
     line-height: 30px;
     font-weight: 800;
-    font-size: 14px;
+    font-size: 14px; /* Se o texto ficar espremido, pode baixar pra 12px */
     color: #166534;
     text-transform: uppercase;
+    white-space: nowrap; /* Impede que o título quebre em duas linhas e bagunce a altura */
 }
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
@@ -1456,8 +1454,8 @@ strong{
     align-items: center;
     gap: 40px;
     flex: 1;
-    width: 280px; 
-    min-width: 280px; /* Trava o meio para não espremer o troféu */
+    width: 220px; /* Era 280px */
+    min-width: 220px; 
 }
 
 /* --- ESTILO BASE DAS CAIXAS --- */
@@ -1539,8 +1537,14 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    width: 220px;
-    min-width: 220px; /* TRAVA A LARGURA: Os cards não vão mais amassar */
+    width: 170px; /* Era 220px! Isso vai reduzir drasticamente o tamanho da tela toda */
+    min-width: 170px;
+    align-items: center; /* Centraliza os cards perfeitamente no eixo da coluna */
+}
+
+.bracket-column > div {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .phase-container {
