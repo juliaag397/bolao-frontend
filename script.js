@@ -232,6 +232,9 @@ function abrirAposta(celula) {
     input2.style.width = "35px";
     input2.style.textAlign = "center";
 
+    celula.style.border = "none";
+    celula.style.outline = "none";
+
     let selectClassificado = null;
     if (jogoId >= 73) {
         selectClassificado = document.createElement("select");
