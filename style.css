@@ -1561,18 +1561,24 @@ strong{
     display: none !important;
 }
 
-/* 1. Base da tabela: devolve o espaçamento (respiro) vertical para a linha não ficar espremida */
-td[data-jogo-id] {
+/* 1. DEVOLVE o comportamento natural da tabela para as bordas NUNCA mais desalinharem */
+td.celula-aposta, td[data-jogo-id] {
+    display: table-cell !important; /* Força a voltar a ser uma célula de tabela */
+    vertical-align: middle !important;
+    text-align: center !important;
+    white-space: nowrap !important; /* Impede que o 'x' e o botão caiam para a linha de baixo */
+    
+    /* Remove bordas verticais indesejadas e mantém APENAS a linha padrão de baixo */
     border-left: none !important;
     border-right: none !important;
     border-top: none !important;
     border-bottom: 1px solid #dee2e6 !important;
-    vertical-align: middle !important;
-    padding-top: 12px !important; /* Força o espaço em cima */
-    padding-bottom: 12px !important; /* Força o espaço embaixo */
+    
+    /* Um espaçamento interno seguro para não esmagar a linha */
+    padding: 10px 5px !important; 
 }
 
-/* 2. Tira as bordas pretas do palpite inicial do servidor */
+/* 2. Tira as bordas pretas de qualquer palpite já salvo que venha do servidor */
 td[data-jogo-id]:not(.celula-aposta) * {
     border: none !important;
     background-color: transparent !important;
@@ -1580,49 +1586,28 @@ td[data-jogo-id]:not(.celula-aposta) * {
     box-shadow: none !important;
 }
 
-/* 3. Estrutura base para manter as coisas alinhadas */
-.celula-aposta {
-    display: flex !important;
-    flex-direction: row !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 4px !important;
-    flex-wrap: wrap !important;
-    width: 100% !important;
-}
-
-/* =========================================
-   4. REGRAS PARA O CHAVEAMENTO (MATA-MATA)
-   ========================================= */
-/* Caixinhas e botão pequenos para caberem sem quebrar o layout */
+/* 3. Ajusta as caixinhas de gol para ficarem lado a lado (inline) de forma natural */
 .celula-aposta input {
-    width: 28px !important; 
-    height: 25px !important;
+    display: inline-block !important; /* Comportamento em linha (lado a lado) */
+    width: 32px !important; 
+    height: 30px !important;
     text-align: center !important;
-    padding: 0 !important;
     border: 1px solid #ccc !important; 
     background-color: #fff !important;
+    vertical-align: middle !important; /* Alinha o centro da caixa com o 'x' */
+    margin: 0 4px !important; /* Dá o espacinho entre as caixas (substitui o gap) */
+    padding: 0 !important;
+    box-sizing: border-box !important;
 }
 
+/* 4. Ajusta o botão OK */
 .celula-aposta button {
-    padding: 2px 6px !important;
-    font-size: 11px !important;
-    cursor: pointer !important;
-}
-
-/* =========================================
-   5. REGRAS EXCLUSIVAS PARA A TABELA
-   ========================================= */
-/* O prefixo 'td' garante que isso SÓ se aplique às linhas da tabela, devolvendo o tamanho ideal */
-td .celula-aposta input {
-    width: 35px !important;
-    height: 32px !important;
-    padding: 2px !important;
-}
-
-td .celula-aposta button {
+    display: inline-block !important;
     padding: 4px 8px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    vertical-align: middle !important;
+    margin-left: 2px !important;
+    cursor: pointer !important;
 }
 
 /* 3. Reduz o botão OK para ele não ocupar tanto espaço horizontal */
