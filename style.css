@@ -1556,6 +1556,11 @@ strong{
     padding-top: 0; /* Zerado para o título "FINAL" não esmagar o card */
 }
 
+/* Esconde o texto "Jogo X" do rodapé do card */
+.match-card small {
+    display: none !important;
+}
+
 /* Remove conectores da coluna central */
 .central-flow .match-card::after,
 .central-flow .match-card::before,
