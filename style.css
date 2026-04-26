@@ -1386,10 +1386,9 @@ strong{
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    /* O segredo: começa a 25% do topo do par e termina a 25% do fundo */
-    /* Isso sempre acerta o meio dos dois cards se o justify-content for space-around */
-    top: 25%; 
-    bottom: 25%;
+    /* O SEGREDO ESTÁ AQUI: Substitua o 25% por isso */
+    top: calc(var(--altura-card) / 2); 
+    bottom: calc(var(--altura-card) / 2);
     width: 0;
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
@@ -1422,8 +1421,9 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: 25%;
-    bottom: 25%;
+    /* O SEGREDO ESTÁ AQUI: Substitua o 25% por isso */
+    top: calc(var(--altura-card) / 2);
+    bottom: calc(var(--altura-card) / 2);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1444,23 +1444,6 @@ strong{
 .bracket-column[id$="-right"] .match-card::before {
     top: 50% !important;
     transform: translateY(-50%) !important;
-}
-
-/* Espaçamento entre pares (cada confronto) */
-
-#round-32-left .match-pair,
-#round-32-right .match-pair {
-    margin-bottom: 20px;
-}
-
-#round-16-left .match-pair,
-#round-16-right .match-pair {
-    margin-bottom: 0;
-}
-
-#round-8-left .match-pair,
-#round-8-right .match-pair {
-    margin-bottom: 0;
 }
 
 /* Mantenha este para o alinhamento */
@@ -1574,7 +1557,8 @@ strong{
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* MUDE AQUI: De 'center' para 'space-around' */
+    justify-content: space-around; 
     gap: 0;
     min-height: 970px;
     width: 180px; 
