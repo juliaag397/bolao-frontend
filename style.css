@@ -1464,13 +1464,13 @@ strong{
 /* --- QUARTAS PARA SEMIS (Aumentar ainda mais) --- */
 /* Lado Esquerdo */
 [id^="round-8-left"] .match-pair::after {
-    top: -30px !important;    /* Mais negativo = linha muito mais comprida */
-    bottom: -30px !important;
+    top: -10px !important;    /* Mais negativo = linha muito mais comprida */
+    bottom: -10px !important;
 }
 /* Lado Direito */
 [id^="round-8-right"] .match-pair::before {
-    top: -30px !important;
-    bottom: -30px !important;
+    top: -10px !important;
+    bottom: -10px !important;
 }
 
 
