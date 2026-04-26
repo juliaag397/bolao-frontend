@@ -1452,8 +1452,8 @@ strong{
 /* --- OITAVAS PARA QUARTAS (Aumentar a linha) --- */
 /* Lado Esquerdo */
 [id^="round-16-left"] .match-pair::after {
-    top: -10px !important;    /* Valor negativo faz a linha subir além do card */
-    bottom: -10px !important; /* Valor negativo faz a linha descer além do card */
+    top: 0px !important;    /* Valor negativo faz a linha subir além do card */
+    bottom: 0px !important; /* Valor negativo faz a linha descer além do card */
 }
 /* Lado Direito */
 [id^="round-16-right"] .match-pair::before {
