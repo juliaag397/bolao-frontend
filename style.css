@@ -1561,6 +1561,21 @@ strong{
     display: none !important;
 }
 
+.celula-aposta {
+    display: flex;
+    flex-direction: row; /* Força ficar um ao lado do outro */
+    align-items: center; /* Alinha verticalmente no centro */
+    justify-content: center; /* Centraliza no meio da célula */
+    gap: 4px; /* Dá um espacinho entre os inputs e o botão */
+    flex-wrap: nowrap; /* Impede que quebrem para a linha de baixo */
+}
+
+.celula-aposta input {
+    width: 35px !important; /* Diminuí um pouco para caber melhor */
+    padding: 2px;
+    text-align: center;
+}
+
 /* Remove conectores da coluna central */
 .central-flow .match-card::after,
 .central-flow .match-card::before,

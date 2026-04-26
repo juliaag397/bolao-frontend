@@ -214,45 +214,42 @@ function abrirAposta(celula) {
     const dataJogo = new Date(celula.dataset.data);
     const jogoId = parseInt(celula.dataset.jogoId);
 
-    // 🔒 BLOQUEIO REAL BASEADO NA DATA
     if (agora >= dataJogo) {
         alert("Apostas encerradas para este jogo!");
         return;
     }
 
-    // Se já abriu input, não cria outro
     if (celula.querySelector("input")) return;
 
-    // 1. CRIAÇÃO DOS ELEMENTOS
+    // 1. CRIAÇÃO DOS ELEMENTOS (Diminuí um pouco as larguras para caber)
     const input1 = document.createElement("input");
-    input1.type = "number"; input1.min = "0"; input1.style.width = "45px";
+    input1.type = "number"; input1.min = "0"; input1.style.width = "35px";
 
     const input2 = document.createElement("input");
-    input2.type = "number"; input2.min = "0"; input2.style.width = "45px";
+    input2.type = "number"; input2.min = "0"; input2.style.width = "35px";
 
     let selectClassificado = null;
     if (jogoId >= 73) {
         selectClassificado = document.createElement("select");
-        selectClassificado.style.display = "none"; // Começa escondido
+        selectClassificado.style.display = "none"; 
         selectClassificado.style.fontSize = "10px";
-        selectClassificado.style.margin = "5px auto";
+        selectClassificado.style.width = "65px"; // Largura pequena para caber na linha
 
-        const optDefault = new Option("Quem passa?", "");
-        const optCasa = new Option("Time Esquerda", "casa");
-        const optFora = new Option("Time Direita", "fora");
+        const optDefault = new Option("Vence?", "");
+        const optCasa = new Option("Esq.", "casa");
+        const optFora = new Option("Dir.", "fora");
         
         selectClassificado.add(optDefault);
         selectClassificado.add(optCasa);
         selectClassificado.add(optFora);
     }
 
-    // --- LÓGICA DE MOSTRAR SELECT APENAS NO EMPATE ---
     const verificarEmpate = () => {
         if (selectClassificado) {
             const v1 = input1.value;
             const v2 = input2.value;
             if (v1 !== "" && v2 !== "" && v1 === v2) {
-                selectClassificado.style.display = "block";
+                selectClassificado.style.display = "inline-block"; // inline para manter a linha
             } else {
                 selectClassificado.style.display = "none";
             }
@@ -264,12 +261,11 @@ function abrirAposta(celula) {
 
     const botao = document.createElement("button");
     botao.textContent = "OK";
-    botao.style.marginLeft = "5px";
+    botao.style.fontSize = "10px";
+    botao.style.padding = "2px 5px";
 
-    // 2. LÓGICA DE ENVIO (FETCH)
     botao.onclick = function (event) {
         event.stopPropagation();
-
         const g1 = input1.value;
         const g2 = input2.value;
 
@@ -279,18 +275,13 @@ function abrirAposta(celula) {
         }
 
         let classificadoValue = null;
-
-        // Lógica inteligente de classificação
         if (jogoId >= 73) {
-            if (parseInt(g1) > parseInt(g2)) {
-                classificadoValue = "casa";
-            } else if (parseInt(g1) < parseInt(g2)) {
-                classificadoValue = "fora";
-            } else {
-                // Se empatou, pega o valor do Select
+            if (parseInt(g1) > parseInt(g2)) classificadoValue = "casa";
+            else if (parseInt(g1) < parseInt(g2)) classificadoValue = "fora";
+            else {
                 classificadoValue = selectClassificado.value;
                 if (!classificadoValue) {
-                    alert("Em caso de empate, selecione quem se classifica!");
+                    alert("Selecione quem se classifica!");
                     return;
                 }
             }
@@ -309,35 +300,36 @@ function abrirAposta(celula) {
         })
         .then(async res => {
             if (res.status === 403) { alert("Jogo já começou."); return; }
-            if (res.status === 401) { alert("Sessão expirada."); return; }
-
             const data = await res.json();
-            if (data.erro) { alert(data.erro); return; }
-
-            // Visual após salvar: Placar + Setinha se for empate no mata-mata
             let textoResultado = `${g1} x ${g2}`;
             if (jogoId >= 73 && g1 === g2) {
                 textoResultado += ` (${classificadoValue === 'casa' ? '⬅️' : '➡️'})`;
             }
-            
             celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
         })
         .catch(() => alert("Erro ao conectar com servidor"));
     };
 
-    // 3. MONTAGEM FINAL DA CÉLULA
+    // 2. APLICAÇÃO DO FLEXBOX (Isso resolve o alinhamento)
+    celula.style.display = "flex";
+    celula.style.flexDirection = "row";
+    celula.style.alignItems = "center";
+    celula.style.justifyContent = "center";
+    celula.style.gap = "2px"; 
+    celula.style.flexWrap = "nowrap"; // Impede de pular linha
+
+    // 3. MONTAGEM FINAL (Apenas uma vez!)
     input1.onclick = e => e.stopPropagation();
     input2.onclick = e => e.stopPropagation();
     if (selectClassificado) selectClassificado.onclick = e => e.stopPropagation();
 
     celula.innerHTML = "";
     celula.appendChild(input1);
-    celula.appendChild(document.createTextNode(" x "));
+    celula.appendChild(document.createTextNode("x")); 
     celula.appendChild(input2);
     
     if (selectClassificado) {
-        celula.appendChild(document.createElement("br"));
         celula.appendChild(selectClassificado);
     }
     
