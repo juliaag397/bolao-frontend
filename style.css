@@ -1313,23 +1313,22 @@ strong{
 }
 
 /* --- COLUNAS E ALINHAMENTO --- */
+/* --- TÍTULO DA COLUNA --- */
 .column-title {
     position: absolute;
-    top: -50px; /* Ajuste conforme necessário */
+    /* Use um valor POSITIVO para o título ficar na "área segura" do padding-top: 100px */
+    top: 40px; 
     left: 50%;
     transform: translateX(-50%);
     font-weight: 800;
-    pointer-events: none;
-    text-transform: uppercase;
-    color: var(--cor-terciaria);
     font-size: 14px;
+    color: #166534; 
+    text-transform: uppercase;
     white-space: nowrap;
+    pointer-events: none;
     z-index: 10;
 }
 
-
-/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
-/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
     position: relative;
@@ -1540,18 +1539,6 @@ strong{
     align-items: center;
     position: relative;
     padding-top: 100px; /* Garante que o título não sobreponha os jogos */
-}
-
-/* Título fixo: ele está fora da div que o JS limpa */
-.column-title {
-    position: absolute;
-    top: -20px;
-    font-weight: 800;
-    font-size: 14px;
-    color: #166534; /* Verde da sua referência */
-    text-transform: uppercase;
-    white-space: nowrap;
-    pointer-events: none; /* Garante que não interfira em cliques */
 }
 
 /* Coluna onde os jogos são renderizados */
