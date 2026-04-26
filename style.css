@@ -1373,8 +1373,8 @@ strong{
     right: calc(var(--largura-conector) * -1);
     /* O segredo: começa a 25% do topo do par e termina a 25% do fundo */
     /* Isso sempre acerta o meio dos dois cards se o justify-content for space-around */
-    top: calc(var(--altura-card) / 2 - 15px); 
-    bottom: calc(var(--altura-card) / 2 - 15px);
+    top: calc(var(--altura-card) / 2 - 30px); 
+    bottom: calc(var(--altura-card) / 2 - 30px);
     width: 0;
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
@@ -1407,8 +1407,8 @@ strong{
     content: "";
     position: absolute;
     left: calc(var(--largura-conector) * -1);
-    top: calc(var(--altura-card) / 2 - 15px);
-    bottom: calc(var(--altura-card) / 2 - 15px);
+    top: calc(var(--altura-card) / 2 - 30px);
+    bottom: calc(var(--altura-card) / 2 - 30px);
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
@@ -1444,10 +1444,10 @@ strong{
 [id^="round-32"] .match-pair { gap: 10px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 145px; }
+[id^="round-16"] .match-pair { gap: 150px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 400px; }
+[id^="round-8"] .match-pair { gap: 395px; }
 
 /* Mantenha este para o alinhamento */
 .central-flow {
