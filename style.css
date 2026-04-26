@@ -1574,7 +1574,7 @@ strong{
 .bracket-column {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     gap: 0;
     min-height: 970px;
     width: 180px; 
