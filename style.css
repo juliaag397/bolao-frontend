@@ -1444,10 +1444,35 @@ strong{
 [id^="round-32"] .match-pair { gap: 10px; }
 
 /* Oitavas (Mais afastados) */
-[id^="round-16"] .match-pair { gap: 150px; }
+[id^="round-16"] .match-pair { gap: 145px; }
 
 /* Quartas (Bem afastados) */
-[id^="round-8"] .match-pair { gap: 395px; }
+[id^="round-8"] .match-pair { gap: 390px; }
+
+/* --- OITAVAS PARA QUARTAS (Aumentar a linha) --- */
+/* Lado Esquerdo */
+[id^="round-16-left"] .match-pair::after {
+    top: -10px !important;    /* Valor negativo faz a linha subir além do card */
+    bottom: -10px !important; /* Valor negativo faz a linha descer além do card */
+}
+/* Lado Direito */
+[id^="round-16-right"] .match-pair::before {
+    top: -10px !important;
+    bottom: -10px !important;
+}
+
+/* --- QUARTAS PARA SEMIS (Aumentar ainda mais) --- */
+/* Lado Esquerdo */
+[id^="round-8-left"] .match-pair::after {
+    top: -30px !important;    /* Mais negativo = linha muito mais comprida */
+    bottom: -30px !important;
+}
+/* Lado Direito */
+[id^="round-8-right"] .match-pair::before {
+    top: -30px !important;
+    bottom: -30px !important;
+}
+
 
 /* Mantenha este para o alinhamento */
 .central-flow {
