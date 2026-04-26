@@ -1330,12 +1330,13 @@ strong{
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
+/* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
 .match-pair {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 0; /* O SEGREDO ESTÁ AQUI: Mude de '10px 0' para '0' */
+    justify-content: space-around; /* MUDOU AQUI: de space-between para space-around */
+    padding: 0; 
     width: 100%;
     flex-grow: 0;
     height: calc(var(--altura-card) * 2 + 20px);
@@ -1387,9 +1388,8 @@ strong{
     content: "";
     position: absolute;
     right: calc(var(--largura-conector) * -1);
-    /* O SEGREDO ESTÁ AQUI: Substitua o 25% por isso */
-    top: calc(var(--altura-card) / 2); 
-    bottom: calc(var(--altura-card) / 2);
+    top: 25%; 
+    bottom: 25%;
     width: 0;
     border-right: 2px solid var(--cor-linha);
     z-index: 1;
@@ -1423,8 +1423,8 @@ strong{
     position: absolute;
     left: calc(var(--largura-conector) * -1);
     /* O SEGREDO ESTÁ AQUI: Substitua o 25% por isso */
-    top: calc(var(--altura-card) / 2);
-    bottom: calc(var(--altura-card) / 2);
+    top: 25%;
+    bottom: 25%;
     border-left: 2px solid var(--cor-linha);
     z-index: 1;
 }
