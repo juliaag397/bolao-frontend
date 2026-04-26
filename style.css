@@ -1462,32 +1462,6 @@ strong{
     margin-bottom: 0;
 }
 
-
-/* --- OITAVAS PARA QUARTAS (Aumentar a linha) --- */
-/* Lado Esquerdo */
-[id^="round-16-left"] .match-pair::after {
-    top: 0px !important;    /* Valor negativo faz a linha subir além do card */
-    bottom: 0px !important; /* Valor negativo faz a linha descer além do card */
-}
-/* Lado Direito */
-[id^="round-16-right"] .match-pair::before {
-    top: -10px !important;
-    bottom: -10px !important;
-}
-
-/* --- QUARTAS PARA SEMIS (Aumentar ainda mais) --- */
-/* Lado Esquerdo */
-[id^="round-8-left"] .match-pair::after {
-    top: -10px !important;    /* Mais negativo = linha muito mais comprida */
-    bottom: -10px !important;
-}
-/* Lado Direito */
-[id^="round-8-right"] .match-pair::before {
-    top: -10px !important;
-    bottom: -10px !important;
-}
-
-
 /* Mantenha este para o alinhamento */
 .central-flow {
     display: flex;
