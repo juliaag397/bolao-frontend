@@ -1561,7 +1561,7 @@ strong{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    min-height: 1100px;
+    min-height: 1000px;
     width: 180px; 
     position: relative;
     padding: 0; /* Garante que nada interno desvie o centro */
