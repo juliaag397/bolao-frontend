@@ -221,12 +221,34 @@ function abrirAposta(celula) {
 
     if (celula.querySelector("input")) return;
 
-    // 1. CRIAÇÃO DOS ELEMENTOS (Diminuí um pouco as larguras para caber)
+    // 1. CRIAÇÃO DOS ELEMENTOS
     const input1 = document.createElement("input");
-    input1.type = "number"; input1.min = "0"; input1.style.width = "35px";
+    input1.type = "number"; input1.min = "0"; 
+    input1.style.width = "35px";
+    input1.style.textAlign = "center";
 
     const input2 = document.createElement("input");
-    input2.type = "number"; input2.min = "0"; input2.style.width = "35px";
+    input2.type = "number"; input2.min = "0"; 
+    input2.style.width = "35px";
+    input2.style.textAlign = "center";
+
+    // 🔥 NOVA LÓGICA: Remove a "linha preta" (bordas) apenas na Fase de Grupos
+    if (jogoId < 73) {
+        // Remove bordas e sombras para os inputs ficarem "limpos" na tabela
+        input1.style.border = "none";
+        input1.style.outline = "none"; // Remove a linha preta ao clicar (foco)
+        input1.style.boxShadow = "none";
+        input1.style.background = "transparent";
+
+        input2.style.border = "none";
+        input2.style.outline = "none";
+        input2.style.boxShadow = "none";
+        input2.style.background = "transparent";
+
+        // Se a própria célula da tabela tiver uma borda ou sombra interna que você queira tirar:
+        celula.style.boxShadow = "none";
+        celula.style.border = "none";
+    }
 
     let selectClassificado = null;
     if (jogoId >= 73) {
