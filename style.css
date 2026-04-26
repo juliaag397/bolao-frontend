@@ -1576,6 +1576,15 @@ strong{
     text-align: center;
 }
 
+/* Tira a borda dos elementos que já carregam com a página na coluna de palpites */
+td[data-jogo-id] input[readonly],
+td[data-jogo-id] div {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    outline: none !important;
+}
+
 /* Remove conectores da coluna central */
 .central-flow .match-card::after,
 .central-flow .match-card::before,
