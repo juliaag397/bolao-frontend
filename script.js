@@ -221,7 +221,7 @@ function abrirAposta(celula) {
 
     if (celula.querySelector("input")) return;
 
-    // 1. CRIAÇÃO DOS ELEMENTOS
+    // 1. CRIAÇÃO DOS ELEMENTOS (Caixinhas normais e visíveis)
     const input1 = document.createElement("input");
     input1.type = "number"; input1.min = "0"; 
     input1.style.width = "35px";
@@ -232,30 +232,12 @@ function abrirAposta(celula) {
     input2.style.width = "35px";
     input2.style.textAlign = "center";
 
-    // 🔥 NOVA LÓGICA: Remove a "linha preta" (bordas) apenas na Fase de Grupos
-    if (jogoId < 73) {
-        // Remove bordas e sombras para os inputs ficarem "limpos" na tabela
-        input1.style.border = "none";
-        input1.style.outline = "none"; // Remove a linha preta ao clicar (foco)
-        input1.style.boxShadow = "none";
-        input1.style.background = "transparent";
-
-        input2.style.border = "none";
-        input2.style.outline = "none";
-        input2.style.boxShadow = "none";
-        input2.style.background = "transparent";
-
-        // Se a própria célula da tabela tiver uma borda ou sombra interna que você queira tirar:
-        celula.style.boxShadow = "none";
-        celula.style.border = "none";
-    }
-
     let selectClassificado = null;
     if (jogoId >= 73) {
         selectClassificado = document.createElement("select");
         selectClassificado.style.display = "none"; 
         selectClassificado.style.fontSize = "10px";
-        selectClassificado.style.width = "65px"; // Largura pequena para caber na linha
+        selectClassificado.style.width = "65px";
 
         const optDefault = new Option("Vence?", "");
         const optCasa = new Option("Esq.", "casa");
@@ -271,7 +253,7 @@ function abrirAposta(celula) {
             const v1 = input1.value;
             const v2 = input2.value;
             if (v1 !== "" && v2 !== "" && v1 === v2) {
-                selectClassificado.style.display = "inline-block"; // inline para manter a linha
+                selectClassificado.style.display = "inline-block";
             } else {
                 selectClassificado.style.display = "none";
             }
@@ -285,6 +267,14 @@ function abrirAposta(celula) {
     botao.textContent = "OK";
     botao.style.fontSize = "10px";
     botao.style.padding = "2px 5px";
+
+    // 2. FORÇAR ALINHAMENTO LADO A LADO (Resolve a fase de grupos e o mata-mata)
+    celula.style.display = "flex";
+    celula.style.flexDirection = "row";
+    celula.style.alignItems = "center";
+    celula.style.justifyContent = "center";
+    celula.style.gap = "4px"; 
+    celula.style.flexWrap = "nowrap";
 
     botao.onclick = function (event) {
         event.stopPropagation();
@@ -329,28 +319,26 @@ function abrirAposta(celula) {
             }
             celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
+
+            // Limpa o estilo Flexbox após salvar para não quebrar o visual da tabela
+            celula.style.display = "";
+            celula.style.flexDirection = "";
+            celula.style.alignItems = "";
+            celula.style.justifyContent = "";
+            celula.style.gap = "";
+            celula.style.flexWrap = "";
         })
         .catch(() => alert("Erro ao conectar com servidor"));
     };
 
-    // 2. APLICAÇÃO DO ESTILO (Apenas para o Mata-Mata!)
-    if (jogoId >= 73) {
-        celula.style.display = "flex";
-        celula.style.flexDirection = "row";
-        celula.style.alignItems = "center";
-        celula.style.justifyContent = "center";
-        celula.style.gap = "2px"; 
-        celula.style.flexWrap = "nowrap"; 
-    }
-
-    // 3. MONTAGEM FINAL (Apenas uma vez!)
+    // 3. MONTAGEM FINAL
     input1.onclick = e => e.stopPropagation();
     input2.onclick = e => e.stopPropagation();
     if (selectClassificado) selectClassificado.onclick = e => e.stopPropagation();
 
     celula.innerHTML = "";
     celula.appendChild(input1);
-    celula.appendChild(document.createTextNode("x")); 
+    celula.appendChild(document.createTextNode(" x ")); 
     celula.appendChild(input2);
     
     if (selectClassificado) {
