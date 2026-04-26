@@ -1290,15 +1290,9 @@ strong{
 
 .bracket-container {
     display: flex;
-    justify-content: flex-start; /* Importante para a rolagem */
-    align-items: center;
-    background-color: var(--cor-fundo);
-    padding: 40px;
-    gap: 40px; /* Reduzi um pouco o espaço entre fases */
-    overflow-x: auto;
-    width: 100%;
-    /* O segredo para o zoom: */
-    zoom: 0.8; /* Isso funciona melhor que scale para manter os conectores no lugar */
+    align-items: stretch; /* O SEGREDO: Faz todas as colunas terem a mesma altura da maior coluna (Fase de 32) */
+    justify-content: center;
+    gap: 15px; /* Espaço seguro entre as colunas */
 }
 
 /* Adicione isso para garantir que o conteúdo não fique "colado" no topo ou fundo */
@@ -1312,21 +1306,20 @@ strong{
     flex-shrink: 0; 
 }
 
-/* --- COLUNAS E ALINHAMENTO --- */
-/* --- TÍTULO DA COLUNA --- */
 .column-title {
-    position: absolute;
-    /* Use um valor POSITIVO para o título ficar na "área segura" do padding-top: 100px */
-    top: 40px; 
-    left: 50%;
-    transform: translateX(-50%);
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    transform: none !important;
+    text-align: center;
+    display: block;
+    margin-bottom: 20px; /* Empurra os cards para baixo gentilmente */
+    height: 30px; /* Altura CRAVADA: garante que a matemática das linhas seja idêntica em toda a tela */
+    line-height: 30px;
     font-weight: 800;
     font-size: 14px;
-    color: #166534; 
+    color: #166534;
     text-transform: uppercase;
-    white-space: nowrap;
-    pointer-events: none;
-    z-index: 10;
 }
 
 /* --- CONTAINER DO PAR (O BLOCO QUE DESENHA AS LINHAS) --- */
@@ -1454,15 +1447,14 @@ strong{
     gap: 30px; /* Aumentei o espaço para o campeão não "bater" no 3º lugar */
 }
 
-/* --- CONTAINER CENTRAL --- */
 .central-flow {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    gap: 30px; /* Aumentado para evitar choque visual com o scale 1.15 */
-    padding: 0 40px;
-    flex-shrink: 0; /* Não deixa a coluna central encolher */
+    align-items: center;
+    gap: 40px; /* Dá espaço para as caixas não se encostarem */
+    flex: 1; /* Acompanha a altura das outras colunas */
+    width: 280px; 
 }
 
 /* --- ESTILO BASE DAS CAIXAS --- */
@@ -1532,33 +1524,27 @@ strong{
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Container que protege o título do JavaScript */
-/* --- CONTAINER DA COLUNA (A Capa Protetora) --- */
 .column-container {
-    position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%; /* Obriga a coluna a ir até o final da tela */
-    padding-top: 100px; /* Garante aquele espaço para o título respirar */
+    flex: 1; /* Obriga a capa a esticar junto com o container principal */
+    padding-top: 20px; /* Um pequeno respiro no topo da tela */
 }
 
-/* --- COLUNA DOS JOGOS (Onde ficam os cards) --- */
 .bracket-column {
-    flex-grow: 1; /* Faz essa div esticar e empurrar os cards para os lugares certos */
+    flex: 1; /* Ocupa todo o espaço abaixo do título */
     display: flex;
     flex-direction: column;
-    justify-content: space-around; /* Distribui os jogos perfeitamente */
-    width: 220px; /* Ajuste para a largura dos seus cards, se necessário */
+    justify-content: space-around; /* Encontra o centro exato para as linhas */
+    width: 220px;
 }
 
 .phase-container {
-    position: relative; /* Isso prende os títulos "FINAL" e "3º LUGAR" aqui dentro! */
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    /* Se precisar de um espacinho no topo para o título não colar no card: */
-    padding-top: 40px; 
+    width: 100%;
+    padding-top: 0; /* Zerado para o título "FINAL" não esmagar o card */
 }
 
 /* Remove conectores da coluna central */
