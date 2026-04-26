@@ -1723,15 +1723,17 @@ const mapaBandeiras = {
 };
 
 function obterUrlBandeira(nomeTime) {
-    if (!nomeTime || nomeTime === "?") return "https://flagcdn.com/w40/un.png"; // Bandeira da ONU para jogos indefinidos
+    // Se for um marcador de posição (ex: 74.1) ou interrogação, retorna uma imagem transparente ou ícone neutro
+    if (!nomeTime || nomeTime === "?" || /\d/.test(nomeTime)) {
+        return "https://flagcdn.com/w40/un.png"; // Ou use uma imagem transparente
+    }
     
-    // Limpa o nome para bater com o dicionário (remove espaços e deixa em minúsculo)
     const nomeChave = nomeTime.trim();
     const sigla = mapaBandeiras[nomeChave];
     
     return sigla 
         ? `https://flagcdn.com/w40/${sigla.toLowerCase()}.png` 
-        : `https://placehold.co/40x26/eeeeee/999999?text=X`; // Fallback se não encontrar a sigla
+        : `https://placehold.co/40x26/eeeeee/999999?text=X`;
 }
 
 async function carregarMataMata() {
@@ -1751,39 +1753,33 @@ async function carregarMataMata() {
                 ? `${jogo.gols_casa} x ${jogo.gols_fora}` 
                 : "- x -";
 
-            // --- NOVA LÓGICA DE BANDEIRAS ---
             const urlCasa = obterUrlBandeira(timeCasa);
             const urlFora = obterUrlBandeira(timeFora);
-            // --------------------------------
 
             const cardHTML = `
-                <div class="match-card">
-                    <span class="match-date">📅 ${new Date(jogo.data_jogo).toLocaleDateString('pt-BR')}</span>
-                    <div class="team-row" style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
-                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                            <img src="${urlCasa}" alt="${timeCasa}" style="width: 30px; height: auto; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
-                            <span class="team-name" style="font-size: 11px; margin-top: 4px; text-align: center;">${timeCasa}</span>
-                        </div>
-
-                        <div class="placar-oficial" data-jogo-id="${jogo.id}" style="font-weight: bold; font-size: 1.2em; min-width: 50px; text-align: center;">
+                <div class="match-card" style="padding: 5px; min-height: 70px;">
+                    <span class="match-date" style="font-size: 10px; margin-bottom: 2px;">📅 ${new Date(jogo.data_jogo).toLocaleDateString('pt-BR')}</span>
+                    
+                    <div class="team-row" style="display: flex; align-items: center; justify-content: center; gap: 10px; margin: 5px 0;">
+                        <img src="${urlCasa}" title="${timeCasa}" style="width: 28px; height: auto; border-radius: 2px; border: 1px solid #ddd;">
+                        
+                        <div class="placar-oficial" data-jogo-id="${jogo.id}" style="font-weight: bold; font-size: 14px; min-width: 40px; text-align: center;">
                             ${placarOficial}
                         </div>
-
-                        <div style="display: flex; flex-direction: column; align-items: center; flex: 1;">
-                            <img src="${urlFora}" alt="${timeFora}" style="width: 30px; height: auto; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.2);">
-                            <span class="team-name" style="font-size: 11px; margin-top: 4px; text-align: center;">${timeFora}</span>
-                        </div>
+                        
+                        <img src="${urlFora}" title="${timeFora}" style="width: 28px; height: auto; border-radius: 2px; border: 1px solid #ddd;">
                     </div>
-                    <div class="match-actions" style="margin-top:10px;">
+
+                    <div class="match-actions">
                         <div class="celula-aposta" 
                              data-jogo-id="${jogo.id}" 
                              data-data="${jogo.data_jogo}" 
                              onclick="abrirAposta(this)"
-                             style="cursor:pointer; text-align:center; padding:5px; border:1px dashed var(--cor-borda); border-radius:5px;">
+                             style="cursor:pointer; text-align:center; padding:3px; font-size: 11px; border:1px dashed var(--cor-borda); border-radius:4px;">
                              Apostar
                         </div>
                     </div>
-                    <small style="display:block; text-align:center; color:#999; font-size:9px; margin-top:5px;">Jogo ${jogo.id}</small>
+                    <small style="display:none;">Jogo ${jogo.id}</small> 
                 </div>
             `;
             const id = parseInt(jogo.id);
