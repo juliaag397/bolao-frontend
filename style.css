@@ -1285,7 +1285,7 @@ strong{
 :root {
     --cor-linha: #b1d8c6;
     --largura-conector: 10px; /* Era 25px! Isso encolhe muito a tela */
-    --altura-card: 75px; 
+    --altura-card: 90px; 
 }
 
 .bracket-container {
