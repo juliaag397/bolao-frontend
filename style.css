@@ -1570,21 +1570,27 @@ strong{
     flex-wrap: nowrap; /* Impede que quebrem para a linha de baixo */
 }
 
-/* 1. Tira a borda preta do palpite inicial que vem do servidor */
-td[data-jogo-id]:not(.celula-aposta) > * {
+/* 1. Tira as bordas verticais e do topo da célula, deixando APENAS a linha horizontal de baixo */
+td[data-jogo-id] {
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid #dee2e6 !important; /* Cor da linha cinza padrão do resto da tabela */
+}
+
+/* 2. Se o "1 x 1" estiver vindo dentro de um input bloqueado do servidor, isso tira a borda preta dele */
+td[data-jogo-id]:not(.celula-aposta) input,
+td[data-jogo-id]:not(.celula-aposta) div {
     border: none !important;
-    background: transparent !important;
+    background-color: transparent !important;
     outline: none !important;
     box-shadow: none !important;
 }
 
-/* 2. Mantém as caixinhas normais (com borda) apenas quando você clica para apostar */
+/* 3. Mantém o visual correto das caixinhas de digitar quando você clica para apostar */
 .celula-aposta input {
     border: 1px solid #ccc !important; 
     background-color: #fff !important;
-    width: 35px !important;
-    padding: 2px;
-    text-align: center;
 }
 
 
