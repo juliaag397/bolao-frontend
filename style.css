@@ -1629,3 +1629,35 @@ td[data-jogo-id]:not(.celula-aposta) * {
 .team-row { display: flex; align-items: center; justify-content: space-between; margin: 5px 0; }
 .team-name { font-size: 13px; font-weight: bold; color: var(--cor-texto); }
 .match-card input { width: 35px; padding: 3px; text-align: center; border-radius: 4px; border: 1px solid var(--cor-borda); font-weight: bold; }
+
+/* =========================================
+   ADAPTAÇÃO DE TELA (O TRUQUE DO ZOOM)
+   ========================================= */
+
+/* Para notebooks com telas normais/médias */
+@media screen and (max-width: 1500px) {
+    .bracket-container {
+        zoom: 0.85; /* Reduz para 85% do tamanho original */
+    }
+}
+
+/* Para notebooks menores (ex: 1366x768) */
+@media screen and (max-width: 1366px) {
+    .bracket-container {
+        zoom: 0.75; /* Reduz para 75% */
+    }
+}
+
+/* Para monitores mais quadrados ou tablets */
+@media screen and (max-width: 1100px) {
+    .bracket-container {
+        zoom: 0.60; /* Reduz para 60% */
+    }
+}
+
+/* Para telas muito apertadas */
+@media screen and (max-width: 900px) {
+    .bracket-container {
+        zoom: 0.45; /* Encolhe mais da metade para caber tudo */
+    }
+}
