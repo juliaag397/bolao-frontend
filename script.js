@@ -302,7 +302,24 @@ function abrirAposta(celula) {
         .then(async res => {
             if (res.status === 403) { alert("Jogo já começou."); return; }
             
-            // Define o texto que aparecerá na tabela após salvar
+            // 1. LER A RESPOSTA DO BACKEND
+            const data = await res.json();
+            
+            // 2. 🚨 VERIFICA SE OS JOGADORES FORAM APAGADOS PELO BACKEND
+            if (data.jogadores_apagados) {
+                if (data.novos_gols_brasil == 0) {
+                    alert("⚠️ Como você zerou os gols do Brasil, seus palpites de jogadores para este jogo foram apagados.");
+                } else {
+                    alert("⚠️ Você alterou a quantidade de gols do Brasil! Seus palpites de jogadores foram apagados. Por favor, vá na aba 'Brasil' e escolha novamente os artilheiros.");
+                }
+
+                // Se a pessoa estiver com a tela do Brasil aberta, já recarrega ela
+                if (typeof carregarJogosBrasil === "function") {
+                    carregarJogosBrasil();
+                }
+            }
+            
+            // 3. Define o texto que aparecerá na tabela após salvar
             let textoResultado = `${g1} x ${g2}`;
             if (jogoId >= 73 && g1 === g2) {
                 // Exibe a sigla em Caps Lock ao lado do placar se for empate
