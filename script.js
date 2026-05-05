@@ -151,27 +151,7 @@ function fazerLogin() {
             document.getElementById("boas-vindas").textContent =
                 "👋 Bem-vindo(a), " + data.nome;
 
-            fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
-                credentials: "include"
-            })
-            .then(res => res.json())
-            .then(apostas => {
-
-                apostas.forEach(aposta => {
-
-                    const celula = document.querySelector(
-                        `.celula-aposta[data-jogo-id="${aposta.jogo_id}"]`
-                    );
-
-                    if (celula) {
-                        celula.innerHTML =
-                            aposta.gols_casa + " x " + aposta.gols_fora;
-                        celula.dataset.apostado = "true";
-                    }
-
-                });
-
-            });
+            carregarApostas(); 
 
             verificarLogin();
 
