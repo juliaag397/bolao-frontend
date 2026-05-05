@@ -1093,14 +1093,12 @@ async function toggleGroup(groupId) {
 
     // ABA BRASIL
 async function carregarJogosBrasil() {
-
     if (!usuarioId) return;
 
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
 
     try {
-
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuarioId}`,
             { credentials: "include" }
@@ -1113,10 +1111,12 @@ async function carregarJogosBrasil() {
         const jogos = await response.json();
 
         jogos.forEach(aposta => {
-
             const div = document.createElement("div");
             div.classList.add("jogo");
             div.dataset.data = aposta.data_jogo;
+
+            // Garante que temos a quantidade de gols em formato de número
+            const golsBrasilNum = parseInt(aposta.gols_brasil) || 0;
 
             div.innerHTML = `
                 <strong>⚽ ${aposta.jogo}</strong>
@@ -1126,9 +1126,10 @@ async function carregarJogosBrasil() {
                     <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
                 </p>
 
-                <button class="btn-jogadores">
-                    Escolher jogadores
-                </button>
+                ${golsBrasilNum > 0 
+                    ? `<button class="btn-jogadores">Escolher jogadores</button>` 
+                    : `<p style="font-size: 0.9em; color: gray;"><em>Palpite sem gols para o Brasil.</em></p>`
+                }
 
                 <div class="resultado-gols">
                     <strong>⚽ Quem fez os gols:</strong>
@@ -1139,7 +1140,6 @@ async function carregarJogosBrasil() {
                     <strong>🏆 Pontos nessa aposta:</strong>
                     <span class="pontos">${aposta.pontos_jogadores || 0}</span>
                 </div>
-
                 <hr>
             `;
 
@@ -1147,14 +1147,12 @@ async function carregarJogosBrasil() {
 
             const btn = div.querySelector(".btn-jogadores");
 
-            btn.onclick = function () {
-
-                const agora = new Date();
-                const dataJogo = new Date(aposta.data_jogo);
-
-                abrirJogadores(aposta.id, aposta.gols_brasil, btn);
-
-            };
+            // Só tenta adicionar o evento de clique se o botão existir
+            if (btn) {
+                btn.onclick = function () {
+                    abrirJogadores(aposta.id, golsBrasilNum, btn);
+                };
+            }
 
             carregarGolsBrasil(aposta.jogo_id, div);
             carregarPontosJogadores(aposta.id, div);
@@ -1332,20 +1330,31 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 }
 
 async function carregarJogadores(aposta_id, container) {
-
     try {
-
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`,
             { credentials: "include" }
         );
 
-        const jogadores = await response.json(); // 👈 direto
+        const jogadores = await response.json(); 
+        const selects = container.querySelectorAll(".select-jogador");
 
         if (!Array.isArray(jogadores) || jogadores.length === 0) return;
 
-        const selects = container.querySelectorAll(".select-jogador");
+        // 🚨 VERIFICAÇÃO DE MUDANÇA DE PLACAR
+        if (jogadores.length !== selects.length) {
+            const aviso = document.createElement("p");
+            aviso.style.color = "red";
+            aviso.style.fontWeight = "bold";
+            aviso.style.fontSize = "0.9em";
+            aviso.textContent = "⚠️ Você alterou o placar da aposta! Por favor, escolha os jogadores novamente e clique em Salvar.";
+            container.prepend(aviso);
+            
+            // Interrompe a função aqui para os selects ficarem vazios, obrigando a pessoa a reescolher
+            return; 
+        }
 
+        // Se estiver tudo certo, preenche normalmente
         jogadores.forEach((j, i) => {
             if (selects[i]) {
                 selects[i].value = j.jogador_nome;
