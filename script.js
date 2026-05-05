@@ -213,6 +213,13 @@ function abrirAposta(celula) {
     const agora = new Date();
     const dataJogo = new Date(celula.dataset.data);
     const jogoId = parseInt(celula.dataset.jogoId);
+    
+    // Pega o nome, corta as 3 primeiras letras e coloca em CAPS LOCK
+    const timeCasaRaw = celula.dataset.timeCasa || "CASA";
+    const timeForaRaw = celula.dataset.timeFora || "FORA";
+    
+    const timeCasaCaps = timeCasaRaw.substring(0, 3).toUpperCase();
+    const timeForaCaps = timeForaRaw.substring(0, 3).toUpperCase();
 
     if (agora >= dataJogo) {
         alert("Apostas encerradas para este jogo!");
@@ -221,7 +228,7 @@ function abrirAposta(celula) {
 
     if (celula.querySelector("input")) return;
 
-    // 1. CRIAÇÃO DOS ELEMENTOS (Caixinhas normais e visíveis)
+    // 1. CRIAÇÃO DOS ELEMENTOS
     const input1 = document.createElement("input");
     input1.type = "number"; input1.min = "0"; 
     input1.style.width = "35px";
@@ -233,18 +240,18 @@ function abrirAposta(celula) {
     input2.style.textAlign = "center";
 
     celula.style.border = "none";
-    celula.style.outline = "none";
 
     let selectClassificado = null;
     if (jogoId >= 73) {
         selectClassificado = document.createElement("select");
         selectClassificado.style.display = "none"; 
         selectClassificado.style.fontSize = "10px";
-        selectClassificado.style.width = "65px";
+        selectClassificado.style.width = "auto";
 
         const optDefault = new Option("Vence?", "");
-        const optCasa = new Option("Esq.", "casa");
-        const optFora = new Option("Dir.", "fora");
+        // Aqui usamos as variáveis em Caps Lock (ex: BRA, ARG)
+        const optCasa = new Option(timeCasaCaps, "casa");
+        const optFora = new Option(timeForaCaps, "fora");
         
         selectClassificado.add(optDefault);
         selectClassificado.add(optCasa);
@@ -271,13 +278,12 @@ function abrirAposta(celula) {
     botao.style.fontSize = "10px";
     botao.style.padding = "2px 5px";
 
-    // 2. FORÇAR ALINHAMENTO LADO A LADO (Resolve a fase de grupos e o mata-mata)
+    // 2. ALINHAMENTO
     celula.style.display = "flex";
     celula.style.flexDirection = "row";
     celula.style.alignItems = "center";
     celula.style.justifyContent = "center";
     celula.style.gap = "4px"; 
-    celula.style.flexWrap = "nowrap";
 
     botao.onclick = function (event) {
         event.stopPropagation();
@@ -296,7 +302,7 @@ function abrirAposta(celula) {
             else {
                 classificadoValue = selectClassificado.value;
                 if (!classificadoValue) {
-                    alert("Selecione quem se classifica!");
+                    alert("Quem vence nos pênaltis?");
                     return;
                 }
             }
@@ -315,26 +321,23 @@ function abrirAposta(celula) {
         })
         .then(async res => {
             if (res.status === 403) { alert("Jogo já começou."); return; }
-            const data = await res.json();
+            
+            // Define o texto que aparecerá na tabela após salvar
             let textoResultado = `${g1} x ${g2}`;
             if (jogoId >= 73 && g1 === g2) {
-                textoResultado += ` (${classificadoValue === 'casa' ? '⬅️' : '➡️'})`;
+                // Exibe a sigla em Caps Lock ao lado do placar se for empate
+                const siglaVencedor = classificadoValue === 'casa' ? timeCasaCaps : timeForaCaps;
+                textoResultado += ` (${siglaVencedor})`;
             }
+            
             celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
-
-            // Limpa o estilo Flexbox após salvar para não quebrar o visual da tabela
-            celula.style.display = "";
-            celula.style.flexDirection = "";
-            celula.style.alignItems = "";
-            celula.style.justifyContent = "";
-            celula.style.gap = "";
-            celula.style.flexWrap = "";
+            celula.style.display = ""; // Reseta o flexbox
         })
         .catch(() => alert("Erro ao conectar com servidor"));
     };
 
-    // 3. MONTAGEM FINAL
+    // 3. MONTAGEM
     input1.onclick = e => e.stopPropagation();
     input2.onclick = e => e.stopPropagation();
     if (selectClassificado) selectClassificado.onclick = e => e.stopPropagation();
@@ -343,11 +346,7 @@ function abrirAposta(celula) {
     celula.appendChild(input1);
     celula.appendChild(document.createTextNode(" x ")); 
     celula.appendChild(input2);
-    
-    if (selectClassificado) {
-        celula.appendChild(selectClassificado);
-    }
-    
+    if (selectClassificado) celula.appendChild(selectClassificado);
     celula.appendChild(botao);
 }
 
