@@ -1837,6 +1837,8 @@ async function carregarMataMata() {
                         <div class="celula-aposta" 
                              data-jogo-id="${jogo.id}" 
                              data-data="${jogo.data_jogo}" 
+                             data-time-casa="${timeCasa}" 
+                             data-time-fora="${timeFora}" 
                              onclick="abrirAposta(this)"
                              style="cursor:pointer; text-align:center; padding:3px; font-size: 11px; border:1px dashed var(--cor-borda); border-radius:4px;">
                              Apostar
