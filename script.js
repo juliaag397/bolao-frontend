@@ -248,7 +248,7 @@ function abrirAposta(celula) {
         selectClassificado.style.fontSize = "10px";
         selectClassificado.style.width = "auto";
 
-        const optDefault = new Option("Vence?", "");
+        const optDefault = new Option("Class:", "");
         // Aqui usamos as variáveis em Caps Lock (ex: BRA, ARG)
         const optCasa = new Option(timeCasaCaps, "casa");
         const optFora = new Option(timeForaCaps, "fora");
@@ -351,18 +351,13 @@ function abrirAposta(celula) {
 }
 
 async function carregarApostas() {
-
     console.log("usuarioId", usuarioId);
-
     if (!usuarioId) return;
 
     try {
-
         const resposta = await fetch(
             `https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`,
-            {
-                credentials: "include" // 🔥 ESSENCIAL para sessão funcionar
-            }
+            { credentials: "include" }
         );
 
         if (!resposta.ok) {
@@ -371,24 +366,35 @@ async function carregarApostas() {
         }
 
         const apostas = await resposta.json();
-
         console.log("Apostas recebidas:", apostas);
 
         if (!Array.isArray(apostas)) return;
 
         apostas.forEach(aposta => {
-
             const celula = document.querySelector(
                 `.celula-aposta[data-jogo-id="${aposta.jogo_id}"]`
             );
 
             if (celula) {
-                celula.innerHTML =
-                    `${aposta.gols_casa} x ${aposta.gols_fora}`;
+                // 1. Pegamos as siglas (3 primeiras letras em CAPS)
+                // O dataset vem lá da função carregarMataMata que configuramos antes
+                const timeCasa = celula.dataset.timeCasa || "ESQ";
+                const timeFora = celula.dataset.timeFora || "DIR";
+                const siglaCasa = timeCasa.substring(0, 3).toUpperCase();
+                const siglaFora = timeFora.substring(0, 3).toUpperCase();
 
+                let textoResultado = `${aposta.gols_casa} x ${aposta.gols_fora}`;
+
+                // 2. Lógica para empate no Mata-Mata (ID >= 73)
+                if (aposta.jogo_id >= 73 && parseInt(aposta.gols_casa) === parseInt(aposta.gols_fora)) {
+                    const vencedor = aposta.classificado_apostado === 'casa' ? siglaCasa : siglaFora;
+                    textoResultado += ` (${vencedor})`;
+                }
+
+                // 3. Insere o texto final na célula
+                celula.innerHTML = textoResultado;
                 celula.dataset.apostado = "true";
             }
-
         });
 
     } catch (erro) {
