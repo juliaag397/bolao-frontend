@@ -1415,39 +1415,57 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
 
 }
 
-    //MOSTRAR JOGOS POR DIA
 
+// MOSTRAR JOGOS POR DIA
 function montarJogosPorDia() {
-
     const container = document.getElementById("lista-jogos-dia");
     container.innerHTML = "";
 
     const jogos = document.querySelectorAll(".celula-aposta");
-
     let dias = {};
 
     jogos.forEach(celula => {
-
-        const tr = celula.closest("tr");
-
         const jogoId = celula.dataset.jogoId;
-
         const dataISO = celula.dataset.data;
+
+        // Proteção: Se a célula não tiver data configurada, ele pula para não dar erro
+        if (!dataISO) return;
+
         const data = new Date(dataISO);
-
         const dia = data.toLocaleDateString("pt-BR");
-
         const hora = data.toLocaleTimeString("pt-BR", {
             hour: "2-digit",
             minute: "2-digit"
         });
 
-        const selecao1 = tr.children[1].innerHTML;
-        const selecao2 = tr.children[3].innerHTML;
+        let selecao1 = "";
+        let selecao2 = "";
+        let resultado = "";
 
-        const resultado = tr.querySelector(".placar-oficial").textContent;
+        const tr = celula.closest("tr");
 
-        const aposta = celula.textContent;
+        if (tr) {
+            // PLANO A: É um jogo da Fase de Grupos (tem <tr>)
+            selecao1 = tr.children[1] ? tr.children[1].innerHTML : "Casa";
+            selecao2 = tr.children[3] ? tr.children[3].innerHTML : "Fora";
+            
+            const placarOficial = tr.querySelector(".placar-oficial");
+            resultado = placarOficial ? placarOficial.textContent : "";
+        } else {
+            // PLANO B: É um jogo do Mata-Mata (Não tem <tr>)
+            // Pegamos as siglas que colocamos no dataset
+            const timeCasa = celula.dataset.timeCasa || "?";
+            const timeFora = celula.dataset.timeFora || "?";
+            
+            // Deixamos o nome em negrito já que não temos a tag da bandeira aqui
+            selecao1 = `<b>${timeCasa}</b>`;
+            selecao2 = `<b>${timeFora}</b>`;
+            
+            // Opcional: Se você tiver um placar oficial do mata-mata, pode colocar aqui.
+            resultado = "-"; 
+        }
+
+        const aposta = celula.textContent || "-";
 
         if (!dias[dia]) {
             dias[dia] = [];
@@ -1461,17 +1479,14 @@ function montarJogosPorDia() {
             aposta,
             jogoId
         });
-
     });
 
-    Object.keys(dias).sort((a,b)=>{
+    Object.keys(dias).sort((a, b) => {
         const d1 = new Date(a.split("/").reverse().join("-"));
         const d2 = new Date(b.split("/").reverse().join("-"));
         return d1 - d2;
     }).forEach(dia => {
-
         const bloco = document.createElement("div");
-
         bloco.innerHTML = `
             <h3>${dia}</h3>
             <div class="jogos-dia"></div>
@@ -1480,61 +1495,56 @@ function montarJogosPorDia() {
         const lista = bloco.querySelector(".jogos-dia");
 
         dias[dia].forEach(jogo => {
-
             const item = document.createElement("div");
-
             item.className = "jogo-dia";
-
             item.innerHTML = `
                 <span class="hora">${jogo.hora}</span>
-
                 <span class="time">${jogo.selecao1}</span>
-
                 <span class="placar">${jogo.resultado}</span>
-
                 <span class="time">${jogo.selecao2}</span>
-
                 <span class="separador">|</span>
-
-                <span class="aposta" onclick="irParaJogo(${jogo.jogoId})">🎯 ${jogo.aposta}</span>
+                <span class="aposta" onclick="irParaJogo(${jogo.jogoId})" style="cursor: pointer;">🎯 ${jogo.aposta}</span>
             `;
-
             lista.appendChild(item);
-
         });
 
         container.appendChild(bloco);
-
     });
-
 }
 
 function irParaJogo(jogoId) {
+    const idNum = parseInt(jogoId);
 
-    // abrir aba fase de grupos
-    mostrarArea("grupos");
-
-    // encontrar célula do jogo
-    const celula = document.querySelector(
-        `.celula-aposta[data-jogo-id="${jogoId}"]`
-    );
-
-    if (celula) {
-
-        const linha = celula.closest("tr");
-
-        linha.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-        linha.style.background = "#fff3cd";
-
-        setTimeout(() => {
-            linha.style.background = "";
-        }, 2000);
+    // 1. Identifica para qual aba devemos ir baseado no ID
+    if (idNum >= 73) {
+        mostrarArea("mata-mata"); // ATENÇÃO: Confirme se o ID da sua aba do mata-mata é esse mesmo
+    } else {
+        mostrarArea("grupos");
     }
 
+    // 2. Dá um tempo bem curtinho para o HTML mudar de aba antes de rolar a tela
+    setTimeout(() => {
+        const celula = document.querySelector(`.celula-aposta[data-jogo-id="${jogoId}"]`);
+
+        if (celula) {
+            // Verifica se é linha (grupos) ou bloco solto (mata-mata) para aplicar o visual de "piscar"
+            const tr = celula.closest("tr");
+            const alvoVisual = tr ? tr : celula; 
+
+            alvoVisual.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+            // Guarda a cor original para não estragar seu layout
+            const corOriginal = alvoVisual.style.background;
+            alvoVisual.style.background = "#fff3cd";
+
+            setTimeout(() => {
+                alvoVisual.style.background = corOriginal;
+            }, 2000);
+        }
+    }, 100); 
 }
 
     // PODIO
