@@ -584,11 +584,11 @@ async function verificarLogin() {
         await loadUserGroups();
         await carregarJogosBrasil();
         await carregarResultadoArtilheiro();
-        montarJogosPorDia();
         carregarPalpitesPodio();
         bloquearPalpitesSeExpirado();
         await carregarConfiguracoesGerais();
         await carregarMataMata();
+        montarJogosPorDia();
 
     } else {
 
