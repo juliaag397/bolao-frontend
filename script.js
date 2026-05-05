@@ -1517,7 +1517,7 @@ function irParaJogo(jogoId) {
 
     // 1. Identifica para qual aba devemos ir baseado no ID
     if (idNum >= 73) {
-        mostrarArea("mata-mata"); // ATENÇÃO: Confirme se o ID da sua aba do mata-mata é esse mesmo
+        mostrarArea("mata"); // <-- AGORA COM O ID CORRETO DO SEU HTML!
     } else {
         mostrarArea("grupos");
     }
@@ -1527,9 +1527,14 @@ function irParaJogo(jogoId) {
         const celula = document.querySelector(`.celula-aposta[data-jogo-id="${jogoId}"]`);
 
         if (celula) {
-            // Verifica se é linha (grupos) ou bloco solto (mata-mata) para aplicar o visual de "piscar"
+            // Verifica se é linha (grupos) ou bloco solto (mata-mata)
             const tr = celula.closest("tr");
-            const alvoVisual = tr ? tr : celula; 
+            
+            // Se for do mata-mata, vamos tentar pegar a caixinha inteira do jogo para dar o destaque
+            // Como o seu mata-mata gera os jogos dentro de classes dinâmicas, procuramos a caixa mais próxima
+            const caixaMataMata = celula.closest(".match-card") || celula.closest("div[class^='match']"); 
+            
+            const alvoVisual = tr ? tr : (caixaMataMata ? caixaMataMata : celula); 
 
             alvoVisual.scrollIntoView({
                 behavior: "smooth",
