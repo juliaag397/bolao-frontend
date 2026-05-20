@@ -772,26 +772,34 @@ async function carregarPontosPorJogo() {
         const apostas = await resposta.json();
 
         apostas.forEach(aposta => {
-            // Usa querySelectorAll para atualizar no mata-mata E na lista de jogos por dia simultaneamente
+            // 1. Busca todas as células de pontos deste jogo (mata-mata e jogos do dia)
             const celulas = document.querySelectorAll(
                 `.pontos-jogo[data-jogo-id="${aposta.jogo_id}"]`
             );
 
+            // 2. Busca o elemento do placar oficial para verificar se já foi lançado
+            const placarOficialElem = document.querySelector(
+                `.placar-oficial[data-jogo-id="${aposta.jogo_id}"]`
+            );
+            
+            // O resultado só é considerado "lançado" se o placar for diferente de "- x -"
+            const resultadoLancado = placarOficialElem && placarOficialElem.textContent.trim() !== "- x -";
+
             celulas.forEach(celula => {
-                // Se o jogo terminou e os pontos foram calculados (não é null nem undefined)
-                if (aposta.pontos !== null && aposta.pontos !== undefined) {
+                // SÓ mostra a pontuação real se o resultado oficial já tiver sido lançado
+                if (resultadoLancado && aposta.pontos !== null && aposta.pontos !== undefined) {
                     celula.textContent = `${aposta.pontos} pts`;
                     
-                    // Opcional: dar uma cor para destacar o resultado
+                    // Destaca a cor dependendo se pontuou ou zerou
                     if (aposta.pontos > 0) {
-                        celula.style.color = "#2e7d32"; // Verde se ganhou pontos
+                        celula.style.color = "#2e7d32"; // Verde
                     } else {
-                        celula.style.color = "#d32f2f"; // Vermelho se zerou
+                        celula.style.color = "#d32f2f"; // Vermelho
                     }
                 } else {
-                    // Se o jogo não aconteceu ou não foi calculado ainda
+                    // Se o jogo não aconteceu ou não tem resultado oficial ainda, mantém oculto com (- pts)
                     celula.textContent = "(- pts)";
-                    celula.style.color = "#777"; // Cor neutra cinza
+                    celula.style.color = "#777"; // Cinza neutro
                 }
             });
         });
