@@ -762,26 +762,42 @@ async function calcularPontuacao() {
 }
 
 async function carregarPontosPorJogo() {
-
     if (!usuarioId) return;
 
-    const resposta = await fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
-        credentials: "include"
-    });
+    try {
+        const resposta = await fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
+            credentials: "include"
+        });
 
-    const apostas = await resposta.json();
+        const apostas = await resposta.json();
 
-    apostas.forEach(aposta => {
+        apostas.forEach(aposta => {
+            // Usa querySelectorAll para atualizar no mata-mata E na lista de jogos por dia simultaneamente
+            const celulas = document.querySelectorAll(
+                `.pontos-jogo[data-jogo-id="${aposta.jogo_id}"]`
+            );
 
-        const celula = document.querySelector(
-            `.pontos-jogo[data-jogo-id="${aposta.jogo_id}"]`
-        );
-
-        if (celula) {
-            celula.textContent = aposta.pontos ?? 0;
-        }
-
-    });
+            celulas.forEach(celula => {
+                // Se o jogo terminou e os pontos foram calculados (não é null nem undefined)
+                if (aposta.pontos !== null && aposta.pontos !== undefined) {
+                    celula.textContent = `${aposta.pontos} pts`;
+                    
+                    // Opcional: dar uma cor para destacar o resultado
+                    if (aposta.pontos > 0) {
+                        celula.style.color = "#2e7d32"; // Verde se ganhou pontos
+                    } else {
+                        celula.style.color = "#d32f2f"; // Vermelho se zerou
+                    }
+                } else {
+                    // Se o jogo não aconteceu ou não foi calculado ainda
+                    celula.textContent = "(- pts)";
+                    celula.style.color = "#777"; // Cor neutra cinza
+                }
+            });
+        });
+    } catch (erro) {
+        console.error("Erro ao carregar pontos por jogo:", erro);
+    }
 }
 
     // JOGOS OFICIAIS
@@ -1854,16 +1870,18 @@ async function carregarMataMata() {
                         <img src="${urlFora}" title="${timeFora}" style="width: 28px; height: auto; border-radius: 2px; border: 1px solid #ddd;">
                     </div>
 
-                    <div class="match-actions">
+                    <div class="match-actions" style="display: flex; align-items: center; justify-content: center; gap: 6px;">
                         <div class="celula-aposta" 
-                             data-jogo-id="${jogo.id}" 
-                             data-data="${jogo.data_jogo}" 
-                             data-time-casa="${timeCasa}" 
-                             data-time-fora="${timeFora}" 
-                             onclick="abrirAposta(this)"
-                             style="cursor:pointer; text-align:center; padding:3px; font-size: 11px; border:1px dashed var(--cor-borda); border-radius:4px;">
-                             Apostar
+                            data-jogo-id="${jogo.id}" 
+                            data-data="${jogo.data_jogo}" 
+                            data-time-casa="${timeCasa}" 
+                            data-time-fora="${timeFora}" 
+                            onclick="abrirAposta(this)"
+                            style="cursor:pointer; text-align:center; padding:3px; font-size: 11px; border:1px dashed var(--cor-borda); border-radius:4px; flex: 1;">
+                            Apostar
                         </div>
+                        
+                        <span class="pontos-jogo" data-jogo-id="${jogo.id}" style="font-size: 11px; font-weight: bold; color: #777; white-space: nowrap;">(- pts)</span>
                     </div>
                     <small style="display:none;">Jogo ${jogo.id}</small> 
                 </div>
@@ -1906,6 +1924,7 @@ async function carregarMataMata() {
         // Finaliza carregando os dados do usuário
         await carregarApostas();
         bloquearJogosPassados();
+        await carregarPontosPorJogo();
 
     } catch (erro) {
         console.error("Erro ao montar mata-mata:", erro);
