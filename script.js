@@ -809,20 +809,23 @@ async function carregarPontosPorJogo() {
 }
 
     // JOGOS OFICIAIS
+// JOGOS OFICIAIS
 async function carregarJogos() {
-
     const res = await fetch("https://bolao-backend-k56l.onrender.com/jogos");
     const jogos = await res.json();
 
     jogos.forEach(jogo => {
-
         const celula = document.querySelector(
             `.placar-oficial[data-jogo-id="${jogo.id}"]`
         );
 
         if (celula) {
-            celula.textContent =
-                jogo.gols_casa + " x " + jogo.gols_fora;
+            // Verifica se o resultado ainda não foi lançado (se os gols são null)
+            if (jogo.gols_casa === null || jogo.gols_fora === null) {
+                celula.textContent = "- x -";
+            } else {
+                celula.textContent = jogo.gols_casa + " x " + jogo.gols_fora;
+            }
         } else {
             console.log("Não encontrou:", jogo.jogo);
         }
