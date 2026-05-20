@@ -1015,7 +1015,6 @@ async function loadRankingInsideGroup(groupId) {
         `;
 
         data.forEach((member, index) => {
-
             let medalha;
 
             if (index === 0) medalha = "🥇";
@@ -1023,11 +1022,12 @@ async function loadRankingInsideGroup(groupId) {
             else if (index === 2) medalha = "🥉";
             else medalha = index + 1;
 
+            // Mudado de 'member.score' para 'member.pontos' para bater com o banco
             html += `
                 <tr>
                     <td>${medalha}</td>
                     <td>${member.nome}</td>
-                    <td>${member.pontos ?? 0}</td>
+                    <td>${member.pontos}</td>
                 </tr>
             `;
         });
@@ -1040,7 +1040,7 @@ async function loadRankingInsideGroup(groupId) {
         rankingDiv.innerHTML = html;
 
     } catch (error) {
-        console.error("Erro ao carregar ranking:", error);
+        console.error("Erro ao carregar ranking do grupo:", error);
     }
 }
 
