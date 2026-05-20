@@ -1027,7 +1027,7 @@ async function loadRankingInsideGroup(groupId) {
                 <tr>
                     <td>${medalha}</td>
                     <td>${member.nome}</td>
-                    <td>${member.score ?? 0}</td>
+                    <td>${member.pontos ?? 0}</td>
                 </tr>
             `;
         });
