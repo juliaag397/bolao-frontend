@@ -994,6 +994,9 @@ async function loadRankingInsideGroup(groupId) {
 
         const data = await response.json();
 
+        // IMPORTANTE: Abra o console do navegador (F12) para ver o que aparece aqui!
+        console.log("Estrutura do membro do grupo:", data);
+
         const rankingDiv = document.getElementById(`ranking-${groupId}`);
         if (!rankingDiv) return;
 
@@ -1022,12 +1025,26 @@ async function loadRankingInsideGroup(groupId) {
             else if (index === 2) medalha = "🥉";
             else medalha = index + 1;
 
-            // Mudado de 'member.score' para 'member.pontos' para bater com o banco
+            // Tratamento preventivo para várias estruturas possíveis do backend:
+            let pontosExibicao = 0;
+
+            if (member) {
+                // 1. Se veio direto no objeto principal:
+                if (member.pontos !== undefined) pontosExibicao = member.pontos;
+                else if (member.total_pontos !== undefined) pontosExibicao = member.total_pontos;
+                else if (member.score !== undefined) pontosExibicao = member.score;
+                
+                // 2. Se o backend colocou dentro de um sub-objeto criado pelo ORM (ex: member.User.pontos ou member.usuario.pontos)
+                else if (member.usuario && member.usuario.pontos !== undefined) pontosExibicao = member.usuario.pontos;
+                else if (member.User && member.User.pontos !== undefined) pontosExibicao = member.User.pontos;
+                else if (member.pivot && member.pivot.pontos !== undefined) pontosExibicao = member.pivot.pontos; // comum em relacionamentos muitos-para-muitos
+            }
+
             html += `
                 <tr>
                     <td>${medalha}</td>
-                    <td>${member.nome}</td>
-                    <td>${member.pontos}</td>
+                    <td>${member.nome || (member.usuario && member.usuario.nome) || "Usuário"}</td>
+                    <td>${pontosExibicao}</td>
                 </tr>
             `;
         });
