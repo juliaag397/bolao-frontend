@@ -121,7 +121,7 @@ function fazerLogin() {
         headers: {
             "Content-Type": "application/json"
         },
-        credentials: "include",
+        // REMOVIDO: credentials: "include" (evita o bloqueio de cookies)
         body: JSON.stringify({
             email: email,
             senha: senha
@@ -143,6 +143,7 @@ function fazerLogin() {
             usuarioLogado = true;
             usuarioId = data.id;
 
+            // Salva o ID do usuário no navegador para os próximos acessos
             localStorage.setItem("usuario_id", data.id);
 
             document.getElementById("login-form").style.display = "none";
@@ -152,9 +153,8 @@ function fazerLogin() {
                 "👋 Bem-vindo(a), " + data.nome;
 
             carregarApostas(); 
-
-            verificarLogin();
-
+            
+            // REMOVIDO: verificarLogin() aqui de dentro não é necessário, pois você já acabou de logar!
         }
 
         loginCarregando = false;
@@ -560,61 +560,76 @@ async function carregarPontuacao() {
 }
 
 async function verificarLogin() {
+    // Pegamos o ID que deixamos salvo no LocalStorage
+    const salvoUsuarioId = localStorage.getItem("usuario_id");
 
-    const res = await fetch(
-        "https://bolao-backend-k56l.onrender.com/verificar-login",
-        { credentials: "include" }
-    );
-
-    const data = await res.json();
-
-    const area = document.getElementById("artilheiro");
-
-    if (data.logado) {
-
-        usuarioLogado = true;
-        usuarioId = data.id;
-
-        localStorage.setItem("usuario_id", data.id);
-
-        document.getElementById("login-form").style.display = "none";
-        document.getElementById("area-logada").style.display = "block";
-
-        document.getElementById("boas-vindas").textContent =
-            "👋 Bem-vinda, " + data.nome;
-
-        if (area) {
-            area.querySelectorAll("p").forEach(p => {
-                if (p.style.color === "red") {
-                    p.remove();
-                }
-            });
-        }
-
-        await carregarPontuacao();
-        await carregarApostas();
-        bloquearJogosPassados();
-        await carregarPontosPorJogo();
-        await carregarPontosArtilheiro();
-        await carregarArtilheiros();
-        await carregarRanking();
-        await loadUserGroups();
-        await carregarJogosBrasil();
-        await carregarResultadoArtilheiro();
-        carregarPalpitesPodio();
-        bloquearPalpitesSeExpirado();
-        await carregarConfiguracoesGerais();
-        await carregarMataMata();
-        montarJogosPorDia();
-
-    } else {
-
+    // Se não tiver nenhum ID salvo, nem gasta internet chamando o servidor, manda direto pro formulário de login
+    if (!salvoUsuarioId) {
         usuarioLogado = false;
-
         document.getElementById("area-logada").style.display = "none";
         document.getElementById("login-form").style.display = "block";
-
         bloquearJogosPassados();
+        return;
+    }
+
+    try {
+        // Enviamos o ID salvo para o backend saber quem é o usuário, sem usar cookies!
+        const res = await fetch(
+            `https://bolao-backend-k56l.onrender.com/verificar-login?id=${salvoUsuarioId}`,
+            { 
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+                // REMOVIDO: credentials: "include"
+            }
+        );
+
+        const data = await res.json();
+        const area = document.getElementById("artilheiro");
+
+        if (data.logado) {
+            usuarioLogado = true;
+            usuarioId = data.id;
+
+            document.getElementById("login-form").style.display = "none";
+            document.getElementById("area-logada").style.display = "block";
+
+            document.getElementById("boas-vindas").textContent =
+                "👋 Bem-vinda, " + data.nome;
+
+            if (area) {
+                area.querySelectorAll("p").forEach(p => {
+                    if (p.style.color === "red") {
+                        p.remove();
+                    }
+                });
+            }
+
+            // Carrega todos os dados da tela
+            await carregarPontuacao();
+            await carregarApostas();
+            bloquearJogosPassados();
+            await carregarPontosPorJogo();
+            await carregarPontosArtilheiro();
+            await carregarArtilheiros();
+            await carregarRanking();
+            await loadUserGroups();
+            await carregarJogosBrasil();
+            await carregarResultadoArtilheiro();
+            carregarPalpitesPodio();
+            bloquearPalpitesSeExpirado();
+            await carregarConfiguracoesGerais();
+            await carregarMataMata();
+            montarJogosPorDia();
+
+        } else {
+            // Se o servidor disser que o ID não é válido por algum motivo
+            usuarioLogado = false;
+            document.getElementById("area-logada").style.display = "none";
+            document.getElementById("login-form").style.display = "block";
+            bloquearJogosPassados();
+        }
+    } catch (error) {
+        console.error("Erro na verificação automática:", error);
     }
 }
 
