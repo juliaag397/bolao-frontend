@@ -254,6 +254,41 @@ function abrirAposta(celula) {
     botao.style.fontSize = "10px";
     botao.style.padding = "2px 5px";
 
+    // --- NOVO CÓDIGO: Pular para o jogo de baixo com o TAB ---
+    botao.addEventListener('keydown', function(event) {
+        // Se a tecla for 'Tab' e não estiver segurando 'Shift' (que serve para voltar)
+        if (event.key === 'Tab' && !event.shiftKey) {
+            event.preventDefault(); // Bloqueia o pulo padrão do navegador
+
+            // Acha a linha atual (tr) e a linha de baixo
+            const linhaAtual = celula.closest('tr');
+            const proximaLinha = linhaAtual.nextElementSibling;
+            
+            if (proximaLinha) {
+                // Acha a célula de aposta da linha de baixo
+                const proximaCelula = proximaLinha.querySelector('.celula-aposta');
+                
+                if (proximaCelula) {
+                    // Verifica se já tem um input lá dentro
+                    let proximoInput = proximaCelula.querySelector('input');
+                    
+                    // Se não tem (ou seja, está escrito "- x -"), manda abrir!
+                    if (!proximoInput) {
+                        abrirAposta(proximaCelula);
+                        // Agora que abriu, pega o input recém-criado
+                        proximoInput = proximaCelula.querySelector('input');
+                    }
+                    
+                    // Joga o cursor piscando para o primeiro input da linha de baixo
+                    if (proximoInput) {
+                        proximoInput.focus();
+                    }
+                }
+            }
+        }
+    });
+    // --- FIM DO NOVO CÓDIGO ---
+
     // 2. ALINHAMENTO
     celula.style.display = "flex";
     celula.style.flexDirection = "row";
