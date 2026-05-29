@@ -1744,7 +1744,7 @@ function salvarPodio() {
     });
 }
 
-// Função que preenche o pódio com o que vem do banco
+
 // Função que preenche o pódio com o que vem do banco
 function carregarPalpitesPodio() {
     const token = localStorage.getItem("token"); // 🔑 Pega o token
@@ -1762,41 +1762,39 @@ function carregarPalpitesPodio() {
             document.getElementById("select-2").value = data.segundo_lugar || "";
             document.getElementById("select-3").value = data.terceiro_lugar || "";
 
-            // Mapeia os pontos vindos do backend para facilitar o loop
-            const pontosMapeados = {
-                1: data.pts1,
-                2: data.pts2,
-                3: data.pts3
-            };
-
+            // --- Atualiza as Bandeiras nos Lugares Corretos ---
             [1, 2, 3].forEach(pos => {
                 const select = document.getElementById(`select-${pos}`);
                 const img = document.getElementById(`flag-${pos}`);
-                const divPontos = document.getElementById(`pontos-${pos}`); // Busca a div de pontos
                 
-                // --- Lógica das Bandeiras ---
-                if (select.value && select.value !== "") {
+                if (select && select.value && select.value !== "") {
                     img.src = `https://flagcdn.com/w80/${select.value}.png`;
-                } else {
+                } else if (img) {
                     img.src = "https://via.placeholder.com/80x50/cccccc/cccccc";
                 }
-
-                // --- Lógica dos Pontos ---
-                const pts = pontosMapeados[pos];
-
-                if (divPontos) {
-                    // Só mostra se pts não for null (ou seja, se já houver resultado oficial)
-                    if (pts !== null && pts !== undefined) {
-                        divPontos.innerText = `${pts} pts`;
-                        divPontos.style.display = "block"; 
-                        
-                        // Estilização dinâmica
-                        divPontos.style.color = pts === 10 ? "#28a745" : "#dc3545"; // Verde ou Vermelho
-                    } else {
-                        divPontos.style.display = "none"; // Esconde se a Copa não começou/terminou
-                    }
-                }
             });
+
+            // --- 🎯 NOVA LÓGICA: Atualiza a Caixa de Pontuação Total ao Lado ---
+            const totalElement = document.getElementById("pontos-podio-total");
+            if (totalElement) {
+                // Pega a coluna de pontuação total do objeto vindo do banco (geralmente data.pontos)
+                // Se ainda for nulo ou indefinido (Copa não acabou), deixa em "0 pts"
+                const totalPontosPodio = (data.pontos !== null && data.pontos !== undefined) ? data.pontos : null;
+
+                if (totalPontosPodio !== null) {
+                    totalElement.innerText = `${totalPontosPodio} pts`;
+                    
+                    // Altera a cor dinamicamente na caixinha lateral
+                    if (totalPontosPodio === 0) {
+                        totalElement.style.color = "#dc3545"; // Vermelho se zerou
+                    } else {
+                        totalElement.style.color = "#28a745"; // Verde se pontuou (ex: 100 pts)
+                    }
+                } else {
+                    totalElement.innerText = "0 pts";
+                    totalElement.style.color = "#666"; // Cinza padrão se não foi calculada
+                }
+            }
         }
     })
     .catch(err => console.error("Erro ao carregar pódio:", err));

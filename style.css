@@ -1260,24 +1260,61 @@ strong{
     .podio-container { transform: scale(0.8); }
 }
 
-/* Estilo para a etiqueta de pontos */
-.label-pontos {
-    margin-top: 4px;
-    font-weight: bold;
-    font-size: 1.1rem;
-    padding: 2px 10px;
-    border-radius: 15px;
-    display: none; /* Começa escondido e o JS mostra se houver resultado */
-    text-align: center;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    width: fit-content;
-    align-self: center;
+
+/* ===== ALINHAMENTO LADO A LADO DO PÓDIO COM O TOTAL ===== */
+
+.podio-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    max-width: 850px;
+    margin: 25px auto;
+    flex-wrap: wrap; /* Se a tela for pequena, a pontuação vai para baixo sem quebrar o pódio */
 }
 
-/* Cores dinâmicas que o JS vai aplicar */
-.pontos-verde { color: #28a745; } /* Para 10 pts */
-.pontos-vermelho { color: #dc3545; } /* Para 0 pts */
+/* Ajuste sutil no seu container original para zerar as margens conflituosas */
+.podio-container {
+    margin: 0 !important; 
+}
+
+/* Estilo da nova caixinha de pontuação */
+.podio-score-box {
+    background-color: #ffffff;
+    border: 3px solid var(--cor-terciaria, #2d7a6f); /* Usa a cor do 1º lugar se existir */
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    min-width: 150px;
+    align-self: center; /* Centraliza verticalmente com o pódio */
+    transition: all 0.3s ease;
+}
+
+.score-title {
+    font-size: 13px;
+    color: #666;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.score-value {
+    font-size: 32px;
+    color: #28a745; /* Começa verde clássico */
+    font-weight: 900;
+    font-family: sans-serif;
+}
+
+/* Mantém o comportamento de escala do mobile no wrapper inteiro */
+@media (max-width: 768px) {
+    .podio-wrapper {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
 
 /* ------------------------- MATA-MATA TEMÁTICO ------------------------- */
 
