@@ -120,7 +120,7 @@ function fazerLogin() {
         headers: {
             "Content-Type": "application/json"
         },
-        credentials: "include",
+        
         body: JSON.stringify({
             email: email,
             senha: senha
@@ -143,6 +143,7 @@ function fazerLogin() {
             usuarioId = data.id;
 
             localStorage.setItem("usuario_id", data.id);
+            localStorage.setItem("token", data.token);
             document.getElementById("login-form").style.display = "none";
             document.getElementById("area-logada").style.display = "block";
 
@@ -165,23 +166,17 @@ function fazerLogin() {
 
     // PARA SAIR
 function logout() {
+    // 🗑️ Limpa os dados do usuário e o token do navegador
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario_id");
+    
+    usuarioLogado = false;
+    usuarioId = null;
 
-    fetch("https://bolao-backend-k56l.onrender.com/logout", {
-        method: "POST",
-        credentials: "include"
-    })
-    .then(() => {
+    document.getElementById("login-form").style.display = "block";
+    document.getElementById("area-logada").style.display = "none";
 
-        usuarioLogado = false;
-        usuarioId = null;
-
-        document.getElementById("login-form").style.display = "block";
-        document.getElementById("area-logada").style.display = "none";
-
-        location.reload(); // 🔥 força atualizar estado
-
-    });
-
+    location.reload(); // 🔥 força atualizar estado
 }
 
     // PARA APOSTAR
@@ -319,10 +314,12 @@ function abrirAposta(celula) {
             }
         }
 
+        const token = localStorage.getItem("token");
         fetch("https://bolao-backend-k56l.onrender.com/apostar", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
+            headers: { "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
             body: JSON.stringify({
                 jogo_id: jogoId,
                 gols_casa: g1,
@@ -382,10 +379,14 @@ async function carregarApostas() {
     console.log("usuarioId", usuarioId);
     if (!usuarioId) return;
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const resposta = await fetch(
             `https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`,
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         if (!resposta.ok) {
@@ -404,8 +405,6 @@ async function carregarApostas() {
             );
 
             if (celula) {
-                // 1. Pegamos as siglas (3 primeiras letras em CAPS)
-                // O dataset vem lá da função carregarMataMata que configuramos antes
                 const timeCasa = celula.dataset.timeCasa || "ESQ";
                 const timeFora = celula.dataset.timeFora || "DIR";
                 const siglaCasa = timeCasa.substring(0, 3).toUpperCase();
@@ -413,13 +412,11 @@ async function carregarApostas() {
 
                 let textoResultado = `${aposta.gols_casa} x ${aposta.gols_fora}`;
 
-                // 2. Lógica para empate no Mata-Mata (ID >= 73)
                 if (aposta.jogo_id >= 73 && parseInt(aposta.gols_casa) === parseInt(aposta.gols_fora)) {
                     const vencedor = aposta.classificado_apostado === 'casa' ? siglaCasa : siglaFora;
                     textoResultado += ` (${vencedor})`;
                 }
 
-                // 3. Insere o texto final na célula
                 celula.innerHTML = textoResultado;
                 celula.dataset.apostado = "true";
             }
@@ -517,29 +514,24 @@ function toggleMenu() {
 // ARTILHEIRO
 
 function carregarArtilheiros() {
-
     console.log("CARREGAR ARTILHEIROS FOI CHAMADO");
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     fetch("https://bolao-backend-k56l.onrender.com/artilheiros", {
-        credentials: "include"
+        headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
     })
     .then(res => res.json())
     .then(apostas => {
-
         apostas.forEach(aposta => {
-
             const select = document.getElementById(
                 aposta.tipo == "inicial" ? "jogador1" : "jogador2"
             );
-
             if (select) {
                 select.value = aposta.jogador;
             }
-
         });
-
     });
-
 }
 
 async function carregarResultadoArtilheiro() {
@@ -567,11 +559,14 @@ async function carregarResultadoArtilheiro() {
 
     // PONTUACAO TOTAL
 async function carregarPontuacao() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
 
     try {
         const resposta = await fetch(
             "https://bolao-backend-k56l.onrender.com/minha-pontuacao",
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         if (!resposta.ok) return;
@@ -591,17 +586,28 @@ async function carregarPontuacao() {
 }
 
 async function verificarLogin() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
+    // Se não tem token, já corta por aqui e mostra o login
+    if (!token) {
+        usuarioLogado = false;
+        document.getElementById("area-logada").style.display = "none";
+        document.getElementById("login-form").style.display = "block";
+        bloquearJogosPassados();
+        return;
+    }
+
     const res = await fetch(
         "https://bolao-backend-k56l.onrender.com/verificar-login",
-        { credentials: "include" }
+        { 
+            headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+        }
     );
 
     const data = await res.json();
-
     const area = document.getElementById("artilheiro");
 
     if (data.logado) {
-
         usuarioLogado = true;
         usuarioId = data.id;
 
@@ -637,12 +643,13 @@ async function verificarLogin() {
 
     } else {
         usuarioLogado = false;
+        localStorage.removeItem("token"); // Limpa token inválido
 
         document.getElementById("area-logada").style.display = "none";
         document.getElementById("login-form").style.display = "block";
         bloquearJogosPassados();
     }
-} 
+}
 
 
 function verificarPeriodoArtilheiros() {
@@ -700,7 +707,6 @@ function verificarPeriodoArtilheiros() {
 
 // SALVAR ARTILHEIRO
 function salvarAposta(tipo) {
-
     let jogador = document.getElementById(
         tipo === 1 ? "jogador1" : "jogador2"
     ).value;
@@ -708,55 +714,55 @@ function salvarAposta(tipo) {
     // remove o país
     jogador = jogador.split(" (")[0];
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     fetch("https://bolao-backend-k56l.onrender.com/salvar-artilheiro", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // 🚨 Envia o token
         },
-        credentials: "include",
         body: JSON.stringify({
             tipo: tipo === 1 ? "inicial" : "pos_grupos",
             jogador: jogador
         })
     })
     .then(res => {
-        if (res.status === 401) {
+        if (res.status === 401 || res.status === 403) { // Captura token expirado/inválido
             alert("Sessão expirada. Faça login novamente.");
+            logout(); // Se tiver a função logout disponível, já desloga o usuário
             return;
         }
         return res.json();
     })
     .then(data => {
-
-        if (data.erro) {
+        if (data && data.erro) {
             alert("Erro ao salvar aposta");
             return;
         }
-
-        alert("Aposta salva com sucesso!");
-
+        if(data) alert("Aposta salva com sucesso!");
     })
     .catch(() => {
         alert("Erro ao conectar com servidor");
     });
-
 }
 
 // ===== ATUALIZAR RESULTADO FINAL ARTILHEIRO=====
 
 async function carregarPontosArtilheiro() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
 
     try {
-
         const response = await fetch(
             "https://bolao-backend-k56l.onrender.com/pontos-artilheiro",
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         if (!response.ok) return;
 
         const data = await response.json();
-
         const span = document.getElementById("pontosArtilheiro");
 
         if (span) {
@@ -764,23 +770,23 @@ async function carregarPontosArtilheiro() {
         }
 
     } catch (erro) {
-
         console.log("Erro ao carregar pontos artilheiro:", erro);
-
     }
 }
 
     // CALCULAR PONTOS
+// CALCULAR PONTOS
 async function calcularPontuacao() {
-
     if (!usuarioId) {
         alert("Usuário não logado");
         return;
     }
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     await fetch(`https://bolao-backend-k56l.onrender.com/calcular-pontos/${usuarioId}`, {
         method: "POST",
-        credentials: "include"
+        headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
     });
 
     // 🔥 Depois de calcular, carrega os pontos
@@ -790,40 +796,36 @@ async function calcularPontuacao() {
 async function carregarPontosPorJogo() {
     if (!usuarioId) return;
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const resposta = await fetch(`https://bolao-backend-k56l.onrender.com/apostas/${usuarioId}`, {
-            credentials: "include"
+            headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
         });
 
         const apostas = await resposta.json();
 
         apostas.forEach(aposta => {
-            // 1. Busca todas as células de pontos deste jogo (mata-mata e jogos do dia)
             const celulas = document.querySelectorAll(
                 `.pontos-jogo[data-jogo-id="${aposta.jogo_id}"]`
             );
 
-            // 2. Busca o elemento do placar oficial para verificar se já foi lançado
             const placarOficialElem = document.querySelector(
                 `.placar-oficial[data-jogo-id="${aposta.jogo_id}"]`
             );
             
-            // O resultado só é considerado "lançado" se o placar for diferente de "- x -"
             const resultadoLancado = placarOficialElem && placarOficialElem.textContent.trim() !== "- x -";
 
             celulas.forEach(celula => {
-                // SÓ mostra a pontuação real se o resultado oficial já tiver sido lançado
                 if (resultadoLancado && aposta.pontos !== null && aposta.pontos !== undefined) {
                     celula.textContent = `${aposta.pontos} pts`;
                     
-                    // Destaca a cor dependendo se pontuou ou zerou
                     if (aposta.pontos > 0) {
                         celula.style.color = "#2e7d32"; // Verde
                     } else {
                         celula.style.color = "#d32f2f"; // Vermelho
                     }
                 } else {
-                    // Se o jogo não aconteceu ou não tem resultado oficial ainda, mantém oculto com (- pts)
                     celula.textContent = "(- pts)";
                     celula.style.color = "#777"; // Cinza neutro
                 }
@@ -859,12 +861,16 @@ async function carregarJogos() {
 }
 
     //RANKING
+// RANKING
 async function carregarRanking() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
 
     try {
         const resposta = await fetch(
             "https://bolao-backend-k56l.onrender.com/ranking",
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         const ranking = await resposta.json();
@@ -873,7 +879,6 @@ async function carregarRanking() {
         tbody.innerHTML = "";
 
         ranking.forEach((usuario, index) => {
-
             let medalha;
 
             if (index === 0) medalha = "🥇";
@@ -908,6 +913,7 @@ function showTab(tabId) {
     }
 }
 
+// GRUPOS
 async function createGroup() {
     const nameInput = document.getElementById("groupName");
     const rulesInput = document.getElementById("groupRules");
@@ -915,7 +921,6 @@ async function createGroup() {
     const name = nameInput.value.trim();
     const rules = rulesInput.value.trim();
 
-    // 🚨 VALIDAÇÃO FRONTEND
     if (!name) {
         alert("O nome do grupo é obrigatório.");
         nameInput.focus();
@@ -934,15 +939,17 @@ async function createGroup() {
         return;
     }
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const response = await fetch(
             "https://bolao-backend-k56l.onrender.com/create-group",
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` // 🚨 Envia o token
                 },
-                credentials: "include",
                 body: JSON.stringify({ name, rules })
             }
         );
@@ -977,15 +984,17 @@ async function joinGroup() {
         return;
     }
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const response = await fetch(
             "https://bolao-backend-k56l.onrender.com/join-group",
             {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}` // 🚨 Envia o token
                 },
-                credentials: "include", // 👈 AQUI
                 body: JSON.stringify({ code })
             }
         );
@@ -1008,10 +1017,14 @@ async function joinGroup() {
 }
 
 async function loadRankingInsideGroup(groupId) {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/ranking-grupo/${groupId}`,
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         if (!response.ok) {
@@ -1020,7 +1033,6 @@ async function loadRankingInsideGroup(groupId) {
 
         const data = await response.json();
 
-        // IMPORTANTE: Olhe o F12 no navegador para ver o nome exato das propriedades!
         console.log("Dados recebidos do grupo:", data);
 
         const rankingDiv = document.getElementById(`ranking-${groupId}`);
@@ -1051,12 +1063,9 @@ async function loadRankingInsideGroup(groupId) {
             else if (index === 2) medalha = "🥉";
             else medalha = index + 1;
 
-            // Pega o nome (tenta na raiz, depois tenta dentro de 'usuario')
             const nomeExibicao = membro.nome || (membro.usuario && membro.usuario.nome) || "Usuário";
             
-            // Pega os pontos da mesma forma que o Ranking Geral faz
             let pontosExibicao = 0;
-            
             if (membro.pontos !== undefined) {
                 pontosExibicao = membro.pontos;
             } else if (membro.usuario && membro.usuario.pontos !== undefined) {
@@ -1085,12 +1094,14 @@ async function loadRankingInsideGroup(groupId) {
 }
 
 async function loadUserGroups() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const response = await fetch(
             "https://bolao-backend-k56l.onrender.com/my-groups",
             {
                 method: "GET",
-                credentials: "include"
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
             }
         );
 
@@ -1116,30 +1127,22 @@ async function loadUserGroups() {
         data.forEach(group => {
             html += `
                 <div class="grupo-card">
-
                     <button class="grupo-titulo" onclick="toggleGroup('${group.id}')">
                         ${group.name}
                     </button>
-
-                    <div id="group-details-${group.id}" 
-                        class="grupo-detalhes">
-
+                    <div id="group-details-${group.id}" class="grupo-detalhes">
                         <div class="grupo-info">
                             <p><span>Código:</span> ${group.code || "----"}</p>
-
                             <p><span>Regras:</span></p>
                             <div class="grupo-regras">
                                 ${group.rules ? group.rules : "Nenhuma regra definida."}
                             </div>
                         </div>
-
                         <div class="grupo-ranking">
                             <h4>🏆 Ranking</h4>
                             <div id="ranking-${group.id}"></div>
                         </div>
-
                     </div>
-
                 </div>
             `;
         });
@@ -1181,11 +1184,15 @@ async function carregarJogosBrasil() {
 
     const lista = document.getElementById("listaJogosBrasil");
     lista.innerHTML = "";
+    
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
 
     try {
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/jogos-brasil/${usuarioId}`,
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         if (!response.ok) {
@@ -1199,12 +1206,10 @@ async function carregarJogosBrasil() {
             div.classList.add("jogo");
             div.dataset.data = aposta.data_jogo;
 
-            // Garante que temos a quantidade de gols em formato de número
             const golsBrasilNum = parseInt(aposta.gols_brasil) || 0;
 
             div.innerHTML = `
                 <strong>⚽ ${aposta.jogo}</strong>
-
                 <p class="palpite">
                     Seu palpite:
                     <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
@@ -1230,8 +1235,6 @@ async function carregarJogosBrasil() {
             lista.appendChild(div);
 
             const btn = div.querySelector(".btn-jogadores");
-
-            // Só tenta adicionar o evento de clique se o botão existir
             if (btn) {
                 btn.onclick = function () {
                     abrirJogadores(aposta.id, golsBrasilNum, btn);
@@ -1329,9 +1332,7 @@ function criarSelectJogadores(golsBrasil, container) {
 }
 
 async function salvarJogadores(aposta_id, botao) {
-
     try {
-
         const jogoDiv = botao.closest(".jogo");
         const selects = jogoDiv.querySelectorAll(".select-jogador");
 
@@ -1348,10 +1349,13 @@ async function salvarJogadores(aposta_id, botao) {
             return;
         }
 
+        const token = localStorage.getItem("token"); // 🔑 Pega o token
+
         const response = await fetch("https://bolao-backend-k56l.onrender.com/salvar-jogadores", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}` // 🚨 Envia o token
             },
             body: JSON.stringify({
                 aposta_id: aposta_id,
@@ -1364,7 +1368,7 @@ async function salvarJogadores(aposta_id, botao) {
         if (data.sucesso) {
             alert("Jogadores salvos com sucesso!");
         } else {
-            alert(data.erro);
+            alert(data.erro || "Erro ao salvar.");
         }
 
     } catch (error) {
@@ -1414,10 +1418,14 @@ function abrirJogadores(aposta_id, golsBrasil, botao) {
 }
 
 async function carregarJogadores(aposta_id, container) {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     try {
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`,
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         const jogadores = await response.json(); 
@@ -1434,11 +1442,9 @@ async function carregarJogadores(aposta_id, container) {
             aviso.textContent = "⚠️ Você alterou o placar da aposta! Por favor, escolha os jogadores novamente e clique em Salvar.";
             container.prepend(aviso);
             
-            // Interrompe a função aqui para os selects ficarem vazios, obrigando a pessoa a reescolher
             return; 
         }
 
-        // Se estiver tudo certo, preenche normalmente
         jogadores.forEach((j, i) => {
             if (selects[i]) {
                 selects[i].value = j.jogador_nome;
@@ -1477,12 +1483,14 @@ async function carregarPontosJogadores(aposta_id, div) {
 }
 
 async function mostrarJogadoresSalvos(aposta_id, container) {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
 
     try {
-
         const response = await fetch(
             `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`,
-            { credentials: "include" }
+            { 
+                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+            }
         );
 
         const jogadores = await response.json();
@@ -1505,7 +1513,6 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
     } catch (err) {
         console.error("Erro ao carregar jogadores", err);
     }
-
 }
 
 
@@ -1684,12 +1691,14 @@ function salvarPodio() {
         return;
     }
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     fetch("https://bolao-backend-k56l.onrender.com/salvar-podio", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // 🚨 Envia o token
         },
-        credentials: "include", // Importante para manter a sessão do usuário
         body: JSON.stringify({
             primeiro: primeiro,
             segundo: segundo,
@@ -1716,9 +1725,14 @@ function salvarPodio() {
 }
 
 // Função que preenche o pódio com o que vem do banco
+// Função que preenche o pódio com o que vem do banco
 function carregarPalpitesPodio() {
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     fetch("https://bolao-backend-k56l.onrender.com/obter-podio", {
-        credentials: "include"
+        headers: { 
+            "Authorization": `Bearer ${token}` // 🚨 Envia o token
+        }
     })
     .then(res => res.json())
     .then(data => {
@@ -2034,9 +2048,14 @@ function salvarResultadoOficial(jogoId) {
         }
     }
 
+    const token = localStorage.getItem("token"); // 🔑 Pega o token
+
     fetch("/admin/atualizar-resultado", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}` // 🚨 Envia o token para autorizar o admin
+        },
         body: JSON.stringify({
             jogo_id: jogoId,
             gols_casa: gCasa,
