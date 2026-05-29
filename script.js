@@ -1779,7 +1779,7 @@ function carregarPalpitesPodio() {
                 // Pega o valor retornado do backend (caso seja nulo ou indefinido, assume 0)
                 const somaTotal = (data && data.pontos !== undefined) ? data.pontos : 0;
 
-                totalElement.innerText = somaTotal + " pts"; // Mostra "55 pts" perfeitamente
+                totalElement.innerText = somaTotal; // Mostra "55 pts" perfeitamente
                 
                 if (somaTotal > 0) {
                     totalElement.style.color = "#28a745"; // Verde se pontuou
