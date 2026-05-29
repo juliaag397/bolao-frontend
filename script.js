@@ -207,14 +207,18 @@ function abrirAposta(celula) {
 
     if (celula.querySelector("input")) return;
 
-    // 1. CRIAÇÃO DOS ELEMENTOS
+    // 1. CRIAÇÃO DOS ELEMENTOS (Com a trava de min 0 e max 9)
     const input1 = document.createElement("input");
-    input1.type = "number"; input1.min = "0"; 
+    input1.type = "number"; 
+    input1.min = "0"; 
+    input1.max = "9"; // 🚨 Define o máximo no HTML
     input1.style.width = "35px";
     input1.style.textAlign = "center";
 
     const input2 = document.createElement("input");
-    input2.type = "number"; input2.min = "0"; 
+    input2.type = "number"; 
+    input2.min = "0"; 
+    input2.max = "9"; // 🚨 Define o máximo no HTML
     input2.style.width = "35px";
     input2.style.textAlign = "center";
 
@@ -228,7 +232,6 @@ function abrirAposta(celula) {
         selectClassificado.style.width = "auto";
 
         const optDefault = new Option("Class:", "");
-        // Aqui usamos as variáveis em Caps Lock (ex: BRA, ARG)
         const optCasa = new Option(timeCasaCaps, "casa");
         const optFora = new Option(timeForaCaps, "fora");
         
@@ -249,40 +252,43 @@ function abrirAposta(celula) {
         }
     };
 
-    input1.oninput = verificarEmpate;
-    input2.oninput = verificarEmpate;
+    // 🚨 NOVO: Limita o valor digitado para o intervalo de 0 a 9 e roda o empate
+    input1.oninput = function() {
+        if (this.value > 9) this.value = 9;
+        if (this.value !== "" && this.value < 0) this.value = 0;
+        verificarEmpate();
+    };
+
+    input2.oninput = function() {
+        if (this.value > 9) this.value = 9;
+        if (this.value !== "" && this.value < 0) this.value = 0;
+        verificarEmpate();
+    };
 
     const botao = document.createElement("button");
     botao.textContent = "OK";
     botao.style.fontSize = "10px";
     botao.style.padding = "2px 5px";
 
-    // --- NOVO CÓDIGO: Pular para o jogo de baixo com o TAB ---
+    // --- Pular para o jogo de baixo com o TAB ---
     botao.addEventListener('keydown', function(event) {
-        // Se a tecla for 'Tab' e não estiver segurando 'Shift' (que serve para voltar)
         if (event.key === 'Tab' && !event.shiftKey) {
-            event.preventDefault(); // Bloqueia o pulo padrão do navegador
+            event.preventDefault(); 
 
-            // Acha a linha atual (tr) e a linha de baixo
             const linhaAtual = celula.closest('tr');
             const proximaLinha = linhaAtual.nextElementSibling;
             
             if (proximaLinha) {
-                // Acha a célula de aposta da linha de baixo
                 const proximaCelula = proximaLinha.querySelector('.celula-aposta');
                 
                 if (proximaCelula) {
-                    // Verifica se já tem um input lá dentro
                     let proximoInput = proximaCelula.querySelector('input');
                     
-                    // Se não tem (ou seja, está escrito "- x -"), manda abrir!
                     if (!proximoInput) {
                         abrirAposta(proximaCelula);
-                        // Agora que abriu, pega o input recém-criado
                         proximoInput = proximaCelula.querySelector('input');
                     }
                     
-                    // Joga o cursor piscando para o primeiro input da linha de baixo
                     if (proximoInput) {
                         proximoInput.focus();
                     }
@@ -290,7 +296,6 @@ function abrirAposta(celula) {
             }
         }
     });
-    // --- FIM DO NOVO CÓDIGO ---
 
     // 2. ALINHAMENTO
     celula.style.display = "flex";
@@ -306,6 +311,12 @@ function abrirAposta(celula) {
 
         if (g1 === "" || g2 === "") {
             alert("Preencha os dois campos!");
+            return;
+        }
+
+        // 🚨 TRAVA DE SEGURANÇA EXTRA ANTES DE MANDAR PRO BANCO
+        if (parseInt(g1) > 9 || parseInt(g2) > 9 || parseInt(g1) < 0 || parseInt(g2) < 0) {
+            alert("O limite máximo de gols por time é 9!");
             return;
         }
 
@@ -325,9 +336,10 @@ function abrirAposta(celula) {
         const token = localStorage.getItem("token");
         fetch("https://bolao-backend-k56l.onrender.com/apostar", {
             method: "POST",
-            headers: { "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
-        },
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
             body: JSON.stringify({
                 jogo_id: jogoId,
                 gols_casa: g1,
@@ -338,10 +350,8 @@ function abrirAposta(celula) {
         .then(async res => {
             if (res.status === 403) { alert("Jogo já começou."); return; }
             
-            // 1. LER A RESPOSTA DO BACKEND
             const data = await res.json();
             
-            // 2. 🚨 VERIFICA SE OS JOGADORES FORAM APAGADOS PELO BACKEND
             if (data.jogadores_apagados) {
                 if (data.novos_gols_brasil == 0) {
                     alert("⚠️ Como você zerou os gols do Brasil, seus palpites de jogadores para este jogo foram apagados.");
@@ -349,23 +359,20 @@ function abrirAposta(celula) {
                     alert("⚠️ Você alterou a quantidade de gols do Brasil! Seus palpites de jogadores foram apagados. Por favor, vá na aba 'Brasil' e escolha novamente os artilheiros.");
                 }
 
-                // Se a pessoa estiver com a tela do Brasil aberta, já recarrega ela
                 if (typeof carregarJogosBrasil === "function") {
                     carregarJogosBrasil();
                 }
             }
             
-            // 3. Define o texto que aparecerá na tabela após salvar
             let textoResultado = `${g1} x ${g2}`;
             if (jogoId >= 73 && g1 === g2) {
-                // Exibe a sigla em Caps Lock ao lado do placar se for empate
                 const siglaVencedor = classificadoValue === 'casa' ? timeCasaCaps : timeForaCaps;
                 textoResultado += ` (${siglaVencedor})`;
             }
             
             celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
-            celula.style.display = ""; // Reseta o flexbox
+            celula.style.display = ""; 
         })
         .catch(() => alert("Erro ao conectar com servidor"));
     };
@@ -1302,19 +1309,24 @@ function criarSelectJogadores(golsBrasil, container) {
     golsBrasil = Math.min(golsBrasil, 4);
 
     const jogadores = [
-        "Vinicius Jr",
-        "João Pedro",
-        "Raphinha",
-        "Estevão",
-        "Paquetá",
-        "Endrick",
-        "Gabriel Magalhães",
-        "Marquinhos",
-        "Casemiro",
-        "Bruno Guimarães",
-        "Luis Henrique",
-        "Martinelli",
-        "Neymar"
+    "Bruno Guimarães",
+    "Casemiro",
+    "Douglas Santos",
+    "Endrick",
+    "Gabriel Magalhães",
+    "Igor",
+    "Leo Pereira",
+    "Luis Henrique",
+    "Marquinhos",
+    "Martinelli",
+    "Matheus Cunha",
+    "Neymar",
+    "Paquetá",
+    "Raphinha",
+    "Rayan",
+    "Thiago",
+    "Vinicius Jr",
+    "Wesley"
     ];
 
     for (let i = 0; i < golsBrasil; i++) {
