@@ -1316,7 +1316,7 @@ function criarSelectJogadores(golsBrasil, container) {
     "Gabriel Magalhães",
     "Igor",
     "Leo Pereira",
-    "Luis Henrique",
+    "Luiz Henrique",
     "Marquinhos",
     "Martinelli",
     "Matheus Cunha",
