@@ -1288,7 +1288,7 @@ strong{
     bottom: 15px; /* Mantém alinhado perfeitamente com a linha dos selects */
     
     /* 🚀 Aumentamos para 180px para jogar o texto bem longe da quina do bloco 3 */
-    transform: translateX(180px); 
+    transform: translateX(200px); 
     
     font-size: 15px;    
     font-weight: 800;
