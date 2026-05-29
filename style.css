@@ -1261,58 +1261,50 @@ strong{
 }
 
 
-/* ===== ALINHAMENTO LADO A LADO DO PÓDIO COM O TOTAL ===== */
+/* ===== NOVO ALINHAMENTO DO PÓDIO COM PTS DISCRETO ===== */
 
 .podio-wrapper {
+    position: relative; /* Deixa o wrapper como referência para fixar o PTS no canto */
+    width: 100%;
+    max-width: 600px;
+    margin: 25px auto;
+}
+
+/* Devolvemos o controle original para o seu container centralizar */
+.podio-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 30px;
-    max-width: 850px;
-    margin: 25px auto;
-    flex-wrap: wrap; /* Se a tela for pequena, a pontuação vai para baixo sem quebrar o pódio */
+    align-items: flex-end;
+    gap: 0;
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;
 }
 
-/* Ajuste sutil no seu container original para zerar as margens conflituosas */
-.podio-container {
-    margin: 0 !important; 
-}
-
-/* Estilo da nova caixinha de pontuação */
-.podio-score-box {
-    background-color: #ffffff;
-    border: 3px solid var(--cor-terciaria, #2d7a6f); /* Usa a cor do 1º lugar se existir */
-    border-radius: 12px;
-    padding: 20px;
-    text-align: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    min-width: 150px;
-    align-self: center; /* Centraliza verticalmente com o pódio */
-    transition: all 0.3s ease;
-}
-
-.score-title {
-    font-size: 13px;
-    color: #666;
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-    text-transform: uppercase;
+/* 🎯 O TEXTO DISCRETO NO CANTO INFERIOR DIREITO */
+.podio-discreto-score {
+    position: absolute;
+    right: -25px;       /* Desloca para a direita, fora da linha da pirâmide */
+    bottom: 8px;        /* Alinha com a altura do select do 3º lugar */
+    font-size: 15px;    /* Tamanho compacto */
+    font-weight: 800;
+    color: #444;        /* Cinza escuro elegante */
+    font-family: 'Arial Black', sans-serif;
     letter-spacing: 0.5px;
+    background: rgba(255, 255, 255, 0.6); /* Fundo quase invisível para dar leitura */
+    padding: 2px 6px;
+    border-radius: 4px;
+    z-index: 10;
 }
 
-.score-value {
-    font-size: 32px;
-    color: #28a745; /* Começa verde clássico */
-    font-weight: 900;
-    font-family: sans-serif;
-}
-
-/* Mantém o comportamento de escala do mobile no wrapper inteiro */
-@media (max-width: 768px) {
-    .podio-wrapper {
-        flex-direction: column;
-        gap: 15px;
+/* Ajuste fino para não sumir ou quebrar em telas de celular */
+@media (max-width: 600px) {
+    .podio-wrapper { 
+        transform: scale(0.85); 
+    }
+    .podio-discreto-score { 
+        right: 10px; 
+        bottom: -20px; /* No mobile ele vai para baixo do pódio para não apertar */
     }
 }
 

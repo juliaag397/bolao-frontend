@@ -1747,11 +1747,11 @@ function salvarPodio() {
 
 // Função que preenche o pódio com o que vem do banco
 function carregarPalpitesPodio() {
-    const token = localStorage.getItem("token"); // 🔑 Pega o token
+    const token = localStorage.getItem("token"); 
 
     fetch("https://bolao-backend-k56l.onrender.com/obter-podio", {
         headers: { 
-            "Authorization": `Bearer ${token}` // 🚨 Envia o token
+            "Authorization": `Bearer ${token}` 
         }
     })
     .then(res => res.json())
@@ -1762,7 +1762,7 @@ function carregarPalpitesPodio() {
             document.getElementById("select-2").value = data.segundo_lugar || "";
             document.getElementById("select-3").value = data.terceiro_lugar || "";
 
-            // --- Atualiza as Bandeiras nos Lugares Corretos ---
+            // Atualiza as Bandeiras
             [1, 2, 3].forEach(pos => {
                 const select = document.getElementById(`select-${pos}`);
                 const img = document.getElementById(`flag-${pos}`);
@@ -1774,25 +1774,24 @@ function carregarPalpitesPodio() {
                 }
             });
 
-            // --- 🎯 NOVA LÓGICA: Atualiza a Caixa de Pontuação Total ao Lado ---
+            // --- 🎯 LÓGICA DE SOMA DOS PONTOS DO BANCO ---
             const totalElement = document.getElementById("pontos-podio-total");
             if (totalElement) {
-                // Pega a coluna de pontuação total do objeto vindo do banco (geralmente data.pontos)
-                // Se ainda for nulo ou indefinido (Copa não acabou), deixa em "0 pts"
-                const totalPontosPodio = (data.pontos !== null && data.pontos !== undefined) ? data.pontos : null;
+                // Converte para número e garante que se for null ou vazio conte como 0
+                const p1 = Number(data.pts1) || 0;
+                const p2 = Number(data.pts2) || 0;
+                const p3 = Number(data.pts3) || 0;
+                
+                const somaTotal = p1 + p2 + p3;
 
-                if (totalPontosPodio !== null) {
-                    totalElement.innerText = `${totalPontosPodio} pts`;
-                    
-                    // Altera a cor dinamicamente na caixinha lateral
-                    if (totalPontosPodio === 0) {
-                        totalElement.style.color = "#dc3545"; // Vermelho se zerou
-                    } else {
-                        totalElement.style.color = "#28a745"; // Verde se pontuou (ex: 100 pts)
-                    }
+                // Define o número de forma limpa dentro do texto discreto
+                totalElement.innerText = somaTotal;
+                
+                // Muda a cor do texto dependendo se acertou ou zerou de forma sutil
+                if (somaTotal > 0) {
+                    totalElement.style.color = "#28a745"; // Verde se tiver ponto
                 } else {
-                    totalElement.innerText = "0 pts";
-                    totalElement.style.color = "#666"; // Cinza padrão se não foi calculada
+                    totalElement.style.color = "#dc3545"; // Vermelho se estiver zerado
                 }
             }
         }
