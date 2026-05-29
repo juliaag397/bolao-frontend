@@ -1773,23 +1773,18 @@ function carregarPalpitesPodio() {
             });
 
             // --- 🎯 ATUALIZAÇÃO REFEITA DOS PONTOS ---
+            // Dentro da função carregarPalpitesPodio(), atualize o bloco do score:
             const totalElement = document.getElementById("pontos-podio-total");
             if (totalElement) {
-                // Força a conversão para número puro e trata nulos
-                const p1 = Number(data.pts1) || 0;
-                const p2 = Number(data.pts2) || 0;
-                const p3 = Number(data.pts3) || 0;
-                
-                const somaTotal = p1 + p2 + p3;
+                // Pega o valor retornado do backend (caso seja nulo ou indefinido, assume 0)
+                const somaTotal = (data && data.pontos !== undefined) ? data.pontos : 0;
 
-                // Altera APENAS o número dentro do span
-                totalElement.innerText = somaTotal;
+                totalElement.innerText = somaTotal + " pts"; // Mostra "55 pts" perfeitamente
                 
-                // Aplica cor dinâmica no número dependendo do resultado
                 if (somaTotal > 0) {
-                    totalElement.style.color = "#28a745"; // Verde se acertou palpites
+                    totalElement.style.color = "#28a745"; // Verde se pontuou
                 } else {
-                    totalElement.style.color = "#dc3545"; // Vermelho se estiver zerado
+                    totalElement.style.color = "#444444"; // Cor padrão discreta se for 0
                 }
             }
         }

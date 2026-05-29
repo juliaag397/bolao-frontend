@@ -1281,11 +1281,12 @@ strong{
     margin: 0 auto;
 }
 
-/* 🎯 TEXTO DISCRETO E COLOCO BEM MAIS PARA A DIREITA */
+/* 🎯 TEXTO DISCRETO EMPURRADO TOTALMENTE PARA A DIREITA */
 .podio-discreto-score {
     position: absolute;
-    right: -60px;       /* Empurra o texto bem mais para fora do pódio */
-    bottom: 12px;       /* Alinha com a base horizontal dos selects */
+    right: 0;
+    bottom: 12px;       /* Alinha perfeitamente com a base horizontal do select */
+    transform: translateX(110px); /* 🚀 EMPURRA EXATAMENTE 110px MAIS PARA A DIREITA */
     font-size: 15px;    
     font-weight: 800;
     color: #444;        
@@ -1295,10 +1296,10 @@ strong{
     padding: 4px 8px;
     border-radius: 4px;
     z-index: 10;
-    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
+    white-space: nowrap; /* Impede que o texto quebre linhas */
 }
 
-/* Ajuste fino para telas menores/mobile */
+/* Ajuste inteligente para telas menores de celular */
 @media (max-width: 768px) {
     .podio-wrapper { 
         transform: scale(0.85); 
@@ -1307,10 +1308,11 @@ strong{
         position: relative;
         right: 0; 
         bottom: 0;
+        transform: translateX(0); /* Reseta o empurrão no mobile para não sumir da tela */
         margin-top: 20px;
         display: block;
         width: fit-content;
-        margin-left: auto; /* Centraliza ou joga para a direita no mobile abaixo do bloco */
+        margin-left: auto; /* Joga para a direita de forma segura abaixo do bloco */
     }
 }
 
