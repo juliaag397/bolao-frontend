@@ -23,8 +23,11 @@ function showDemo(tipo) {
 // ===============================
 // CADASTRO
 // ===============================
+// ===============================
+// CADASTRO
+// ===============================
 
-function fazerCadastro() {
+async function fazerCadastro() {
     const nome = document.getElementById("ca-nome").value;
     const email = document.getElementById("ca-email").value;
     const senha = document.getElementById("ca-senha").value;
@@ -34,71 +37,75 @@ function fazerCadastro() {
     const sucesso = document.getElementById("ca-success");
 
     erro.textContent = "";
+    erro.style.display = "none";
     sucesso.style.display = "none";
 
     // Validações
     if (!nome || !email || !senha || !confirma) {
         erro.textContent = "Preencha todos os campos!";
+        erro.style.display = "block";
         return;
     }
 
     if (senha.length < 6) {
         erro.textContent = "A senha deve ter no mínimo 6 caracteres!";
+        erro.style.display = "block";
         return;
     }
 
     if (senha !== confirma) {
         erro.textContent = "As senhas não coincidem!";
+        erro.style.display = "block";
         return;
     }
 
-    // Enviar para o backend
-    fetch("https://bolao-backend-k56l.onrender.com/cadastro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            nome: nome,
-            email: email,
-            senha: senha
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-    console.log(data);
+    try {
+        const response = await fetch("https://bolao-backend-k56l.onrender.com/cadastro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ nome, email, senha })
+        });
 
-    if (data.erro) {
-        erro.textContent = data.erro;
-        return;
-    }
+        const data = await response.json();
+        console.log(data);
 
-    sucesso.style.display = "block";
+        if (data.erro) {
+            erro.textContent = data.erro;
+            erro.style.display = "block";
+            return;
+        }
 
-    // Limpar campos
-    document.getElementById("ca-nome").value = "";
-    document.getElementById("ca-email").value = "";
-    document.getElementById("ca-senha").value = "";
-    document.getElementById("ca-confirma").value = "";
+        sucesso.style.display = "block";
 
-    // voltar para tela de login automaticamente
-    setTimeout(() => {
-        showDemo("login");
-    }, 1500);
-})
-.catch(err => {
+        // Limpar campos
+        document.getElementById("ca-nome").value = "";
+        document.getElementById("ca-email").value = "";
+        document.getElementById("ca-senha").value = "";
+        document.getElementById("ca-confirma").value = "";
+
+        // Voltar para tela de login automaticamente
+        setTimeout(() => {
+            showDemo("login");
+        }, 1500);
+
+    } catch (err) {
         console.error(err);
         erro.textContent = "Erro ao conectar com servidor.";
-});
+        erro.style.display = "block";
+    }
 }
 
 // ===============================
 // LOGIN
 // ===============================
 
-function fazerLogin() {
-    if (loginCarregando) return;
-    loginCarregando = true;
+async function fazerLogin() {
+    // Se a variável loginCarregando não estiver declarada globalmente no seu código, 
+    // certifique-se de que ela existe lá em cima (let loginCarregando = false;)
+    if (typeof loginCarregando !== 'undefined' && loginCarregando) return;
+    if (typeof loginCarregando !== 'undefined') loginCarregando = true;
 
     const email = document.getElementById("li-email").value;
     const senha = document.getElementById("li-senha").value;
@@ -107,61 +114,62 @@ function fazerLogin() {
     const sucesso = document.getElementById("li-success");
 
     erro.textContent = "";
+    erro.style.display = "none";
     sucesso.style.display = "none";
 
     if (!email || !senha) {
         erro.textContent = "Preencha todos os campos!";
-        loginCarregando = false;
+        erro.style.display = "block";
+        if (typeof loginCarregando !== 'undefined') loginCarregando = false;
         return;
     }
 
-    fetch("https://bolao-backend-k56l.onrender.com/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        
-        body: JSON.stringify({
-            email: email,
-            senha: senha
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
+    try {
+        const response = await fetch("https://bolao-backend-k56l.onrender.com/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ email, senha })
+        });
 
+        const data = await response.json();
         console.log(data);
 
         if (data.erro) {
             erro.textContent = data.erro;
-            loginCarregando = false;
+            erro.style.display = "block";
+            if (typeof loginCarregando !== 'undefined') loginCarregando = false;
             return;
         }
 
-        if (data.sucesso) {
-
-            usuarioLogado = true;
-            usuarioId = data.id;
+        if (data.sucesso || data.token) {
+            // 🚨 A MÁGICA: Guardando os dados do usuário e o token no navegador
+            if (typeof usuarioLogado !== 'undefined') usuarioLogado = true;
+            if (typeof usuarioId !== 'undefined') usuarioId = data.id;
 
             localStorage.setItem("usuario_id", data.id);
-            localStorage.setItem("token", data.token);
+            localStorage.setItem("token", data.token); // 🔑 Token salvo!
+
+            sucesso.style.display = "block";
+
+            // Atualiza a interface
             document.getElementById("login-form").style.display = "none";
             document.getElementById("area-logada").style.display = "block";
+            document.getElementById("boas-vindas").textContent = "👋 Bem-vindo(a), " + data.nome;
 
-            document.getElementById("boas-vindas").textContent =
-                "👋 Bem-vindo(a), " + data.nome;
-
-            carregarApostas();
-            verificarLogin();
-
+            // Carrega as informações
+            if (typeof carregarApostas === "function") carregarApostas();
+            if (typeof verificarLogin === "function") verificarLogin();
         }
-
-        loginCarregando = false;
-    })
-    .catch(err => {
+    } catch (err) {
         console.error(err);
         erro.textContent = "Erro ao conectar com servidor.";
-        loginCarregando = false;
-    });
+        erro.style.display = "block";
+    } finally {
+        // Libera o botão independente de dar certo ou errado
+        if (typeof loginCarregando !== 'undefined') loginCarregando = false;
+    }
 }
 
     // PARA SAIR
