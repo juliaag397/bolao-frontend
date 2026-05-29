@@ -1744,8 +1744,6 @@ function salvarPodio() {
     });
 }
 
-
-// Função que preenche o pódio com o que vem do banco
 function carregarPalpitesPodio() {
     const token = localStorage.getItem("token"); 
 
@@ -1774,22 +1772,22 @@ function carregarPalpitesPodio() {
                 }
             });
 
-            // --- 🎯 LÓGICA DE SOMA DOS PONTOS DO BANCO ---
+            // --- 🎯 ATUALIZAÇÃO REFEITA DOS PONTOS ---
             const totalElement = document.getElementById("pontos-podio-total");
             if (totalElement) {
-                // Converte para número e garante que se for null ou vazio conte como 0
+                // Força a conversão para número puro e trata nulos
                 const p1 = Number(data.pts1) || 0;
                 const p2 = Number(data.pts2) || 0;
                 const p3 = Number(data.pts3) || 0;
                 
                 const somaTotal = p1 + p2 + p3;
 
-                // Define o número de forma limpa dentro do texto discreto
+                // Altera APENAS o número dentro do span
                 totalElement.innerText = somaTotal;
                 
-                // Muda a cor do texto dependendo se acertou ou zerou de forma sutil
+                // Aplica cor dinâmica no número dependendo do resultado
                 if (somaTotal > 0) {
-                    totalElement.style.color = "#28a745"; // Verde se tiver ponto
+                    totalElement.style.color = "#28a745"; // Verde se acertou palpites
                 } else {
                     totalElement.style.color = "#dc3545"; // Vermelho se estiver zerado
                 }

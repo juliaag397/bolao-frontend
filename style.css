@@ -1281,30 +1281,36 @@ strong{
     margin: 0 auto;
 }
 
-/* 🎯 O TEXTO DISCRETO NO CANTO INFERIOR DIREITO */
+/* 🎯 TEXTO DISCRETO E COLOCO BEM MAIS PARA A DIREITA */
 .podio-discreto-score {
     position: absolute;
-    right: -25px;       /* Desloca para a direita, fora da linha da pirâmide */
-    bottom: 8px;        /* Alinha com a altura do select do 3º lugar */
-    font-size: 15px;    /* Tamanho compacto */
+    right: -60px;       /* Empurra o texto bem mais para fora do pódio */
+    bottom: 12px;       /* Alinha com a base horizontal dos selects */
+    font-size: 15px;    
     font-weight: 800;
-    color: #444;        /* Cinza escuro elegante */
+    color: #444;        
     font-family: 'Arial Black', sans-serif;
     letter-spacing: 0.5px;
-    background: rgba(255, 255, 255, 0.6); /* Fundo quase invisível para dar leitura */
-    padding: 2px 6px;
+    background: rgba(255, 255, 255, 0.7); 
+    padding: 4px 8px;
     border-radius: 4px;
     z-index: 10;
+    white-space: nowrap; /* Evita que o texto quebre em duas linhas */
 }
 
-/* Ajuste fino para não sumir ou quebrar em telas de celular */
-@media (max-width: 600px) {
+/* Ajuste fino para telas menores/mobile */
+@media (max-width: 768px) {
     .podio-wrapper { 
         transform: scale(0.85); 
     }
     .podio-discreto-score { 
-        right: 10px; 
-        bottom: -20px; /* No mobile ele vai para baixo do pódio para não apertar */
+        position: relative;
+        right: 0; 
+        bottom: 0;
+        margin-top: 20px;
+        display: block;
+        width: fit-content;
+        margin-left: auto; /* Centraliza ou joga para a direita no mobile abaixo do bloco */
     }
 }
 
