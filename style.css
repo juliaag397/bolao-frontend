@@ -376,6 +376,22 @@ strong{
     }
 
 }
+
+/* 1. Prepara a célula para aceitar uma transição suave */
+.celula-aposta {
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.2s ease;
+}
+
+/* 🚀 2. A classe de zoom que o JavaScript vai injetar quando aberta */
+.celula-aposta.em-edicao {
+    transform: scale(1.3);            /* Aumenta todo o bloco em 30% */
+    background-color: #fff9e6 !important; /* Dá um leve fundo amarelado/destaque */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Cria uma sombra para flutuar sobre a linha */
+    border-radius: 4px;
+    z-index: 99;                       /* Garante que fique por cima das outras linhas */
+    position: relative;                /* Ativa o z-index corretamente */
+}
+
 /* ===== MENU HAMBURGUER ===== */
 
 .menu-toggle{

@@ -207,6 +207,9 @@ function abrirAposta(celula) {
 
     if (celula.querySelector("input")) return;
 
+    // 🎯 1. ADICIONA O ZOOM ASSIM QUE ABRE A EDIÇÃO
+    celula.classList.add("em-edicao");
+
     // 1. CRIAÇÃO DOS ELEMENTOS (Com a trava de min 0 e max 9)
     const input1 = document.createElement("input");
     input1.type = "number"; 
@@ -285,6 +288,7 @@ function abrirAposta(celula) {
                     let proximoInput = proximaCelula.querySelector('input');
                     
                     if (!proximoInput) {
+                        celula.classList.remove("em-edicao");
                         abrirAposta(proximaCelula);
                         proximoInput = proximaCelula.querySelector('input');
                     }
@@ -370,11 +374,15 @@ function abrirAposta(celula) {
                 textoResultado += ` (${siglaVencedor})`;
             }
             
+            celula.classList.remove("em-edicao");
             celula.innerHTML = textoResultado;
             celula.dataset.apostado = "true";
             celula.style.display = ""; 
         })
-        .catch(() => alert("Erro ao conectar com servidor"));
+        .catch(() => {
+            celula.classList.remove("em-edicao");
+            alert("Erro ao conectar com servidor");
+        });
     };
 
     // 3. MONTAGEM
