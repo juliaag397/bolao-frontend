@@ -2170,7 +2170,6 @@ function salvarResultadoOficial(jogoId) {
 
 document.addEventListener("DOMContentLoaded", async function () {
     verificarPeriodoArtilheiros();
-    bloquearJogosPassados();
     await carregarJogos();
     await verificarLogin();
 });
