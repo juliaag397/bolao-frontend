@@ -1644,7 +1644,7 @@ function montarJogosPorDia() {
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
         blocoRodada.innerHTML = `
-            <h2 style="margin-top: 30px; color: #1e5c4f; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">🏆 ${nomeRodada}</h2>
+            <h2 style="margin-top: 30px; color: #1e5c4f; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">${nomeRodada}</h2>
         `;
 
         // Ordena os dias cronologicamente e imprime
