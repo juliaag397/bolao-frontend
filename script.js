@@ -1550,17 +1550,45 @@ function montarJogosPorDia() {
     container.innerHTML = "";
 
     const jogos = document.querySelectorAll(".celula-aposta");
-    let dias = {};
+
+    // Preparamos as caixas principais para guardar os jogos de cada rodada
+    const rodadas = {
+        "1ª rodada": {},
+        "2ª rodada": {},
+        "3ª rodada": {},
+        "Mata-Mata": {}
+    };
 
     jogos.forEach(celula => {
         const jogoId = celula.dataset.jogoId;
         const dataISO = celula.dataset.data;
 
-        // Proteção: Se a célula não tiver data configurada, ele pula para não dar erro
+        // Se não tiver data na célula, pula o jogo para não quebrar o site
         if (!dataISO) return;
 
         const data = new Date(dataISO);
-        const dia = data.toLocaleDateString("pt-BR");
+        // Pegamos só a data "YYYY-MM-DD" para facilitar a ordenação depois
+        const dataIsoCurta = dataISO.split("T")[0]; 
+
+        // Lógica inteligente: Descobre a rodada pelo dia do mês de junho
+        const diaDoMes = data.getDate();
+        const mes = data.getMonth() + 1; // 6 é Junho
+
+        let nomeRodada = "Mata-Mata"; 
+        // Identifica os dias da Fase de Grupos
+        if (mes === 6 || mes === 1) { // Aceita '1' por conta do erro de janeiro no texto da FIFA
+            if (diaDoMes >= 11 && diaDoMes <= 17) nomeRodada = "1ª rodada";
+            else if (diaDoMes >= 18 && diaDoMes <= 23) nomeRodada = "2ª rodada";
+            else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
+        }
+
+        // Formata para "Quinta-feira, 11 de junho de 2026"
+        let textoDia = data.toLocaleDateString("pt-BR", { 
+            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
+        });
+        // Deixa a primeira letra maiúscula
+        textoDia = textoDia.charAt(0).toUpperCase() + textoDia.slice(1);
+
         const hora = data.toLocaleTimeString("pt-BR", {
             hour: "2-digit",
             minute: "2-digit"
@@ -1573,70 +1601,85 @@ function montarJogosPorDia() {
         const tr = celula.closest("tr");
 
         if (tr) {
-            // PLANO A: É um jogo da Fase de Grupos (tem <tr>)
+            // PLANO A: Jogo da Fase de Grupos
             selecao1 = tr.children[1] ? tr.children[1].innerHTML : "Casa";
             selecao2 = tr.children[3] ? tr.children[3].innerHTML : "Fora";
             
             const placarOficial = tr.querySelector(".placar-oficial");
             resultado = placarOficial ? placarOficial.textContent : "";
         } else {
-            // PLANO B: É um jogo do Mata-Mata (Não tem <tr>)
-            // Pegamos as siglas que colocamos no dataset
+            // PLANO B: Jogo do Mata-Mata
             const timeCasa = celula.dataset.timeCasa || "?";
             const timeFora = celula.dataset.timeFora || "?";
             
-            // Deixamos o nome em negrito já que não temos a tag da bandeira aqui
             selecao1 = `<b>${timeCasa}</b>`;
             selecao2 = `<b>${timeFora}</b>`;
-            
-            // Opcional: Se você tiver um placar oficial do mata-mata, pode colocar aqui.
             resultado = "-"; 
         }
 
         const aposta = celula.textContent || "-";
 
-        if (!dias[dia]) {
-            dias[dia] = [];
+        // Cria a caixinha do dia específico dentro da rodada, se ainda não existir
+        if (!rodadas[nomeRodada][dataIsoCurta]) {
+            rodadas[nomeRodada][dataIsoCurta] = {
+                tituloFormatado: textoDia,
+                jogos: []
+            };
         }
 
-        dias[dia].push({
-            hora,
-            selecao1,
-            selecao2,
-            resultado,
-            aposta,
-            jogoId
+        // Adiciona o jogo dentro do dia e rodada certos
+        rodadas[nomeRodada][dataIsoCurta].jogos.push({
+            hora, selecao1, selecao2, resultado, aposta, jogoId
         });
     });
 
-    Object.keys(dias).sort((a, b) => {
-        const d1 = new Date(a.split("/").reverse().join("-"));
-        const d2 = new Date(b.split("/").reverse().join("-"));
-        return d1 - d2;
-    }).forEach(dia => {
-        const bloco = document.createElement("div");
-        bloco.innerHTML = `
-            <h3>${dia}</h3>
-            <div class="jogos-dia"></div>
+    // Hora de imprimir na tela (Na ordem certa)
+    Object.keys(rodadas).forEach(nomeRodada => {
+        const diasDaRodada = rodadas[nomeRodada];
+
+        // Se não tiver nenhum jogo salvo nesta rodada ainda, a gente pula ela
+        if (Object.keys(diasDaRodada).length === 0) return;
+
+        // Cria o título da Rodada
+        const blocoRodada = document.createElement("div");
+        blocoRodada.className = "bloco-rodada";
+        blocoRodada.innerHTML = `
+            <h2 style="margin-top: 30px; color: #1e5c4f; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">🏆 ${nomeRodada}</h2>
         `;
 
-        const lista = bloco.querySelector(".jogos-dia");
+        // Ordena os dias cronologicamente e imprime
+        Object.keys(diasDaRodada).sort().forEach(dataIso => {
+            const infoDia = diasDaRodada[dataIso];
 
-        dias[dia].forEach(jogo => {
-            const item = document.createElement("div");
-            item.className = "jogo-dia";
-            item.innerHTML = `
-                <span class="hora">${jogo.hora}</span>
-                <span class="time">${jogo.selecao1}</span>
-                <span class="placar">${jogo.resultado}</span>
-                <span class="time">${jogo.selecao2}</span>
-                <span class="separador">|</span>
-                <span class="aposta" onclick="irParaJogo(${jogo.jogoId})" style="cursor: pointer;">🎯 ${jogo.aposta}</span>
+            const blocoDia = document.createElement("div");
+            blocoDia.className = "bloco-dia";
+            blocoDia.innerHTML = `
+                <h3 style="margin: 15px 0 10px 0; color: #333;">📅 ${infoDia.tituloFormatado}</h3>
+                <div class="jogos-dia"></div>
             `;
-            lista.appendChild(item);
+
+            const listaJogos = blocoDia.querySelector(".jogos-dia");
+
+            // Imprime cada jogo do dia
+            infoDia.jogos.forEach(jogo => {
+                const item = document.createElement("div");
+                item.className = "jogo-dia";
+                item.innerHTML = `
+                    <span class="hora">${jogo.hora}</span>
+                    <span class="time">${jogo.selecao1}</span>
+                    <span class="placar">${jogo.resultado}</span>
+                    <span class="time">${jogo.selecao2}</span>
+                    <span class="separador">|</span>
+                    <span class="aposta" onclick="irParaJogo(${jogo.jogoId})" style="cursor: pointer;">🎯 ${jogo.aposta}</span>
+                `;
+                listaJogos.appendChild(item);
+            });
+
+            blocoRodada.appendChild(blocoDia);
         });
 
-        container.appendChild(bloco);
+        // Adiciona o bloco da rodada inteiro na tela
+        container.appendChild(blocoRodada);
     });
 }
 
