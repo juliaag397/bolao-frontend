@@ -200,6 +200,12 @@ function abrirAposta(celula) {
     const timeCasaCaps = timeCasaRaw.substring(0, 3).toUpperCase();
     const timeForaCaps = timeForaRaw.substring(0, 3).toUpperCase();
 
+    // 🔥 TRAVA DUPLA ADICIONADA AQUI: Se a célula já foi marcada como encerrada pelo outro script
+    if (celula.dataset.encerrado === "true") {
+        alert("O primeiro jogo desta rodada já começou. Apostas encerradas!");
+        return;
+    }
+
     if (agora >= dataJogo) {
         alert("Apostas encerradas para este jogo!");
         return;
