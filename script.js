@@ -466,6 +466,8 @@ function bloquearJogosPassados() {
             celula.style.cursor = "not-allowed";
             celula.dataset.encerrado = "true";
 
+            celula.style.pointerEvents = "none";
+
             // 🔥 SÓ MOSTRA "Encerrado" SE NÃO TIVER APOSTA
             if (celula.dataset.apostado !== "true") {
                 celula.innerHTML = "<span class='palpite'>Encerrado</span>";
