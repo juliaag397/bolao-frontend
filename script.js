@@ -1545,73 +1545,67 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
 
 
 // MOSTRAR JOGOS POR DIA
+// Variável global para guardar o cronômetro e não duplicar se rodar a função 2x
+window.intervaloCronometro = null;
+
 function montarJogosPorDia() {
     const container = document.getElementById("lista-jogos-dia");
     container.innerHTML = "";
 
     const jogos = document.querySelectorAll(".celula-aposta");
 
-    // Preparamos as caixas principais para guardar os jogos de cada rodada
+    // Agora o objeto guarda duas coisas: os dias e a data do primeiro jogo
     const rodadas = {
-        "1ª rodada": {},
-        "2ª rodada": {},
-        "3ª rodada": {},
-        "Mata-Mata": {}
+        "1ª rodada": { dias: {}, primeiroJogo: null },
+        "2ª rodada": { dias: {}, primeiroJogo: null },
+        "3ª rodada": { dias: {}, primeiroJogo: null },
+        "Mata-Mata": { dias: {}, primeiroJogo: null }
     };
 
     jogos.forEach(celula => {
         const jogoId = celula.dataset.jogoId;
         const dataISO = celula.dataset.data;
 
-        // Se não tiver data na célula, pula o jogo para não quebrar o site
         if (!dataISO) return;
 
         const data = new Date(dataISO);
-        // Pegamos só a data "YYYY-MM-DD" para facilitar a ordenação depois
         const dataIsoCurta = dataISO.split("T")[0]; 
 
-        // Lógica inteligente: Descobre a rodada pelo dia do mês de junho
         const diaDoMes = data.getDate();
-        const mes = data.getMonth() + 1; // 6 é Junho
+        const mes = data.getMonth() + 1; 
 
         let nomeRodada = "Mata-Mata"; 
-        // Identifica os dias da Fase de Grupos
-        if (mes === 6 || mes === 1) { // Aceita '1' por conta do erro de janeiro no texto da FIFA
+        if (mes === 6 || mes === 1) { 
             if (diaDoMes >= 11 && diaDoMes <= 17) nomeRodada = "1ª rodada";
             else if (diaDoMes >= 18 && diaDoMes <= 23) nomeRodada = "2ª rodada";
             else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
         }
 
-        // Formata para "Quinta-feira, 11 de junho de 2026"
+        // Descobre se este é o primeiro jogo (o mais cedo) desta rodada
+        if (!rodadas[nomeRodada].primeiroJogo || data.getTime() < new Date(rodadas[nomeRodada].primeiroJogo).getTime()) {
+            rodadas[nomeRodada].primeiroJogo = dataISO;
+        }
+
         let textoDia = data.toLocaleDateString("pt-BR", { 
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
         });
-        // Deixa a primeira letra maiúscula
         textoDia = textoDia.charAt(0).toUpperCase() + textoDia.slice(1);
 
         const hora = data.toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit"
+            hour: "2-digit", minute: "2-digit"
         });
 
-        let selecao1 = "";
-        let selecao2 = "";
-        let resultado = "";
-
+        let selecao1 = "", selecao2 = "", resultado = "";
         const tr = celula.closest("tr");
 
         if (tr) {
-            // PLANO A: Jogo da Fase de Grupos
             selecao1 = tr.children[1] ? tr.children[1].innerHTML : "Casa";
             selecao2 = tr.children[3] ? tr.children[3].innerHTML : "Fora";
-            
             const placarOficial = tr.querySelector(".placar-oficial");
             resultado = placarOficial ? placarOficial.textContent : "";
         } else {
-            // PLANO B: Jogo do Mata-Mata
             const timeCasa = celula.dataset.timeCasa || "?";
             const timeFora = celula.dataset.timeFora || "?";
-            
             selecao1 = `<b>${timeCasa}</b>`;
             selecao2 = `<b>${timeFora}</b>`;
             resultado = "-"; 
@@ -1619,37 +1613,38 @@ function montarJogosPorDia() {
 
         const aposta = celula.textContent || "-";
 
-        // Cria a caixinha do dia específico dentro da rodada, se ainda não existir
-        if (!rodadas[nomeRodada][dataIsoCurta]) {
-            rodadas[nomeRodada][dataIsoCurta] = {
+        if (!rodadas[nomeRodada].dias[dataIsoCurta]) {
+            rodadas[nomeRodada].dias[dataIsoCurta] = {
                 tituloFormatado: textoDia,
                 jogos: []
             };
         }
 
-        // Adiciona o jogo dentro do dia e rodada certos
-        rodadas[nomeRodada][dataIsoCurta].jogos.push({
+        rodadas[nomeRodada].dias[dataIsoCurta].jogos.push({
             hora, selecao1, selecao2, resultado, aposta, jogoId
         });
     });
 
-    // Hora de imprimir na tela (Na ordem certa)
     Object.keys(rodadas).forEach(nomeRodada => {
-        const diasDaRodada = rodadas[nomeRodada];
+        const infoRodada = rodadas[nomeRodada];
 
-        // Se não tiver nenhum jogo salvo nesta rodada ainda, a gente pula ela
-        if (Object.keys(diasDaRodada).length === 0) return;
+        if (Object.keys(infoRodada.dias).length === 0) return;
 
-        // Cria o título da Rodada
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
+        
+        // Criei um layout em "Flexbox" para o título ficar na esquerda e o relógio na direita
         blocoRodada.innerHTML = `
-            <h2 style="margin-top: 30px; color: #1e5c4f; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">${nomeRodada}</h2>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">
+                <h2 style="margin: 0; color: #1e5c4f;">${nomeRodada}</h2>
+                <span class="relogio-rodada" data-alvo="${infoRodada.primeiroJogo}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
+                    ⏳ Calculando...
+                </span>
+            </div>
         `;
 
-        // Ordena os dias cronologicamente e imprime
-        Object.keys(diasDaRodada).sort().forEach(dataIso => {
-            const infoDia = diasDaRodada[dataIso];
+        Object.keys(infoRodada.dias).sort().forEach(dataIso => {
+            const infoDia = infoRodada.dias[dataIso];
 
             const blocoDia = document.createElement("div");
             blocoDia.className = "bloco-dia";
@@ -1660,7 +1655,6 @@ function montarJogosPorDia() {
 
             const listaJogos = blocoDia.querySelector(".jogos-dia");
 
-            // Imprime cada jogo do dia
             infoDia.jogos.forEach(jogo => {
                 const item = document.createElement("div");
                 item.className = "jogo-dia";
@@ -1678,9 +1672,46 @@ function montarJogosPorDia() {
             blocoRodada.appendChild(blocoDia);
         });
 
-        // Adiciona o bloco da rodada inteiro na tela
         container.appendChild(blocoRodada);
     });
+
+    // Chama a função para ligar os cronômetros
+    iniciarCronometros();
+}
+
+// === FUNÇÃO NOVA PARA O CRONÔMETRO === //
+function iniciarCronometros() {
+    // Limpa cronômetros antigos se o usuário trocar de aba e voltar
+    if (window.intervaloCronometro) clearInterval(window.intervaloCronometro);
+
+    function atualizarRelogios() {
+        const relogios = document.querySelectorAll(".relogio-rodada");
+        const agora = new Date().getTime();
+
+        relogios.forEach(relogio => {
+            const alvo = new Date(relogio.dataset.alvo).getTime();
+            const diferenca = alvo - agora;
+
+            // Se o jogo já passou da hora
+            if (diferenca < 0) {
+                relogio.innerHTML = "✅ Rodada iniciada";
+                relogio.style.color = "#1e5c4f";
+                relogio.style.background = "#d4edda"; // Verdinho claro
+                return;
+            }
+
+            // Matemática básica de conversão de tempo
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            relogio.innerHTML = `⏳ Faltam: ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        });
+    }
+
+    atualizarRelogios(); // Roda na mesma hora para não piscar "Calculando..." por 1 segundo
+    window.intervaloCronometro = setInterval(atualizarRelogios, 1000); // Atualiza de 1 em 1 segundo
 }
 
 function irParaJogo(jogoId) {
