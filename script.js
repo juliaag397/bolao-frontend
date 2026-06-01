@@ -1545,7 +1545,7 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
 
 
 // MOSTRAR JOGOS POR DIA
-// Variável global para guardar o cronômetro e não duplicar se rodar a função 2x
+// Variável global para guardar o cronômetro e não duplicar
 window.intervaloCronometro = null;
 
 function montarJogosPorDia() {
@@ -1554,25 +1554,32 @@ function montarJogosPorDia() {
 
     const jogos = document.querySelectorAll(".celula-aposta");
 
-    // Agora o objeto guarda duas coisas: os dias e a data do primeiro jogo
     const rodadas = {
-        "1ª rodada": { dias: {}, primeiroJogo: null },
-        "2ª rodada": { dias: {}, primeiroJogo: null },
-        "3ª rodada": { dias: {}, primeiroJogo: null },
-        "Mata-Mata": { dias: {}, primeiroJogo: null }
+        "1ª rodada": { dias: {}, alvoCronometro: null },
+        "2ª rodada": { dias: {}, alvoCronometro: null },
+        "3ª rodada": { dias: {}, alvoCronometro: null },
+        "Mata-Mata": { dias: {}, alvoCronometro: null }
     };
 
     jogos.forEach(celula => {
         const jogoId = celula.dataset.jogoId;
-        const dataISO = celula.dataset.data;
+        
+        // 1. HORÁRIO DE BLOQUEIO (Início da Rodada - Usado para o Cronômetro)
+        const horarioBloqueio = celula.dataset.data; 
 
-        if (!dataISO) return;
+        // 2. HORÁRIO REAL DO JOGO (Usado para separar os dias e mostrar na tela)
+        // Se você esquecer de colocar no HTML, ele usa o de bloqueio como plano B
+        const horarioReal = celula.dataset.horarioJogo || horarioBloqueio; 
 
-        const data = new Date(dataISO);
-        const dataIsoCurta = dataISO.split("T")[0]; 
+        if (!horarioBloqueio) return;
 
-        const diaDoMes = data.getDate();
-        const mes = data.getMonth() + 1; 
+        const dataBloqueioObj = new Date(horarioBloqueio);
+        const dataRealObj = new Date(horarioReal);
+        const dataIsoCurta = horarioReal.split("T")[0]; 
+
+        // Descobre a rodada baseada no horário REAL do jogo
+        const diaDoMes = dataRealObj.getDate();
+        const mes = dataRealObj.getMonth() + 1; 
 
         let nomeRodada = "Mata-Mata"; 
         if (mes === 6 || mes === 1) { 
@@ -1581,17 +1588,19 @@ function montarJogosPorDia() {
             else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
         }
 
-        // Descobre se este é o primeiro jogo (o mais cedo) desta rodada
-        if (!rodadas[nomeRodada].primeiroJogo || data.getTime() < new Date(rodadas[nomeRodada].primeiroJogo).getTime()) {
-            rodadas[nomeRodada].primeiroJogo = dataISO;
+        // Define o alvo do cronômetro usando o HORÁRIO DE BLOQUEIO
+        if (!rodadas[nomeRodada].alvoCronometro || dataBloqueioObj.getTime() < new Date(rodadas[nomeRodada].alvoCronometro).getTime()) {
+            rodadas[nomeRodada].alvoCronometro = horarioBloqueio;
         }
 
-        let textoDia = data.toLocaleDateString("pt-BR", { 
+        // Formata o texto do dia usando o HORÁRIO REAL
+        let textoDia = dataRealObj.toLocaleDateString("pt-BR", { 
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
         });
         textoDia = textoDia.charAt(0).toUpperCase() + textoDia.slice(1);
 
-        const hora = data.toLocaleTimeString("pt-BR", {
+        // Formata a hora do jogo usando o HORÁRIO REAL
+        const hora = dataRealObj.toLocaleTimeString("pt-BR", {
             hour: "2-digit", minute: "2-digit"
         });
 
@@ -1633,11 +1642,10 @@ function montarJogosPorDia() {
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
         
-        // Criei um layout em "Flexbox" para o título ficar na esquerda e o relógio na direita
         blocoRodada.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">
-                <h2 style="margin: 0; color: #1e5c4f;">${nomeRodada}</h2>
-                <span class="relogio-rodada" data-alvo="${infoRodada.primeiroJogo}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
+                <h2 style="margin: 0; color: #1e5c4f;">🏆 ${nomeRodada}</h2>
+                <span class="relogio-rodada" data-alvo="${infoRodada.alvoCronometro}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
                     ⏳ Calculando...
                 </span>
             </div>
@@ -1675,13 +1683,10 @@ function montarJogosPorDia() {
         container.appendChild(blocoRodada);
     });
 
-    // Chama a função para ligar os cronômetros
     iniciarCronometros();
 }
 
-// === FUNÇÃO NOVA PARA O CRONÔMETRO === //
 function iniciarCronometros() {
-    // Limpa cronômetros antigos se o usuário trocar de aba e voltar
     if (window.intervaloCronometro) clearInterval(window.intervaloCronometro);
 
     function atualizarRelogios() {
@@ -1692,15 +1697,13 @@ function iniciarCronometros() {
             const alvo = new Date(relogio.dataset.alvo).getTime();
             const diferenca = alvo - agora;
 
-            // Se o jogo já passou da hora
             if (diferenca < 0) {
                 relogio.innerHTML = "✅ Rodada iniciada";
                 relogio.style.color = "#1e5c4f";
-                relogio.style.background = "#d4edda"; // Verdinho claro
+                relogio.style.background = "#d4edda"; 
                 return;
             }
 
-            // Matemática básica de conversão de tempo
             const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
             const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
@@ -1710,8 +1713,8 @@ function iniciarCronometros() {
         });
     }
 
-    atualizarRelogios(); // Roda na mesma hora para não piscar "Calculando..." por 1 segundo
-    window.intervaloCronometro = setInterval(atualizarRelogios, 1000); // Atualiza de 1 em 1 segundo
+    atualizarRelogios(); 
+    window.intervaloCronometro = setInterval(atualizarRelogios, 1000); 
 }
 
 function irParaJogo(jogoId) {
