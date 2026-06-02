@@ -3915,7 +3915,18 @@
 
         <div id="geral" class="area">
             <div id="ranking">
-                <h2>🏆 Ranking Geral</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h2>🏆 Ranking Geral</h2>
+                    <div style="text-align: right; font-size: 0.9em;">
+                        <span id="minha-posicao" style="display: block; font-weight: bold; margin-bottom: 5px; color: #1f7a54;"></span>
+                        
+                        <label style="cursor: pointer;">
+                            <input type="checkbox" id="toggle-nome" onchange="alterarVisibilidade(this.checked)">
+                            Mostrar meu nome
+                        </label>
+                    </div>
+                </div>
+
                 <table class="ranking-tabela">
                     <thead>
                         <tr>

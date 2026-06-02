@@ -895,41 +895,102 @@ async function carregarJogos() {
 // RANKING
 async function carregarRanking() {
     const token = localStorage.getItem("token"); // 🔑 Pega o token
+    // Pegamos o ID do usuário atual (certifique-se de que usuarioId está disponível, igual na sua aba Brasil)
+    const meuUsuarioId = parseInt(usuarioId) || parseInt(localStorage.getItem("usuarioId")); 
 
     try {
         const resposta = await fetch(
             "https://bolao-backend-k56l.onrender.com/ranking",
             { 
-                headers: { "Authorization": `Bearer ${token}` } // 🚨 Envia o token
+                headers: { "Authorization": `Bearer ${token}` } 
             }
         );
 
         const ranking = await resposta.json();
-
         const tbody = document.getElementById("ranking-body");
         tbody.innerHTML = "";
 
+        let minhaPosicao = "-";
+        const totalUsuarios = ranking.length;
+
         ranking.forEach((usuario, index) => {
             let medalha;
-
             if (index === 0) medalha = "🥇";
             else if (index === 1) medalha = "🥈";
             else if (index === 2) medalha = "🥉";
             else medalha = index + 1;
 
+            const isEu = (usuario.id === meuUsuarioId);
+            
+            // 1️⃣ Registra a posição do usuário logado e ajusta o botão
+            if (isEu) {
+                minhaPosicao = index + 1;
+                const checkbox = document.getElementById("toggle-nome");
+                if (checkbox) {
+                    // Se for null/undefined, considera true. Senão, usa o valor real.
+                    checkbox.checked = usuario.mostrar_nome !== false; 
+                }
+            }
+
+            // 2️⃣ Regra de esconder o nome:
+            let nomeExibido = usuario.nome;
+            if (!isEu && usuario.mostrar_nome === false) {
+                nomeExibido = "👤 Anônimo"; // Mascara o nome dos outros
+            }
+
             const linha = document.createElement("tr");
+            
+            // Destaque visual se for a linha do próprio usuário
+            if (isEu) {
+                linha.style.fontWeight = "bold";
+                linha.style.backgroundColor = "#e8f5e9"; 
+            }
 
             linha.innerHTML = `
                 <td>${medalha}</td>
-                <td>${usuario.nome}</td>
+                <td>${nomeExibido}</td>
                 <td>${usuario.pontos}</td>
             `;
 
             tbody.appendChild(linha);
         });
 
+        // 3️⃣ Atualiza o texto "5º lugar de 55"
+        const textoPosicao = document.getElementById("minha-posicao");
+        if (textoPosicao) {
+            textoPosicao.textContent = `${minhaPosicao}º lugar de ${totalUsuarios}`;
+        }
+
     } catch (erro) {
         console.log("Erro ao carregar ranking:", erro);
+    }
+}
+
+// 🚨 NOVA FUNÇÃO: Disparada quando o usuário clica na caixinha de seleção
+async function alterarVisibilidade(mostrar) {
+    const token = localStorage.getItem("token");
+    const meuUsuarioId = parseInt(usuarioId) || parseInt(localStorage.getItem("usuarioId"));
+
+    try {
+        const res = await fetch("https://bolao-backend-k56l.onrender.com/preferencia-ranking", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ 
+                mostrar_nome: mostrar,
+                usuario_id: meuUsuarioId
+            })
+        });
+
+        if (res.ok) {
+            carregarRanking(); // Recarrega o ranking na hora para ver o efeito
+        } else {
+            alert("Erro ao salvar preferência de privacidade.");
+        }
+    } catch (err) {
+        console.error("Erro na requisição:", err);
     }
 }
 
