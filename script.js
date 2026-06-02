@@ -1330,7 +1330,7 @@ function criarSelectJogadores(golsBrasil, container) {
     "Douglas Santos",
     "Endrick",
     "Gabriel Magalhães",
-    "Igor",
+    "Igor Thiago",
     "Leo Pereira",
     "Luiz Henrique",
     "Marquinhos",
@@ -1340,7 +1340,7 @@ function criarSelectJogadores(golsBrasil, container) {
     "Paquetá",
     "Raphinha",
     "Rayan",
-    "Thiago",
+    "Ibanez",
     "Vinicius Jr",
     "Wesley"
     ];
