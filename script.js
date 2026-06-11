@@ -703,7 +703,7 @@ function verificarPeriodoArtilheiros() {
     // 🥇 APOSTA 1
     if (hoje >= inicioCopa) {
 
-        const select1 = aposta1.querySelector("select");
+        const select1 = aposta1.querySelector("input");
         const botao1 = aposta1.querySelector("button");
 
         if (select1) select1.disabled = true;
@@ -721,7 +721,7 @@ function verificarPeriodoArtilheiros() {
     // 🥈 APOSTA 2
     if (hoje < fimFaseGrupos || hoje >= inicioMataMata) {
 
-        const select2 = aposta2.querySelector("select");
+        const select2 = aposta2.querySelector("input");
         const botao2 = aposta2.querySelector("button");
 
         if (select2) select2.disabled = true;
