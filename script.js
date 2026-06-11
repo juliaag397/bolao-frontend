@@ -691,6 +691,10 @@ function verificarPeriodoArtilheiros() {
     const fimFaseGrupos = new Date("2026-06-24T16:00:00");
     const inicioMataMata = new Date("2026-06-28T16:00:00");
 
+    
+    console.log("Hora que o navegador acha que é agora:", hoje);
+    console.log("Hora que vai bloquear:", inicioCopa);
+
     const aposta1 = document.getElementById("aposta1");
     const aposta2 = document.getElementById("aposta2");
 
