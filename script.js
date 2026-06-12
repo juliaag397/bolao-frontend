@@ -1616,6 +1616,49 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
     }
 }
 
+async function baixarPlanilha(fase) {
+    const botao = document.getElementById(`btn-${fase}`);
+    const textoOriginal = botao.innerHTML;
+
+    botao.innerHTML = "⏳ Gerando...";
+    botao.disabled = true;
+
+    const token = localStorage.getItem("token"); 
+
+    try {
+        const resposta = await fetch(`https://bolao-backend-k56l.onrender.com/baixar-planilha/${fase}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}` 
+            }
+        });
+
+        if (!resposta.ok) {
+            const erroData = await resposta.json();
+            throw new Error(erroData.erro || "Falha ao baixar o arquivo.");
+        }
+
+        const blob = await resposta.blob();
+        
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        // Coloca o nome do arquivo dinâmico conforme a fase clicada
+        a.download = `palpites_${fase}.xlsx`; 
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url); 
+
+    } catch (erro) {
+        console.error("Erro no download:", erro);
+        alert(erro.message);
+    } finally {
+        botao.innerHTML = textoOriginal;
+        botao.disabled = false;
+    }
+}
+
 
 // MOSTRAR JOGOS POR DIA
 // Variável global para guardar o cronômetro e não duplicar
@@ -1627,21 +1670,17 @@ function montarJogosPorDia() {
 
     const jogos = document.querySelectorAll(".celula-aposta");
 
+    // 1. ADICIONAMOS "ultimoJogo" E O "idPlanilha" (Para o botão saber qual baixar)
     const rodadas = {
-        "1ª rodada": { dias: {}, alvoCronometro: null },
-        "2ª rodada": { dias: {}, alvoCronometro: null },
-        "3ª rodada": { dias: {}, alvoCronometro: null },
-        "Mata-Mata": { dias: {}, alvoCronometro: null }
+        "1ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada1" },
+        "2ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada2" },
+        "3ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada3" },
+        "Mata-Mata": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "" } 
     };
 
     jogos.forEach(celula => {
         const jogoId = celula.dataset.jogoId;
-        
-        // 1. HORÁRIO DE BLOQUEIO (Início da Rodada - Usado para o Cronômetro)
         const horarioBloqueio = celula.dataset.data; 
-
-        // 2. HORÁRIO REAL DO JOGO (Usado para separar os dias e mostrar na tela)
-        // Se você esquecer de colocar no HTML, ele usa o de bloqueio como plano B
         const horarioReal = celula.dataset.horarioJogo || horarioBloqueio; 
 
         if (!horarioBloqueio) return;
@@ -1650,7 +1689,6 @@ function montarJogosPorDia() {
         const dataRealObj = new Date(horarioReal);
         const dataIsoCurta = horarioReal.split("T")[0]; 
 
-        // Descobre a rodada baseada no horário REAL do jogo
         const diaDoMes = dataRealObj.getDate();
         const mes = dataRealObj.getMonth() + 1; 
 
@@ -1661,18 +1699,21 @@ function montarJogosPorDia() {
             else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
         }
 
-        // Define o alvo do cronômetro usando o HORÁRIO DE BLOQUEIO
+        // Define o alvo do cronômetro (Primeiro jogo da rodada)
         if (!rodadas[nomeRodada].alvoCronometro || dataBloqueioObj.getTime() < new Date(rodadas[nomeRodada].alvoCronometro).getTime()) {
             rodadas[nomeRodada].alvoCronometro = horarioBloqueio;
         }
 
-        // Formata o texto do dia usando o HORÁRIO REAL
+        // 2. LÓGICA NOVA: Descobre qual é o ÚLTIMO jogo da rodada
+        if (!rodadas[nomeRodada].ultimoJogo || dataRealObj.getTime() > new Date(rodadas[nomeRodada].ultimoJogo).getTime()) {
+            rodadas[nomeRodada].ultimoJogo = horarioReal;
+        }
+
         let textoDia = dataRealObj.toLocaleDateString("pt-BR", { 
             weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
         });
         textoDia = textoDia.charAt(0).toUpperCase() + textoDia.slice(1);
 
-        // Formata a hora do jogo usando o HORÁRIO REAL
         const hora = dataRealObj.toLocaleTimeString("pt-BR", {
             hour: "2-digit", minute: "2-digit"
         });
@@ -1707,17 +1748,40 @@ function montarJogosPorDia() {
         });
     });
 
+    // Pega o horário EXATO de agora
+    const agora = new Date().getTime();
+
     Object.keys(rodadas).forEach(nomeRodada => {
         const infoRodada = rodadas[nomeRodada];
 
         if (Object.keys(infoRodada.dias).length === 0) return;
 
+        // 3. VERIFICA SE A RODADA ACABOU PARA MOSTRAR O BOTÃO
+        let botaoPlanilha = "";
+        if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "") {
+            // Soma 2 horas ao horário de início do último jogo
+            const tempoFimUltimoJogo = new Date(infoRodada.ultimoJogo).getTime() + (2 * 60 * 60 * 1000);
+            
+            // Se o horário atual passou do fim do último jogo, gera o botão html
+            if (agora >= tempoFimUltimoJogo) {
+                botaoPlanilha = `
+                    <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
+                            style="background-color: #00B050; color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.6em; margin-left: 15px; text-transform: uppercase; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); vertical-align: middle;">
+                        📊 Baixar Planilha
+                    </button>
+                `;
+            }
+        }
+
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
         
+        // 4. INSERE O BOTÃO AO LADO DO TÍTULO DA RODADA
         blocoRodada.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">
-                <h2 style="margin: 0; color: #1e5c4f;">🏆 ${nomeRodada}</h2>
+                <h2 style="margin: 0; color: #1e5c4f; display: flex; align-items: center;">
+                    🏆 ${nomeRodada} ${botaoPlanilha}
+                </h2>
                 <span class="relogio-rodada" data-alvo="${infoRodada.alvoCronometro}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
                     ⏳ Calculando...
                 </span>
