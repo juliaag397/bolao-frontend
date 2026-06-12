@@ -1618,10 +1618,14 @@ async function mostrarJogadoresSalvos(aposta_id, container) {
 
 async function baixarPlanilha(fase) {
     const botao = document.getElementById(`btn-${fase}`);
-    const textoOriginal = botao.innerHTML;
+    let textoOriginal = "";
 
-    botao.innerHTML = "⏳ Gerando...";
-    botao.disabled = true;
+    // 1. Só muda o texto para "Gerando..." se o botão existir na tela
+    if (botao) {
+        textoOriginal = botao.innerHTML;
+        botao.innerHTML = "⏳ Gerando...";
+        botao.disabled = true;
+    }
 
     const token = localStorage.getItem("token"); 
 
@@ -1643,7 +1647,6 @@ async function baixarPlanilha(fase) {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        // Coloca o nome do arquivo dinâmico conforme a fase clicada
         a.download = `palpites_${fase}.xlsx`; 
         document.body.appendChild(a);
         a.click();
@@ -1654,8 +1657,11 @@ async function baixarPlanilha(fase) {
         console.error("Erro no download:", erro);
         alert(erro.message);
     } finally {
-        botao.innerHTML = textoOriginal;
-        botao.disabled = false;
+        // 2. Só tenta restaurar o botão ao normal se ele existir
+        if (botao) {
+            botao.innerHTML = textoOriginal;
+            botao.disabled = false;
+        }
     }
 }
 
