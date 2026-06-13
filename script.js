@@ -1763,13 +1763,13 @@ function montarJogosPorDia() {
 
         if (Object.keys(infoRodada.dias).length === 0) return;
 
-        // 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
-        if (infoRodada.alvoCronometro && infoRodada.idPlanilha !== "" && containerPlanilhas) {
+// 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
+        if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "" && containerPlanilhas) {
             
-            // Usamos 'alvoCronometro' porque é o horário do 1º jogo (quando as apostas encerram)
-            const tempoFimDasApostas = new Date(infoRodada.alvoCronometro).getTime(); 
+            // Usamos 'ultimoJogo' para liberar no INÍCIO da última partida da rodada
+            const tempoInicioUltimoJogo = new Date(infoRodada.ultimoJogo).getTime(); 
             
-            if (agora >= tempoFimDasApostas) {
+            if (agora >= tempoInicioUltimoJogo) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
                     <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
