@@ -489,10 +489,10 @@ function bloquearJogosPassados() {
 // Mostrar área selecionada
 function mostrarArea(areaId, event) {
 
-    // Remove classe ativa de todas as áreas e força o sumiço
+    // Remove classe ativa de todas as áreas e esconde
     document.querySelectorAll(".area").forEach(area => {
         area.classList.remove("ativa");
-        area.style.display = "none"; // 💡 Força esconder todas, limpando o HTML
+        area.style.display = "none"; // Esconde as outras abas
     });
 
     // Remove classe ativa dos botões
@@ -504,7 +504,10 @@ function mostrarArea(areaId, event) {
     const areaSelecionada = document.getElementById(areaId);
     if (areaSelecionada) {
         areaSelecionada.classList.add("ativa");
-        areaSelecionada.style.display = "block"; // 💡 Força a área escolhida a APARECER na tela!
+        
+        // 🔥 A MÁGICA AQUI: Em vez de forçar "block", usamos "" (vazio)
+        // Isso remove qualquer trava do JavaScript e faz o seu CSS original (Flex/Grid) voltar a funcionar!
+        areaSelecionada.style.display = ""; 
     }
 
     // Se veio de clique
@@ -512,7 +515,7 @@ function mostrarArea(areaId, event) {
         event.target.classList.add("ativo");
     }
 
-    // Se veio do script (ex: Jogos por dia)
+    // Se veio do script
     else {
         const botao = document.querySelector(
             `.menu-lateral button[onclick*="${areaId}"]`
