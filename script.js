@@ -1777,13 +1777,17 @@ function montarJogosPorDia() {
 }
 
 function montarBotoesPlanilhas() {
+    console.log("🔍 A função montarBotoesPlanilhas FOI CHAMADA!");
+    
     const containerPlanilhas = document.getElementById("container-botoes-planilhas");
-    if (!containerPlanilhas) return;
-    containerPlanilhas.innerHTML = ""; 
+    if (!containerPlanilhas) {
+        console.log("❌ ERRO: Não encontrei o elemento 'container-botoes-planilhas' no HTML.");
+        return;
+    }
 
     const jogos = document.querySelectorAll(".celula-aposta");
-    
-    // Mapeia apenas o que importa para a planilha: o primeiro jogo de cada rodada
+    console.log("⚽ Quantidade de jogos (.celula-aposta) encontrados na tela:", jogos.length);
+
     const iniciosRodadas = {
         "1ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada1" },
         "2ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada2" },
@@ -1820,8 +1824,8 @@ function montarBotoesPlanilhas() {
         
         if (info.dataPrimeiroJogo) {
             const tempoInicioPrimeiroJogo = new Date(info.dataPrimeiroJogo).getTime();
+            console.log(`📅 Rodada: ${nomeRodada} | Início: ${info.dataPrimeiroJogo} | Já passou?`, agora >= tempoInicioPrimeiroJogo);
             
-            // Se já passou do horário do primeiro jogo da rodada, cria o botão
             if (agora >= tempoInicioPrimeiroJogo) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
@@ -1837,6 +1841,7 @@ function montarBotoesPlanilhas() {
     });
 
     if (!temPlanilhaLiberada) {
+        console.log("⏳ Nenhuma planilha liberada. Injetando aviso de espera no HTML.");
         containerPlanilhas.innerHTML = `
             <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center; width: 100%;">
                 <p style="color: #666; margin: 0;">Nenhuma planilha liberada ainda. ⏳</p>
