@@ -1765,10 +1765,11 @@ function montarJogosPorDia() {
 
         // 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
         if (infoRodada.alvoCronometro && infoRodada.idPlanilha !== "" && containerPlanilhas) {
-            // CORREÇÃO: Pegar o horário de início do PRIMEIRO jogo (bloqueio da rodada)
-            const tempoInicioRodada = new Date(infoRodada.alvoCronometro).getTime(); 
             
-            if (agora >= tempoInicioRodada) {
+            // Usamos 'alvoCronometro' porque é o horário do 1º jogo (quando as apostas encerram)
+            const tempoFimDasApostas = new Date(infoRodada.alvoCronometro).getTime(); 
+            
+            if (agora >= tempoFimDasApostas) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
                     <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
