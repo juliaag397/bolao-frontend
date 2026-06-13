@@ -1764,12 +1764,12 @@ function montarJogosPorDia() {
         if (Object.keys(infoRodada.dias).length === 0) return;
 
 // 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
-        if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "" && containerPlanilhas) {
+        if (infoRodada.alvoCronometro && infoRodada.idPlanilha !== "" && containerPlanilhas) {
             
-            // Usamos 'ultimoJogo' para liberar no INÍCIO da última partida da rodada
-            const tempoInicioUltimoJogo = new Date(infoRodada.ultimoJogo).getTime(); 
+            // Usamos 'alvoCronometro' porque é o horário exato do 1º jogo da rodada
+            const tempoInicioPrimeiroJogo = new Date(infoRodada.alvoCronometro).getTime(); 
             
-            if (agora >= tempoInicioUltimoJogo) {
+            if (agora >= tempoInicioPrimeiroJogo) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
                     <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
