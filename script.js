@@ -489,9 +489,10 @@ function bloquearJogosPassados() {
 // Mostrar área selecionada
 function mostrarArea(areaId, event) {
 
-    // Remove classe ativa de todas as áreas
+    // Remove classe ativa de todas as áreas e força o sumiço
     document.querySelectorAll(".area").forEach(area => {
         area.classList.remove("ativa");
+        area.style.display = "none"; // 💡 Força esconder todas, limpando o HTML
     });
 
     // Remove classe ativa dos botões
@@ -503,6 +504,7 @@ function mostrarArea(areaId, event) {
     const areaSelecionada = document.getElementById(areaId);
     if (areaSelecionada) {
         areaSelecionada.classList.add("ativa");
+        areaSelecionada.style.display = "block"; // 💡 Força a área escolhida a APARECER na tela!
     }
 
     // Se veio de clique
@@ -512,7 +514,6 @@ function mostrarArea(areaId, event) {
 
     // Se veio do script (ex: Jogos por dia)
     else {
-
         const botao = document.querySelector(
             `.menu-lateral button[onclick*="${areaId}"]`
         );
@@ -520,7 +521,6 @@ function mostrarArea(areaId, event) {
         if (botao) {
             botao.classList.add("ativo");
         }
-
     }
 
     // Fecha menu mobile
@@ -528,7 +528,6 @@ function mostrarArea(areaId, event) {
     if (menu) {
         menu.classList.remove("ativo");
     }
-
 }
 
 
