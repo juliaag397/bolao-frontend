@@ -671,6 +671,7 @@ async function verificarLogin() {
         await carregarConfiguracoesGerais();
         await carregarMataMata();
         montarJogosPorDia();
+        montarBotoesPlanilhas();
 
     } else {
         usuarioLogado = false;
@@ -1672,19 +1673,15 @@ window.intervaloCronometro = null;
 
 function montarJogosPorDia() {
     const container = document.getElementById("lista-jogos-dia");
+    if (!container) return;
     container.innerHTML = "";
 
-    // 1. Pega o espaço na nova aba de Planilhas e limpa antes de atualizar
-    const containerPlanilhas = document.getElementById("container-botoes-planilhas");
-    if (containerPlanilhas) containerPlanilhas.innerHTML = ""; 
-
     const jogos = document.querySelectorAll(".celula-aposta");
-
     const rodadas = {
-        "1ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada1" },
-        "2ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada2" },
-        "3ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada3" },
-        "Mata-Mata": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "" } 
+        "1ª rodada": { dias: {}, alvoCronometro: null },
+        "2ª rodada": { dias: {}, alvoCronometro: null },
+        "3ª rodada": { dias: {}, alvoCronometro: null },
+        "Mata-Mata": { dias: {}, alvoCronometro: null } 
     };
 
     jogos.forEach(celula => {
@@ -1712,18 +1709,9 @@ function montarJogosPorDia() {
             rodadas[nomeRodada].alvoCronometro = horarioBloqueio;
         }
 
-        if (!rodadas[nomeRodada].ultimoJogo || dataRealObj.getTime() > new Date(rodadas[nomeRodada].ultimoJogo).getTime()) {
-            rodadas[nomeRodada].ultimoJogo = horarioReal;
-        }
-
-        let textoDia = dataRealObj.toLocaleDateString("pt-BR", { 
-            weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' 
-        });
+        let textoDia = dataRealObj.toLocaleDateString("pt-BR", { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
         textoDia = textoDia.charAt(0).toUpperCase() + textoDia.slice(1);
-
-        const hora = dataRealObj.toLocaleTimeString("pt-BR", {
-            hour: "2-digit", minute: "2-digit"
-        });
+        const hora = dataRealObj.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 
         let selecao1 = "", selecao2 = "", resultado = "";
         const tr = celula.closest("tr");
@@ -1734,81 +1722,39 @@ function montarJogosPorDia() {
             const placarOficial = tr.querySelector(".placar-oficial");
             resultado = placarOficial ? placarOficial.textContent : "";
         } else {
-            const timeCasa = celula.dataset.timeCasa || "?";
-            const timeFora = celula.dataset.timeFora || "?";
-            selecao1 = `<b>${timeCasa}</b>`;
-            selecao2 = `<b>${timeFora}</b>`;
+            selecao1 = `<b>${celula.dataset.timeCasa || "?"}</b>`;
+            selecao2 = `<b>${celula.dataset.timeFora || "?"}</b>`;
             resultado = "-"; 
         }
 
         const aposta = celula.textContent || "-";
 
         if (!rodadas[nomeRodada].dias[dataIsoCurta]) {
-            rodadas[nomeRodada].dias[dataIsoCurta] = {
-                tituloFormatado: textoDia,
-                jogos: []
-            };
+            rodadas[nomeRodada].dias[dataIsoCurta] = { tituloFormatado: textoDia, jogos: [] };
         }
-
-        rodadas[nomeRodada].dias[dataIsoCurta].jogos.push({
-            hora, selecao1, selecao2, resultado, aposta, jogoId
-        });
+        rodadas[nomeRodada].dias[dataIsoCurta].jogos.push({ hora, selecao1, selecao2, resultado, aposta, jogoId });
     });
-
-    const agora = new Date().getTime();
-    let temPlanilhaLiberada = false;
 
     Object.keys(rodadas).forEach(nomeRodada => {
         const infoRodada = rodadas[nomeRodada];
-
         if (Object.keys(infoRodada.dias).length === 0) return;
 
-// 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
-        if (infoRodada.alvoCronometro && infoRodada.idPlanilha !== "" && containerPlanilhas) {
-            
-            // Usamos 'alvoCronometro' porque é o horário exato do 1º jogo da rodada
-            const tempoInicioPrimeiroJogo = new Date(infoRodada.alvoCronometro).getTime(); 
-            
-            if (agora >= tempoInicioPrimeiroJogo) {
-                temPlanilhaLiberada = true;
-                const btnHtml = `
-                    <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
-                            style="background-color: #00B050; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; text-transform: uppercase; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 300px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
-                        <span>📊 ${nomeRodada}</span>
-                        <span>Baixar</span>
-                    </button>
-                `;
-                containerPlanilhas.innerHTML += btnHtml;
-            }
-        }
-
-        // 3. LÓGICA DA ABA JOGOS POR DIA (Apenas o título limpo e os jogos)
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
-        
         blocoRodada.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">
-                <h2 style="margin: 0; color: #1e5c4f; display: flex; align-items: center;">
-                    🏆 ${nomeRodada}
-                </h2>
-                <span class="relogio-rodada" data-alvo="${infoRodada.alvoCronometro}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
-                    ⏳ Calculando...
-                </span>
+                <h2 style="margin: 0; color: #1e5c4f; display: flex; align-items: center;">🏆 ${nomeRodada}</h2>
+                <span class="relogio-rodada" data-alvo="${infoRodada.alvoCronometro}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">⏳ Calculando...</span>
             </div>
         `;
 
         Object.keys(infoRodada.dias).sort().forEach(dataIso => {
             const infoDia = infoRodada.dias[dataIso];
-
             const blocoDia = document.createElement("div");
             blocoDia.className = "bloco-dia";
-            blocoDia.innerHTML = `
-                <h3 style="margin: 15px 0 10px 0; color: #333;">📅 ${infoDia.tituloFormatado}</h3>
-                <div class="jogos-dia"></div>
-            `;
+            blocoDia.innerHTML = `<h3 style="margin: 15px 0 10px 0; color: #333;">📅 ${infoDia.tituloFormatado}</h3><div class="jogos-dia"></div>`;
 
             const listaJogos = blocoDia.querySelector(".jogos-dia");
-
             infoDia.jogos.forEach(jogo => {
                 const item = document.createElement("div");
                 item.className = "jogo-dia";
@@ -1822,23 +1768,81 @@ function montarJogosPorDia() {
                 `;
                 listaJogos.appendChild(item);
             });
-
             blocoRodada.appendChild(blocoDia);
         });
-
         container.appendChild(blocoRodada);
     });
 
-    // 4. Se nenhuma planilha estiver pronta ainda, mostra um aviso amigável na aba
-    if (containerPlanilhas && !temPlanilhaLiberada) {
+    iniciarCronometros();
+}
+
+function montarBotoesPlanilhas() {
+    const containerPlanilhas = document.getElementById("container-botoes-planilhas");
+    if (!containerPlanilhas) return;
+    containerPlanilhas.innerHTML = ""; 
+
+    const jogos = document.querySelectorAll(".celula-aposta");
+    
+    // Mapeia apenas o que importa para a planilha: o primeiro jogo de cada rodada
+    const iniciosRodadas = {
+        "1ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada1" },
+        "2ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada2" },
+        "3ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada3" }
+    };
+
+    jogos.forEach(celula => {
+        const horarioBloqueio = celula.dataset.data; 
+        if (!horarioBloqueio) return;
+
+        const dataObj = new Date(horarioBloqueio);
+        const diaDoMes = dataObj.getDate();
+        const mes = dataObj.getMonth() + 1; 
+
+        let nomeRodada = null; 
+        if (mes === 6 || mes === 1) { 
+            if (diaDoMes >= 11 && diaDoMes <= 17) nomeRodada = "1ª rodada";
+            else if (diaDoMes >= 18 && diaDoMes <= 23) nomeRodada = "2ª rodada";
+            else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
+        }
+
+        if (nomeRodada && iniciosRodadas[nomeRodada]) {
+            if (!iniciosRodadas[nomeRodada].dataPrimeiroJogo || dataObj.getTime() < new Date(iniciosRodadas[nomeRodada].dataPrimeiroJogo).getTime()) {
+                iniciosRodadas[nomeRodada].dataPrimeiroJogo = horarioBloqueio;
+            }
+        }
+    });
+
+    const agora = new Date().getTime();
+    let temPlanilhaLiberada = false;
+
+    Object.keys(iniciosRodadas).forEach(nomeRodada => {
+        const info = iniciosRodadas[nomeRodada];
+        
+        if (info.dataPrimeiroJogo) {
+            const tempoInicioPrimeiroJogo = new Date(info.dataPrimeiroJogo).getTime();
+            
+            // Se já passou do horário do primeiro jogo da rodada, cria o botão
+            if (agora >= tempoInicioPrimeiroJogo) {
+                temPlanilhaLiberada = true;
+                const btnHtml = `
+                    <button id="btn-${info.idPlanilha}" onclick="baixarPlanilha('${info.idPlanilha}')" 
+                            style="background-color: #00B050; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; text-transform: uppercase; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 300px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                        <span>📊 ${nomeRodada}</span>
+                        <span>Baixar</span>
+                    </button>
+                `;
+                containerPlanilhas.innerHTML += btnHtml;
+            }
+        }
+    });
+
+    if (!temPlanilhaLiberada) {
         containerPlanilhas.innerHTML = `
             <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center; width: 100%;">
                 <p style="color: #666; margin: 0;">Nenhuma planilha liberada ainda. ⏳</p>
             </div>
         `;
     }
-
-    iniciarCronometros(); // <-- 2. Faltava chamar a função aqui dentro!
 }
 
 function iniciarCronometros() {
