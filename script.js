@@ -1765,9 +1765,10 @@ function montarJogosPorDia() {
 
         // 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
         if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "" && containerPlanilhas) {
-            const tempoFimUltimoJogo = new Date(infoRodada.ultimoJogo).getTime() + (2 * 60 * 60 * 1000);
+            // Alterado: Agora pega exatamente o horário de início do último jogo
+            const tempoInicioUltimoJogo = new Date(infoRodada.ultimoJogo).getTime(); 
             
-            if (agora >= tempoFimUltimoJogo) {
+            if (agora >= tempoInicioUltimoJogo) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
                     <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
