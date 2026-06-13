@@ -1833,6 +1833,11 @@ function montarJogosPorDia() {
             <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center; width: 100%;">
                 <p style="color: #666; margin: 0;">Nenhuma planilha liberada ainda. ⏳</p>
             </div>
+        `;
+    }
+
+    iniciarCronometros(); // <-- 2. Faltava chamar a função aqui dentro!
+}
 
 function iniciarCronometros() {
     if (window.intervaloCronometro) clearInterval(window.intervaloCronometro);
