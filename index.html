@@ -89,6 +89,8 @@
 
         <button onclick="mostrarArea('grupos-info', event)">Grupos</button>
 
+        <button onclick="mostrarArea('planilhas-info', event)">Planilhas de Palpites</button>
+
         <button onclick="mostrarArea('geral', event)">Geral</button>
 
     </nav>
@@ -3888,6 +3890,18 @@
                 </div>
             </div>
 
+        </div>
+
+        <div id="planilhas-info" class="area" style="display: none;">
+            <div style="margin-bottom: 20px;">
+                <h2>Planilhas de Palpites</h2>
+                <p style="color: #555; font-size: 0.9em;">
+                    As planilhas de cada fase ficam disponíveis para download automaticamente <b>2 horas após o término do último jogo</b> da respectiva rodada.
+                </p>
+            </div>
+
+            <div id="container-botoes-planilhas" style="display: flex; flex-direction: column; gap: 15px; align-items: flex-start;">
+            </div>
         </div>
 
         <div id="geral" class="area">

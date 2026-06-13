@@ -1674,9 +1674,12 @@ function montarJogosPorDia() {
     const container = document.getElementById("lista-jogos-dia");
     container.innerHTML = "";
 
+    // 1. Pega o espaço na nova aba de Planilhas e limpa antes de atualizar
+    const containerPlanilhas = document.getElementById("container-botoes-planilhas");
+    if (containerPlanilhas) containerPlanilhas.innerHTML = ""; 
+
     const jogos = document.querySelectorAll(".celula-aposta");
 
-    // 1. ADICIONAMOS "ultimoJogo" E O "idPlanilha" (Para o botão saber qual baixar)
     const rodadas = {
         "1ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada1" },
         "2ª rodada": { dias: {}, alvoCronometro: null, ultimoJogo: null, idPlanilha: "rodada2" },
@@ -1705,12 +1708,10 @@ function montarJogosPorDia() {
             else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
         }
 
-        // Define o alvo do cronômetro (Primeiro jogo da rodada)
         if (!rodadas[nomeRodada].alvoCronometro || dataBloqueioObj.getTime() < new Date(rodadas[nomeRodada].alvoCronometro).getTime()) {
             rodadas[nomeRodada].alvoCronometro = horarioBloqueio;
         }
 
-        // 2. LÓGICA NOVA: Descobre qual é o ÚLTIMO jogo da rodada
         if (!rodadas[nomeRodada].ultimoJogo || dataRealObj.getTime() > new Date(rodadas[nomeRodada].ultimoJogo).getTime()) {
             rodadas[nomeRodada].ultimoJogo = horarioReal;
         }
@@ -1754,39 +1755,39 @@ function montarJogosPorDia() {
         });
     });
 
-    // Pega o horário EXATO de agora
     const agora = new Date().getTime();
+    let temPlanilhaLiberada = false;
 
     Object.keys(rodadas).forEach(nomeRodada => {
         const infoRodada = rodadas[nomeRodada];
 
         if (Object.keys(infoRodada.dias).length === 0) return;
 
-        // 3. VERIFICA SE A RODADA ACABOU PARA MOSTRAR O BOTÃO
-        let botaoPlanilha = "";
-        if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "") {
-            // Soma 2 horas ao horário de início do último jogo
+        // 2. LÓGICA DA ABA PLANILHAS (Verifica se já deu a hora e cria o botão lá na aba nova)
+        if (infoRodada.ultimoJogo && infoRodada.idPlanilha !== "" && containerPlanilhas) {
             const tempoFimUltimoJogo = new Date(infoRodada.ultimoJogo).getTime() + (2 * 60 * 60 * 1000);
             
-            // Se o horário atual passou do fim do último jogo, gera o botão html
             if (agora >= tempoFimUltimoJogo) {
-                botaoPlanilha = `
+                temPlanilhaLiberada = true;
+                const btnHtml = `
                     <button id="btn-${infoRodada.idPlanilha}" onclick="baixarPlanilha('${infoRodada.idPlanilha}')" 
-                            style="background-color: #00B050; color: white; border: none; padding: 4px 10px; border-radius: 6px; cursor: pointer; font-size: 0.6em; margin-left: 15px; text-transform: uppercase; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.2); vertical-align: middle;">
-                        📊 Baixar Planilha
+                            style="background-color: #00B050; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; text-transform: uppercase; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 300px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                        <span>📊 ${nomeRodada}</span>
+                        <span>Baixar</span>
                     </button>
                 `;
+                containerPlanilhas.innerHTML += btnHtml;
             }
         }
 
+        // 3. LÓGICA DA ABA JOGOS POR DIA (Apenas o título limpo e os jogos)
         const blocoRodada = document.createElement("div");
         blocoRodada.className = "bloco-rodada";
         
-        // 4. INSERE O BOTÃO AO LADO DO TÍTULO DA RODADA
         blocoRodada.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 30px; border-bottom: 2px solid #1e5c4f; padding-bottom: 5px;">
                 <h2 style="margin: 0; color: #1e5c4f; display: flex; align-items: center;">
-                    🏆 ${nomeRodada} ${botaoPlanilha}
+                    🏆 ${nomeRodada}
                 </h2>
                 <span class="relogio-rodada" data-alvo="${infoRodada.alvoCronometro}" style="font-size: 0.9em; background: #f0f0f0; padding: 4px 8px; border-radius: 4px; font-weight: bold; color: #333;">
                     ⏳ Calculando...
@@ -1826,8 +1827,12 @@ function montarJogosPorDia() {
         container.appendChild(blocoRodada);
     });
 
-    iniciarCronometros();
-}
+    // 4. Se nenhuma planilha estiver pronta ainda, mostra um aviso amigável na aba
+    if (containerPlanilhas && !temPlanilhaLiberada) {
+        containerPlanilhas.innerHTML = `
+            <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center; width: 100%;">
+                <p style="color: #666; margin: 0;">Nenhuma planilha liberada ainda. ⏳</p>
+            </div>
 
 function iniciarCronometros() {
     if (window.intervaloCronometro) clearInterval(window.intervaloCronometro);
