@@ -1285,6 +1285,7 @@ async function carregarJogosBrasil() {
     lista.innerHTML = "";
     
     const token = localStorage.getItem("token"); // 🔑 Pega o token
+    const agora = new Date();
 
     try {
         const response = await fetch(
@@ -1305,7 +1306,28 @@ async function carregarJogosBrasil() {
             div.classList.add("jogo");
             div.dataset.data = aposta.data_jogo;
 
+            const dataJogo = new Date(aposta.data_jogo);
+            const jaComecou = agora >= dataJogo; // 🔒 Define se o jogo já bloqueou/começou
             const golsBrasilNum = parseInt(aposta.gols_brasil) || 0;
+
+            // Gerencia o que exibir na área de palpites de jogadores
+            let areaJogadoresHtml = "";
+            if (golsBrasilNum > 0) {
+                if (jaComecou) {
+                    // Se já começou, cria o container que vai receber os nomes direto
+                    areaJogadoresHtml = `
+                        <div class="containerJogadores" style="background: #f9f9f9; padding: 10px; border-radius: 6px; border-left: 4px solid #1e5c4f; margin: 10px 0;">
+                            <strong style="color: #333; font-size: 0.9em;">📋 Seus jogadores escolhidos:</strong>
+                            <div class="lista-escolhidos" style="margin-top: 5px; font-weight: 500;">⏳ Carregando seus palpites...</div>
+                        </div>
+                    `;
+                } else {
+                    // Se NÃO começou, mantém o botão de escolher normalmente
+                    areaJogadoresHtml = `<button class="btn-jogadores">Escolher jogadores</button>`;
+                }
+            } else {
+                areaJogadoresHtml = `<p style="font-size: 0.9em; color: gray; margin: 10px 0;"><em>Palpite sem gols para o Brasil.</em></p>`;
+            }
 
             div.innerHTML = `
                 <strong>⚽ ${aposta.jogo}</strong>
@@ -1314,25 +1336,25 @@ async function carregarJogosBrasil() {
                     <span>${aposta.gols_casa} x ${aposta.gols_fora}</span>
                 </p>
 
-                ${golsBrasilNum > 0 
-                    ? `<button class="btn-jogadores">Escolher jogadores</button>` 
-                    : `<p style="font-size: 0.9em; color: gray;"><em>Palpite sem gols para o Brasil.</em></p>`
-                }
+                ${areaJogadoresHtml}
 
-                <div class="resultado-gols">
-                    <strong>⚽ Quem fez os gols:</strong>
-                    <span class="gols-reais">-</span>
+                <div class="resultado-gols" style="margin-top: 10px; ${jaComecou ? '' : 'display: none;'}">
+                    <strong>⚽ Quem fez os gols (Oficial):</strong>
+                    <span class="gols-reais" style="color: #00B050; font-weight: bold;">-</span>
                 </div>
 
-                <div class="pontuacao-aposta">
-                    <strong>🏆 Pontos nessa aposta:</strong>
-                    <span class="pontos">${aposta.pontos_jogadores || 0}</span>
+                <div class="pontuacao-aposta" style="margin-top: 5px; ${jaComecou ? '' : 'display: none;'}">
+                    <strong>🏆 Pontos obtidos nesta aba:</strong>
+                    <span class="pontos" style="background: #1e5c4f; color: white; padding: 2px 8px; border-radius: 10px; font-weight: bold; font-size: 0.9em;">
+                        ${aposta.pontos_jogadores || 0} pts
+                    </span>
                 </div>
-                <hr>
+                <hr style="border: 0; border-top: 1px solid #eee; margin-top: 15px;">
             `;
 
             lista.appendChild(div);
 
+            // Configura o clique do botão apenas se ele existir (jogo aberto)
             const btn = div.querySelector(".btn-jogadores");
             if (btn) {
                 btn.onclick = function () {
@@ -1340,13 +1362,52 @@ async function carregarJogosBrasil() {
                 };
             }
 
-            carregarGolsBrasil(aposta.jogo_id, div);
-            carregarPontosJogadores(aposta.id, div);
+            // Se o jogo já começou e tinha palpite de gol, busca os jogadores salvos automaticamente
+            if (jaComecou && golsBrasilNum > 0) {
+                const containerLista = div.querySelector(".lista-escolhidos");
+                if (containerLista) {
+                    mostrarJogadoresSalvosNoCard(aposta.id, containerLista);
+                }
+            }
+
+            // Carrega os gols reais e atualiza a pontuação se o jogo começou
+            if (jaComecou) {
+                carregarGolsBrasil(aposta.jogo_id, div);
+                carregarPontosJogadores(aposta.id, div);
+            }
         });
 
     } catch (error) {
-        alert("Erro ao carregar jogos.");
+        alert("Erro ao carregar jogos do Brasil.");
         console.error(error);
+    }
+}
+
+async function mostrarJogadoresSalvosNoCard(aposta_id, container) {
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch(
+            `https://bolao-backend-k56l.onrender.com/jogadores/${aposta_id}`,
+            { 
+                headers: { "Authorization": `Bearer ${token}` }
+            }
+        );
+
+        const jogadores = await response.json();
+
+        if (!Array.isArray(jogadores) || jogadores.length === 0) {
+            container.innerHTML = "<span style='color: #999; font-style: italic;'>Nenhum jogador selecionado antes do prazo.</span>";
+            return;
+        }
+
+        // Transforma a lista de jogadores em texto separado por vírgulas limpo
+        const nomesFormata = jogadores.map(j => j.jogador_nome).join(", ");
+        container.innerHTML = `<span style="color: #333;">🏃‍♂️ ${nomesFormata}</span>`;
+
+    } catch (err) {
+        container.innerHTML = "<span style='color: red;'>Erro ao carredit palpites.</span>";
+        console.error("Erro ao carregar jogadores salvos no card:", err);
     }
 }
 
