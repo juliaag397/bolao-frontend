@@ -464,6 +464,9 @@ function bloquearJogosPassados() {
 
     celulas.forEach(celula => {
 
+        // 🛡️ ESCUDO DE SEGURIDAD: Si el elemento está dentro de la lista de Brasil, ¡no lo toques!
+        if (celula.closest("#listaJogosBrasil")) return;
+
         const dataJogo = new Date(celula.dataset.data);
 
         if (hoje >= dataJogo) {
