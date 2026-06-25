@@ -1846,38 +1846,46 @@ function montarBotoesPlanilhas() {
     console.log("🔍 A função montarBotoesPlanilhas FOI CHAMADA!");
     
     const containerPlanilhas = document.getElementById("container-botoes-planilhas");
-    if (!containerPlanilhas) {
-        console.log("❌ ERRO: Não encontrei o elemento 'container-botoes-planilhas' no HTML.");
-        return;
-    }
+    if (!containerPlanilhas) return;
+    containerPlanilhas.innerHTML = ""; // Limpa antes de recriar
 
     const jogos = document.querySelectorAll(".celula-aposta");
-    console.log("⚽ Quantidade de jogos (.celula-aposta) encontrados na tela:", jogos.length);
-
-    const iniciosRodadas = {
-        "1ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada1" },
-        "2ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada2" },
-        "3ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada3" }
+    
+    // 🏆 Definimos TODAS as fases baseadas nos IDs oficiais do seu banco
+    const fases = {
+        "1ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada1", min: 1, max: 24 },
+        "2ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada2", min: 25, max: 48 },
+        "3ª rodada": { dataPrimeiroJogo: null, idPlanilha: "rodada3", min: 49, max: 72 },
+        "16-Avos": { dataPrimeiroJogo: null, idPlanilha: "pre-oitavas", min: 73, max: 88 },
+        "Oitavas": { dataPrimeiroJogo: null, idPlanilha: "oitavas", min: 89, max: 96 },
+        "Quartas": { dataPrimeiroJogo: null, idPlanilha: "quartas", min: 97, max: 100 },
+        "Semis": { dataPrimeiroJogo: null, idPlanilha: "semis", min: 101, max: 102 },
+        "Finais": { dataPrimeiroJogo: null, idPlanilha: "finais", min: 103, max: 104 }
     };
 
+    // Varre os jogos na tela para descobrir a data do PRIMEIRO jogo de cada fase
     jogos.forEach(celula => {
         const horarioBloqueio = celula.dataset.data; 
-        if (!horarioBloqueio) return;
+        const jogoId = parseInt(celula.dataset.jogoId);
+        
+        if (!horarioBloqueio || !jogoId) return;
 
-        const dataObj = new Date(horarioBloqueio);
-        const diaDoMes = dataObj.getDate();
-        const mes = dataObj.getMonth() + 1; 
-
-        let nomeRodada = null; 
-        if (mes === 6 || mes === 1) { 
-            if (diaDoMes >= 11 && diaDoMes <= 17) nomeRodada = "1ª rodada";
-            else if (diaDoMes >= 18 && diaDoMes <= 23) nomeRodada = "2ª rodada";
-            else if (diaDoMes >= 24 && diaDoMes <= 27) nomeRodada = "3ª rodada";
+        let nomeFase = null;
+        // Descobre a qual fase esse ID pertence
+        for (const [fase, info] of Object.entries(fases)) {
+            if (jogoId >= info.min && jogoId <= info.max) {
+                nomeFase = fase;
+                break;
+            }
         }
 
-        if (nomeRodada && iniciosRodadas[nomeRodada]) {
-            if (!iniciosRodadas[nomeRodada].dataPrimeiroJogo || dataObj.getTime() < new Date(iniciosRodadas[nomeRodada].dataPrimeiroJogo).getTime()) {
-                iniciosRodadas[nomeRodada].dataPrimeiroJogo = horarioBloqueio;
+        if (nomeFase) {
+            const dataObj = new Date(horarioBloqueio).getTime();
+            const dataAtualRegistrada = fases[nomeFase].dataPrimeiroJogo ? new Date(fases[nomeFase].dataPrimeiroJogo).getTime() : null;
+
+            // Salva a data mais antiga (o primeiro jogo daquela fase)
+            if (!dataAtualRegistrada || dataObj < dataAtualRegistrada) {
+                fases[nomeFase].dataPrimeiroJogo = horarioBloqueio;
             }
         }
     });
@@ -1885,19 +1893,19 @@ function montarBotoesPlanilhas() {
     const agora = new Date().getTime();
     let temPlanilhaLiberada = false;
 
-    Object.keys(iniciosRodadas).forEach(nomeRodada => {
-        const info = iniciosRodadas[nomeRodada];
+    // Gera os botões se a data do primeiro jogo da fase já passou
+    Object.keys(fases).forEach(nomeFase => {
+        const info = fases[nomeFase];
         
         if (info.dataPrimeiroJogo) {
             const tempoInicioPrimeiroJogo = new Date(info.dataPrimeiroJogo).getTime();
-            console.log(`📅 Rodada: ${nomeRodada} | Início: ${info.dataPrimeiroJogo} | Já passou?`, agora >= tempoInicioPrimeiroJogo);
             
             if (agora >= tempoInicioPrimeiroJogo) {
                 temPlanilhaLiberada = true;
                 const btnHtml = `
                     <button id="btn-${info.idPlanilha}" onclick="baixarPlanilha('${info.idPlanilha}')" 
-                            style="background-color: #00B050; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-size: 1em; text-transform: uppercase; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 300px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
-                        <span>📊 ${nomeRodada}</span>
+                            style="background-color: #00B050; color: white; border: none; padding: 12px 20px; margin-bottom: 10px; border-radius: 6px; cursor: pointer; font-size: 1em; text-transform: uppercase; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 300px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                        <span>📊 ${nomeFase}</span>
                         <span>Baixar</span>
                     </button>
                 `;
@@ -1907,7 +1915,6 @@ function montarBotoesPlanilhas() {
     });
 
     if (!temPlanilhaLiberada) {
-        console.log("⏳ Nenhuma planilha liberada. Injetando aviso de espera no HTML.");
         containerPlanilhas.innerHTML = `
             <div style="background-color: #f9f9f9; border: 1px dashed #ccc; padding: 20px; border-radius: 8px; text-align: center; width: 100%;">
                 <p style="color: #666; margin: 0;">Nenhuma planilha liberada ainda. ⏳</p>
