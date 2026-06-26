@@ -2175,6 +2175,7 @@ async function carregarConfiguracoesGerais() {
 const mapaBandeiras = {
     "Brasil": "br",
     "África do Sul": "za",
+    "Bósnia e Herzegovina": "ba",
     "Haiti": "ht",
     "Escócia": "gb-sct",
     "Argentina": "ar",
