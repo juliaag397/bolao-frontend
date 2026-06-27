@@ -1281,6 +1281,7 @@ async function toggleGroup(groupId) {
 }
 
     // ABA BRASIL
+// ABA BRASIL
 async function carregarJogosBrasil() {
     if (!usuarioId) return;
 
@@ -1302,9 +1303,22 @@ async function carregarJogosBrasil() {
             throw new Error("Erro ao buscar jogos");
         }
 
-        const jogos = await response.json();
+        const jogosBrutos = await response.json();
 
-        jogos.forEach(aposta => {
+        // 🔥 FILTRO ANTIDUPLICAÇÃO: Pega a lista do backend e remove as repetições
+        const jogosUnicos = [];
+        const idsVistos = new Set();
+
+        jogosBrutos.forEach(aposta => {
+            // Verifica se o ID da aposta (ou do jogo) já foi adicionado
+            if (!idsVistos.has(aposta.id)) {
+                idsVistos.add(aposta.id);
+                jogosUnicos.push(aposta);
+            }
+        });
+
+        // Agora usamos a lista 'jogosUnicos' em vez da original para montar a tela
+        jogosUnicos.forEach(aposta => {
             const div = document.createElement("div");
             div.classList.add("jogo");
             div.dataset.data = aposta.data_jogo;
