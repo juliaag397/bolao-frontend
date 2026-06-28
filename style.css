@@ -1614,21 +1614,49 @@ strong{
     display: none !important;
 }
 
-/* 1. Base da tabela: Espaçamento mínimo para matar o "zoom" de vez */
-td.celula-aposta, td[data-jogo-id] {
-    display: table-cell !important;
-    vertical-align: middle !important;
+/* ✅ SUBSTITUA SEUS ESTILOS DE "td.celula-aposta" POR ESTES AQUI: */
+
+/* Removemos o 'td' porque no HTML usamos 'div' */
+.match-card .celula-aposta {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 4px !important; 
+    border-right: none !important; /* Remove a linha preta feia do lado */
+}
+
+/* Garante que, ao salvar a aposta, os campos não fiquem com borda bugada */
+.match-card [data-jogo-id]:not(.celula-aposta) * {
+    border: none !important;
+    background-color: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* Caixinhas de gol perfeitas para mobile */
+.match-card .celula-aposta input {
+    display: inline-block !important;
+    width: 30px !important;
+    height: 24px !important;
     text-align: center !important;
-    white-space: nowrap !important;
-    
-    /* Reduzido drasticamente: 2px em cima/embaixo, 4px nas laterais */
-    padding: 2px 4px !important; 
-    
-    border-top: none !important;
-    border-bottom: 1px solid #dee2e6 !important; /* Mantém a base sutil padrão */
-    
-    border-left: none !important;
-    border-right: none !important;
+    border: 1px solid #ccc !important; 
+    background-color: #fff !important;
+    vertical-align: middle !important;
+    margin: 0 2px !important;
+    padding: 0 !important;
+    border-radius: 4px !important;
+}
+
+.match-card .celula-aposta button {
+    display: inline-block !important;
+    padding: 2px 6px !important;
+    font-size: 11px !important;
+    margin-left: 4px !important;
+    cursor: pointer !important;
+    border-radius: 4px !important;
+    background-color: #1e5c4f !important;
+    color: white !important;
+    border: none !important;
 }
 
 /* 2. DEVOLVE a linha separadora na cor PRETA */
@@ -1683,34 +1711,16 @@ td[data-jogo-id]:not(.celula-aposta) * {
 .team-name { font-size: 13px; font-weight: bold; color: var(--cor-texto); }
 .match-card input { width: 35px; padding: 3px; text-align: center; border-radius: 4px; border: 1px solid var(--cor-borda); font-weight: bold; }
 
-/* =========================================
-   ADAPTAÇÃO DE TELA (O TRUQUE DO ZOOM)
-   ========================================= */
-
-/* Para notebooks com telas normais/médias */
-@media screen and (max-width: 1500px) {
-    .bracket-container {
-        zoom: 0.85; /* Reduz para 85% do tamanho original */
-    }
+/* ✅ ADICIONE ISSO PARA O MATA-MATA FUNCIONAR NO CELULAR */
+#mata {
+    width: 100%;
+    overflow-x: auto; /* Cria a barra de rolagem horizontal */
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Deixa o arraste macio e fluido no iPhone */
+    padding-bottom: 20px;
 }
 
-/* Para notebooks menores (ex: 1366x768) */
-@media screen and (max-width: 1366px) {
-    .bracket-container {
-        zoom: 0.75; /* Reduz para 75% */
-    }
-}
-
-/* Para monitores mais quadrados ou tablets */
-@media screen and (max-width: 1100px) {
-    .bracket-container {
-        zoom: 0.60; /* Reduz para 60% */
-    }
-}
-
-/* Para telas muito apertadas */
-@media screen and (max-width: 900px) {
-    .bracket-container {
-        zoom: 0.45; /* Encolhe mais da metade para caber tudo */
-    }
+.bracket-container {
+    min-width: max-content; /* Impede os cards de se espremerem */
+    margin: 0 auto; /* Centraliza a chave em monitores gigantes */
 }
