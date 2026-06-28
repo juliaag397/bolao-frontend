@@ -1736,5 +1736,5 @@ td[data-jogo-id]:not(.celula-aposta) * {
     
     /* O SEGREDO ESTÁ AQUI: Muito mais padding no topo e na base 
        (Topo: 50px | Laterais: 15px | Base: 80px) */
-    padding: 50px 15px 80px 15px; 
+    padding: 50px 60px 80px 60px; 
 }
