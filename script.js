@@ -2199,7 +2199,9 @@ const mapaBandeiras = {
     "Mexico": "mx", // Sem acento por precaução
     "França": "fr",
     "Alemanha": "de",
+    "Suécia": "se",
     "Espanha": "es",
+    "RD Congo": "cd",
     "Tunísia": "tn",
     "Nova Zelândia": "nz",
     "Costa do Marfim": "ci",
