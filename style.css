@@ -1712,15 +1712,29 @@ td[data-jogo-id]:not(.celula-aposta) * {
 .match-card input { width: 35px; padding: 3px; text-align: center; border-radius: 4px; border: 1px solid var(--cor-borda); font-weight: bold; }
 
 /* ✅ ADICIONE ISSO PARA O MATA-MATA FUNCIONAR NO CELULAR */
+/* ✅ ATUALIZE ESTAS DUAS CLASSES NO SEU CSS */
+
 #mata {
     width: 100%;
-    overflow-x: auto; /* Cria a barra de rolagem horizontal */
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch; /* Deixa o arraste macio e fluido no iPhone */
-    padding-bottom: 20px;
+    overflow-x: auto; 
+    /* Mudamos para visible ou auto para evitar cortes agressivos */
+    overflow-y: visible; 
+    -webkit-overflow-scrolling: touch;
+    
+    /* Espaço extra por fora do mata-mata */
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .bracket-container {
-    min-width: max-content; /* Impede os cards de se espremerem */
-    margin: 0 auto; /* Centraliza a chave em monitores gigantes */
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 20px;
+    min-width: max-content;
+    margin: 0 auto;
+    
+    /* O SEGREDO ESTÁ AQUI: Muito mais padding no topo e na base 
+       (Topo: 50px | Laterais: 15px | Base: 80px) */
+    padding: 50px 15px 80px 15px; 
 }
